@@ -9,7 +9,7 @@ class Vue():
         self.width = res  #Resolution
         self.canvas = tk.Canvas(self.root, width=self.width, height=self.width)
 
-    def generate_square(self, size, array):
+    def generate_square(self, size, array, biomes):
         square_size = self.width / size
         x1 = 0
         y1 = 0
@@ -52,10 +52,10 @@ class Vue():
                     x2 = square_size
                     x1 = 0
 
+        self.draw_biome_limitaion(biomes)
         self.canvas.pack()
-        self.draw_biome_limitaion()
 
-    def draw_biome_limitaion(self):
+    def draw_biome_limitaion(self, biomes):
         limits = (self.width/3)
         for i in range(1, 3, 1):
             self.canvas.create_line(limits*i, 1, limits*i, self.width, fill="black")
@@ -63,14 +63,19 @@ class Vue():
             self.canvas.create_line(1, limits*i, self.width, limits*i, fill="black")
 
         index = 0
-        for i in range(0, 4, 1):
-            for j in range(0, 4, 1):
-                self.canvas.create_text(limits*i, limits*j, text="text", fill="white")
+        for i in range(0, 3, 1):
+            for j in range(0, 3, 1):
+                self.canvas.create_text(limits*i + 50, limits*j + 6, text=biomes[index], fill="white")
                 index += 1
+
 
 class Diamond_square:
     def __init__(self):
+<<<<<<< HEAD
+        self.heightmapWidth = 257  # 17, 33, 65, 129, 257, 513, 1025...   (best result for performance : 257)
+=======
         self.heightmapWidth = 513  # 17, 33, 65, 129, 257, 513, 1025...   (best result for performance : 257)
+>>>>>>> 2eb6ba748aade6c123275d45e68aa8f1cab23f58
         self.heightmap = [[0] * self.heightmapWidth for i in range(self.heightmapWidth)]
         self.rand = random.randint(45, 175)
         self.heightmap[0][0] = self.rand
