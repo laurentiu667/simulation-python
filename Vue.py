@@ -113,7 +113,7 @@ class Vue:
 
         seed = MAPGENERATOR.Seed()
         seed.generate_map()
-        vue.generate_square(seed.diamond_square.heightmapWidth, seed.diamond_square.heightmap)
+        vue.generate_square(seed.diamond_square.heightmapWidth, seed.diamond_square.heightmap, seed.biomeOrder)
 
         vue.root.mainloop()
 
