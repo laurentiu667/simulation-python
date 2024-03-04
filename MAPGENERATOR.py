@@ -70,7 +70,7 @@ class Vue():
 
 class Diamond_square:
     def __init__(self):
-        self.heightmapWidth = 129  # 17, 33, 65, 129, 257, 513, 1025...   (best result for performance : 257)
+        self.heightmapWidth = 513  # 17, 33, 65, 129, 257, 513, 1025...   (best result for performance : 257)
         self.heightmap = [[0] * self.heightmapWidth for i in range(self.heightmapWidth)]
         self.rand = random.randint(45, 175)
         self.heightmap[0][0] = self.rand

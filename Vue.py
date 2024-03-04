@@ -10,28 +10,28 @@ class Vue:
         self.root = Tk()
         self.simroot = None
 
-#C7B7A3
+
     def accueil(self):
         self.root.title("Accueil")
-        self.root.geometry("1800x700")
+        self.root.geometry("1400x700")
         self.root.resizable(False, False)
         self.root.config(background="#561C24")
-        self.Frame_Preview_show_map = Frame(self.root, bg="red")
+        self.Frame_Preview_show_map = Frame(self.root, bg="#C7B7A3")
 
         Frame_global = Frame(self.root, bg="#C7B7A3")
         Frame_global.pack(fill=BOTH, expand=True, side=LEFT)
 
 
-        self.Frame_Preview_show_map.pack(fill=BOTH, expand=True, side=LEFT)
+        self.Frame_Preview_show_map.pack( side=RIGHT)
 
         # Div du titre
-        frame_title = Frame(Frame_global, bg="red")
+        frame_title = Frame(Frame_global, bg="#C7B7A3")
         frame_title.pack(pady=10, padx=30, fill=BOTH)
         label_title = Label(frame_title, text="Simulation", font=("Arial", 50), bg="#C7B7A3", fg="Black")
         label_title.pack()
 
         # Div des boutons
-        frame_buttons = Frame(Frame_global, bg="red")
+        frame_buttons = Frame(Frame_global, bg="#C7B7A3")
         frame_buttons.pack(padx=30, fill=BOTH, expand=True)
 
 
@@ -57,7 +57,7 @@ class Vue:
                 entry.grid(row=i, column=j, padx=3, pady=20)
 
         # DIV start
-        start_frame = Frame(Frame_global, bg="red")
+        start_frame = Frame(Frame_global, bg="#C7B7A3")
         start_frame.pack(fill=X, pady=10, padx=30)
 
         start_preview = Button(start_frame, text="Preview", font=("Arial", 20), bg="#C7B7A3", fg="Black", command=self.new_window_preview)
