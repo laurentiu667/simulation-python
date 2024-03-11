@@ -65,7 +65,7 @@ class Vue():
         index = 0
         for i in range(0, 3, 1):
             for j in range(0, 3, 1):
-                self.canvas.create_text(limits*i + 50, limits*j + 6, text=biomes[index], fill="white")
+                self.canvas.create_text(limits*i + 35, limits*j + 6, text=biomes[index], fill="white")
                 index += 1
 
 
@@ -120,7 +120,6 @@ class Seed():
     def __init__(self):
         self.diamond_square = None
         self.mapValide = False
-        self.time = math.trunc(time.time())
         self.biomeOrder = []
         self.seed = self.get_seed()
         self.biomeDict = {1: "ForetFeuillu",
@@ -135,7 +134,7 @@ class Seed():
                           0: "Toundra"}
 
     def get_seed(self):
-        random.seed(self.time)
+        random.seed(math.trunc(time.time()))
         seed = 0
         while (len(str(math.trunc(seed)))) != 10:
             seed = random.random()
@@ -150,12 +149,11 @@ class Seed():
     def check_water_percentage(self):
         total = self.diamond_square.heightmapWidth**2
         water = 0
-        percentage = 0
         for i in range(0, self.diamond_square.heightmapWidth, 1):
             for j in range(0, self.diamond_square.heightmapWidth, 1):
                 if(self.diamond_square.heightmap[i][j] > -1 and self.diamond_square.heightmap[i][j] < 50):
                     water += 1
-        percentage = (water/total)*100
+        percentage = ((water/total)*100)
 
         if(percentage > 20 and percentage < 30):
             return True
@@ -170,3 +168,5 @@ class Seed():
             self.diamond_square = Diamond_square()
             self.diamond_square.create_heightMap()
             self.mapValide = self.check_water_percentage()
+
+        self.mapValide = False

@@ -1,28 +1,25 @@
 from tkinter import *
-from tkinter import ttk
-
 import MAPGENERATOR
 from MAPGENERATOR import *
+
 class Vue:
     def __init__(self, parent, model):
         self.parent = parent
         self.model = model
         self.root = Tk()
         self.simroot = None
+        self.seed = MAPGENERATOR.Seed()
 
 
     def accueil(self):
         self.root.title("Accueil")
         self.root.geometry("1400x700")
         self.root.resizable(False, False)
-        self.root.config(background="#561C24")
-        self.Frame_Preview_show_map = Frame(self.root, bg="#C7B7A3")
+        self.root.config(background="#292929")
+        self.Frame_Preview_show_map = None
 
         Frame_global = Frame(self.root, bg="#C7B7A3")
         Frame_global.pack(fill=BOTH, expand=True, side=LEFT)
-
-
-        self.Frame_Preview_show_map.pack( side=RIGHT)
 
         # Div du titre
         frame_title = Frame(Frame_global, bg="#C7B7A3")
@@ -60,8 +57,8 @@ class Vue:
         start_frame = Frame(Frame_global, bg="#C7B7A3")
         start_frame.pack(fill=X, pady=10, padx=30)
 
-        start_preview = Button(start_frame, text="Preview", font=("Arial", 20), bg="#C7B7A3", fg="Black", command=self.new_window_preview)
-        start_button = Button(start_frame, text="Start", font=("Arial", 20), bg="#C7B7A3", fg="Black", command=self.new_window_start_sim)
+        start_preview = Button(start_frame, text="Aperçu", font=("Arial", 20), bg="#C7B7A3", fg="Black", command=self.new_window_preview)
+        start_button = Button(start_frame, text="Commencer", font=("Arial", 20), bg="#C7B7A3", fg="Black", command=self.new_window_start_sim)
 
         start_preview.grid(row=0, column=0, columnspan=1, sticky="nsew")
         start_button.grid(row=0, column=1, columnspan=1, sticky="nsew")
@@ -103,17 +100,22 @@ class Vue:
         Frame_simulation.pack(pady=5, padx=5, fill=BOTH, expand=True)
         canva_frame = Canvas(Frame_simulation, bg="blue")
         canva_frame.pack(pady=5, padx=5, fill=BOTH, expand=True)
-        self.generate_map_on_canvas(canva_frame)
+        self.generate_map_on_canvas(canva_frame, False)
 
-    def generate_map_on_canvas(self, canvas):
-        vue = MAPGENERATOR.Vue(500, canvas)
-        seed = MAPGENERATOR.Seed()
-        seed.generate_map()
-        vue.generate_square(seed.diamond_square.heightmapWidth, seed.diamond_square.heightmap, seed.biomeOrder)
-        vue.root.mainloop()
+    def generate_map_on_canvas(self, canvas, new):
+        vue = MAPGENERATOR.Vue(600, canvas)
+        if(new):
+            self.seed.generate_map()
+
+        vue.generate_square(self.seed.diamond_square.heightmapWidth, self.seed.diamond_square.heightmap, self.seed.biomeOrder)
 
     def new_window_preview(self):
-        self.generate_map_on_canvas(self.Frame_Preview_show_map)
+        if(self.Frame_Preview_show_map):
+            self.Frame_Preview_show_map.destroy()
+
+        self.Frame_Preview_show_map = Frame(self.root, bg="#C7B7A3")
+        self.Frame_Preview_show_map.pack(side=RIGHT)
+        self.generate_map_on_canvas(self.Frame_Preview_show_map, True)
 
     def simulation(self):
         pass
