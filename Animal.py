@@ -39,10 +39,11 @@ class Animal(ABC):
         self.sexe = None
         self.isAlive = None
         self.IsSleeping = False
+        self.isStarvings = False
         self.isFucking = False
         self.isRunning = False
         self.canFuck = [2]  # les 2 date entre
-        self.dureDeVieNaturelle = None
+        self.dureDeVie = None
         self.age = None
         self.endurance = None
         self.tempsGestation = None
@@ -102,7 +103,13 @@ class Animal(ABC):
 
     @abstractmethod
     def isStarving(self):
-        self.energie -= 2
+        self.faim -= 0.05
+        if self.faim <= 70:
+            self.isStarvings = True
+            self.energie -= 0.005
+            self.vie -= 0.005
+            if self.vie == 0:
+                self.isAlive = False
 
     @abstractmethod
     def calculerEndurance(self):
@@ -121,8 +128,12 @@ class Animal(ABC):
             pass
 
     @abstractmethod
-    def dureDeVie(self):
-        pass
+    def calculerDureDeVie(self):
+        vieMoyen = 30
+        marge_erreur = 15
+        erreur = random.randint(-marge_erreur, marge_erreur)
+        self.dureDeVie = vieMoyen - erreur
+        print(self.dureDeVie)
 
     @abstractmethod
     def perceptionTemps(self):
