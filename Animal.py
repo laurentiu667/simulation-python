@@ -7,25 +7,8 @@ import tkinter as tk
 
 # classe et methode abstraite
 
-# Attribus respectif chercher specificitÃ© de l'animal en question
-class CarreRouge:
-    def __init__(self, canvas, x, y, size):
-        self.canvas = canvas
-        self.rect = canvas.create_rectangle(x, y, x + size, y + size, fill="red")
-        self.x = x
-        self.y = y
-        self.size = size
-
-    def deplacer(self, x, y):
-        dx = x - self.x
-        dy = y - self.y
-        self.canvas.move(self.rect, dx, dy)
-        self.x = x
-        self.y = y
-
-
 class Animal(ABC):
-    def __init__(self):
+    def __init__(self, canvas, vitesse):
         self.y1 = None
         self.x1 = None
         self.x2 = None
@@ -50,12 +33,16 @@ class Animal(ABC):
         self.diete = None
         self.social = None
         self.position = None
-        self.canvas = self.canvas
+        self.canvas = canvas
+        self.vitesse = vitesse
+        self.x = random.randint(0, 500)  # changer les valeurs de déplacement en fonction de la map
+        self.y = random.randint(0, 500)
         self.isMoving = True
 
-    @abstractmethod
-    def manger(self):
-        self.energie += 2
+
+@abstractmethod
+def manger(self):
+    self.energie += 2
 
     @abstractmethod
     def boire(self):
@@ -82,20 +69,13 @@ class Animal(ABC):
             self.IsSleeping = False
 
     @abstractmethod
-    def deplacer(self, carre, step=1):
-        if self.isMoving == True:
-            start_x, start_y = carre.x, carre.y
-            dest_x = random.randint(0, 300 - carre.size)
-            dest_y = random.randint(0, 300 - carre.size)
-            dx = dest_x - start_x
-            dy = dest_y - start_y
-            steps = max(abs(dx), abs(dy)) // step
-            for _ in range(steps):
-                carre.deplacer(start_x + dx * (_ + 1) // steps, start_y + dy * (_ + 1) // steps)
-                carre.canvas.update()
-                carre.canvas.after(2)
-        else:
-            pass
+    def deplacer(self):
+        if self.isMoving:
+            dest_x = self.x + random.choice([-self.vitesse, self.vitesse])
+            dest_y = self.y + random.randint(-self.vitesse, self.vitesse)
+            self.canvas.move(self.rect, dest_x - self.x, dest_y - self.y)
+            self.x, self.y = dest_x, dest_y
+            self.canvas.update()
 
     @abstractmethod
     def repro(self):
@@ -141,11 +121,22 @@ class Animal(ABC):
 
 
 class Ours(Animal):
-    def __init__(self):
-        super().__init__(self)
+    def __init__(self, canvas):
+        super().__init__(canvas, self.vitesse)
+        self.image = Image.open("ours.png")
+        self.image = self.image.resize((50, 50))  # checker la grosseur de l'image
+        self.photo = ImageTk.PhotoImage(self.image)
+        self.rect = canvas.create_image(self.x, self.y, image=self.photo, anchor=tk.CENTER)
+
+        canvas = tk.Canvas()
+        ours = Ours(canvas)
+        ours.deplacer()
 
     def hibernation(self):
         pass
+
+    def deplacer(self):
+        super(Ours, self).deplacer()
 
 
 class Cerf(Animal):
