@@ -10,6 +10,9 @@ class Vue:
         self.simroot = None
         self.seed = MAPGENERATOR.Seed()
         self.startButton = None
+        self.canva_frame = None
+        self.squares = []
+        self.res = 600
 
 
     def accueil(self):
@@ -99,12 +102,20 @@ class Vue:
         # frame pour la simulation
         Frame_simulation = Frame(self.simroot, bg="red")
         Frame_simulation.pack(pady=5, padx=5, fill=BOTH, expand=True)
-        canva_frame = Canvas(Frame_simulation, bg="blue")
-        canva_frame.pack(pady=5, padx=5, fill=BOTH, expand=True)
-        self.generate_map_on_canvas(canva_frame, False)
+        self.canva_frame = Canvas(Frame_simulation, bg="gray")
+        self.canva_frame.pack(pady=5, padx=5, fill=BOTH, expand=True)
+        self.generate_map_on_canvas(self.canva_frame, False)
+
+        res = self.res/3
+        for i in range(0, 3, 1):
+            for j in range(0, 3, 1):
+               self.canva_frame.create_rectangle(res*i, res*i, res*(j+1), res*(j+1), fill="", outline="", tags=str(i * j))
+
+    def on_click(self, event):
+        print("salut")
 
     def generate_map_on_canvas(self, canvas, new):
-        vue = MAPGENERATOR.Vue(600, canvas)
+        vue = MAPGENERATOR.Vue(self.res, canvas)
         if(new):
             self.seed.generate_map()
 
@@ -120,7 +131,8 @@ class Vue:
         label_title = Label(self.Frame_Preview_show_map, text="Map qui sera généré :", font=("Arial", 25), bg="#292929", fg="White")
         label_title.pack()
         self.Frame_Preview_show_map.pack(side=RIGHT)
-        self.generate_map_on_canvas(self.Frame_Preview_show_map, True)
+        canva = Canvas(self.Frame_Preview_show_map, width=self.res, height=self.res)
+        self.generate_map_on_canvas(canva, True)
 
     def simulation(self):
         pass

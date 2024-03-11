@@ -7,7 +7,6 @@ class Vue():
     def __init__(self, res, root):
         self.root = root
         self.width = res  #Resolution
-        self.canvas = tk.Canvas(self.root, width=self.width, height=self.width)
 
     def generate_square(self, size, array, biomes):
         square_size = self.width / size
@@ -42,7 +41,7 @@ class Vue():
                 elif 250 < row[j]:
                     color = "gray80"
 
-                self.canvas.create_rectangle(x1, y1, x2, y2, fill=color, outline="")
+                self.root.create_rectangle(x1, y1, x2, y2, fill=color, outline="")
                 x1 += square_size
                 x2 += square_size
                 limit = round(size * square_size)
@@ -53,19 +52,19 @@ class Vue():
                     x1 = 0
 
         self.draw_biome_limitaion(biomes)
-        self.canvas.pack()
+        self.root.pack()
 
     def draw_biome_limitaion(self, biomes):
         limits = (self.width/3)
         for i in range(1, 3, 1):
-            self.canvas.create_line(limits*i, 1, limits*i, self.width, fill="black")
+            self.root.create_line(limits*i, 1, limits*i, self.width, fill="black")
         for i in range(1, 3, 1):
-            self.canvas.create_line(1, limits*i, self.width, limits*i, fill="black")
+            self.root.create_line(1, limits*i, self.width, limits*i, fill="black")
 
         index = 0
         for i in range(0, 3, 1):
             for j in range(0, 3, 1):
-                self.canvas.create_text(limits*i + 35, limits*j + 6, text=biomes[index], fill="white")
+                self.root.create_text(limits*i + 35, limits*j + 6, text=biomes[index], fill="white")
                 index += 1
 
 
