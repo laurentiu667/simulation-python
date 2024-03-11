@@ -31,15 +31,16 @@ class Animal(ABC):
         self.x2 = None
         self.y2 = None
         self.champDeVision = None
-        self.faim = None
-        self.soif = None
-        self.vie = None
+        self.faim = 100
+        self.soif = 100
+        self.vie = 100
         self.Vitesse = None
-        self.energie = None
+        self.energie = 100
         self.sexe = None
         self.isAlive = None
         self.IsSleeping = False
         self.isFucking = False
+        self.isRunning = False
         self.canFuck = [2]  # les 2 date entre
         self.dureDeVieNaturelle = None
         self.age = None
@@ -65,12 +66,19 @@ class Animal(ABC):
 
     @abstractmethod
     def dormir(self):
+        # PAS OBULIER DE METTRE SOI DANS LE TICK OU A UNE AUTRE PLACE: IsSleeping = False
         self.IsSleeping = True
-        self.energie += 2
         if self.IsSleeping == True:
+            self.faim -= 1.67
+            self.soif -= 1.67
             self.isMoving = False
+            if self.energie < 100:
+                self.energie += 1.67
+            elif self.energie == 100:
+                self.energie += 0
         else:
             self.isMoving = True
+            self.IsSleeping = False
 
     @abstractmethod
     def deplacer(self, carre, step=1):
@@ -98,7 +106,19 @@ class Animal(ABC):
 
     @abstractmethod
     def calculerEndurance(self):
-        pass
+        if self.isMoving == True:
+            if self.isRunning == True:
+                self.endurance -= 6.68
+                self.energie -= 3.34
+                self.soif -= 5
+                self.faim -= 1
+            elif self.isRunning == False:
+                self.soif -= 1
+                self.faim -= 0.5
+                self.endurance -= 3.34
+                self.energie -= 1.67
+        else:
+            pass
 
     @abstractmethod
     def dureDeVie(self):
