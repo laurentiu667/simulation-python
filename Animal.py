@@ -3,7 +3,7 @@ from abc import ABC, abstractmethod  # biblioteque pour les classes abstraites d
 from helper import Helper as hp
 import random
 import tkinter as tk
-
+from PIL import Image, ImageTk
 
 # classe et methode abstraite
 
