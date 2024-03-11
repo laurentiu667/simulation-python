@@ -9,6 +9,7 @@ class Vue:
         self.root = Tk()
         self.simroot = None
         self.seed = MAPGENERATOR.Seed()
+        self.startButton = None
 
 
     def accueil(self):
@@ -18,30 +19,30 @@ class Vue:
         self.root.config(background="#292929")
         self.Frame_Preview_show_map = None
 
-        Frame_global = Frame(self.root, bg="#C7B7A3")
+        Frame_global = Frame(self.root, bg="#292929")
         Frame_global.pack(fill=BOTH, expand=True, side=LEFT)
 
         # Div du titre
-        frame_title = Frame(Frame_global, bg="#C7B7A3")
+        frame_title = Frame(Frame_global, bg="#292929")
         frame_title.pack(pady=10, padx=30, fill=BOTH)
-        label_title = Label(frame_title, text="Simulation", font=("Arial", 50), bg="#C7B7A3", fg="Black")
+        label_title = Label(frame_title, text="Simulation", font=("Arial", 50), bg="#292929", fg="gray")
         label_title.pack()
 
         # Div des boutons
-        frame_buttons = Frame(Frame_global, bg="#C7B7A3")
+        frame_buttons = Frame(Frame_global, bg="#292929")
         frame_buttons.pack(padx=30, fill=BOTH, expand=True)
 
 
-        settings_frame = Frame(frame_buttons, bg="white")
+        settings_frame = Frame(frame_buttons, bg="#292929")
         settings_frame.pack(pady=10, padx=30, fill=X)
-        label_settings = Label(settings_frame, text="Settings", font=("Arial", 20), bg="white", fg="Black", height=1)
+        label_settings = Label(settings_frame, text="Settings", font=("Arial", 20), bg="#292929", fg="White", height=1)
         label_settings.pack(padx=10)
 
 
-        groupeboutton = Frame(frame_buttons, bg="#C7B7A3")
+        groupeboutton = Frame(frame_buttons, bg="#292929")
         groupeboutton.pack(pady=10, padx=30, fill=BOTH, expand=True)
 
-        buttons_frame = Frame(groupeboutton, bg="#C7B7A3")
+        buttons_frame = Frame(groupeboutton, bg="#292929")
         buttons_frame.pack()
 
         # center les buttons
@@ -49,19 +50,19 @@ class Vue:
 
         for i in range(4):
             for j in range(5):
-                entry = Entry(buttons_frame, font=("Arial", 20), bg="#C7B7A3",
+                entry = Entry(buttons_frame, font=("Arial", 20), bg="gray25",
                                 fg="Black", width=9)
                 entry.grid(row=i, column=j, padx=3, pady=20)
 
         # DIV start
-        start_frame = Frame(Frame_global, bg="#C7B7A3")
+        start_frame = Frame(Frame_global, bg="#292929")
         start_frame.pack(fill=X, pady=10, padx=30)
 
-        start_preview = Button(start_frame, text="Aperçu", font=("Arial", 20), bg="#C7B7A3", fg="Black", command=self.new_window_preview)
-        start_button = Button(start_frame, text="Commencer", font=("Arial", 20), bg="#C7B7A3", fg="Black", command=self.new_window_start_sim)
+        start_preview = Button(start_frame, text="Aperçu", font=("Arial", 20), bg="#292929", fg="gray", command=self.new_window_preview)
+        self.startButton = Button(start_frame, text="Commencer", font=("Arial", 20), bg="#292929", fg="gray", command=self.new_window_start_sim, state=DISABLED)
 
         start_preview.grid(row=0, column=0, columnspan=1, sticky="nsew")
-        start_button.grid(row=0, column=1, columnspan=1, sticky="nsew")
+        self.startButton.grid(row=0, column=1, columnspan=1, sticky="nsew")
 
 
     def new_window_start_sim(self):
@@ -112,8 +113,12 @@ class Vue:
     def new_window_preview(self):
         if(self.Frame_Preview_show_map):
             self.Frame_Preview_show_map.destroy()
+        else:
+            self.startButton['state'] = NORMAL
 
-        self.Frame_Preview_show_map = Frame(self.root, bg="#C7B7A3")
+        self.Frame_Preview_show_map = Frame(self.root, bg="#292929")
+        label_title = Label(self.Frame_Preview_show_map, text="Map qui sera généré :", font=("Arial", 25), bg="#292929", fg="White")
+        label_title.pack()
         self.Frame_Preview_show_map.pack(side=RIGHT)
         self.generate_map_on_canvas(self.Frame_Preview_show_map, True)
 
