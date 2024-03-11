@@ -103,19 +103,17 @@ class Vue:
         Frame_simulation.pack(pady=5, padx=5, fill=BOTH, expand=True)
         canva_frame = Canvas(Frame_simulation, bg="blue")
         canva_frame.pack(pady=5, padx=5, fill=BOTH, expand=True)
-        Text = Label(canva_frame, text="Simulation", font=("Arial", 20), bg="green", fg="Black")
-        Text.pack(fill=BOTH, expand=True)
+        self.generate_map_on_canvas(canva_frame)
 
-
-    def new_window_preview(self):
-
-        vue = MAPGENERATOR.Vue(500, self.Frame_Preview_show_map)
-
+    def generate_map_on_canvas(self, canvas):
+        vue = MAPGENERATOR.Vue(500, canvas)
         seed = MAPGENERATOR.Seed()
         seed.generate_map()
         vue.generate_square(seed.diamond_square.heightmapWidth, seed.diamond_square.heightmap, seed.biomeOrder)
-
         vue.root.mainloop()
+
+    def new_window_preview(self):
+        self.generate_map_on_canvas(self.Frame_Preview_show_map)
 
     def simulation(self):
         pass
