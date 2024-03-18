@@ -4,12 +4,13 @@ import tkinter as tk
 import time
 
 class Vue():
-    def __init__(self, res, root):
+    def __init__(self, root):
         self.root = root
-        self.width = res  #Resolution
+        self.width = None
 
-    def generate_square(self, size, array, biomes):
-        square_size = self.width / size
+    def generate_square(self, size, array, biomes, res):
+        self.width = res
+        square_size = res / size
         x1 = 0
         y1 = 0
         x2 = square_size
@@ -116,10 +117,11 @@ class Diamond_square:
             self.tileWidth //= 2
 
 class Seed():
-    def __init__(self):
+    def __init__(self, waterPerc):
         self.diamond_square = None
         self.mapValide = False
         self.biomeOrder = []
+        self.WaterPerc = waterPerc
         self.seed = self.get_seed()
         self.biomeDict = {1: "ForetFeuillu",
                           2: "ForetFeuillu",
@@ -154,7 +156,7 @@ class Seed():
                     water += 1
         percentage = ((water/total)*100)
 
-        if(percentage > 20 and percentage < 30):
+        if percentage < (self.WaterPerc + 5) and percentage > (self.WaterPerc - 5):
             return True
         else:
             return False

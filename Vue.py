@@ -8,16 +8,16 @@ class Vue:
         self.model = model
         self.root = Tk()
         self.simroot = None
-        self.seed = MAPGENERATOR.Seed()
+        self.seed = None
         self.startButton = None
         self.canva_frame = None
         self.squares = []
-        self.res = 600
+        self.res = 0
 
 
     def accueil(self):
         self.root.title("Accueil")
-        self.root.geometry("1400x700")
+        self.root.geometry("1300x700")
         self.root.resizable(False, False)
         self.root.config(background="#292929")
         self.Frame_Preview_show_map = None
@@ -31,31 +31,41 @@ class Vue:
         label_title = Label(frame_title, text="Simulation", font=("Arial", 50), bg="#292929", fg="gray")
         label_title.pack()
 
-        # Div des boutons
+        # Div des Configurations
         frame_buttons = Frame(Frame_global, bg="#292929")
-        frame_buttons.pack(padx=30, fill=BOTH, expand=True)
+        frame_buttons.pack(padx=30, fill=BOTH)
 
+        def valider():
+            label.config(text=clicked.get())
+            label2.config(text=clicked2.get())
+            self.res = (mapSize[clicked.get()])
+            water = waterPerc[clicked2.get()]
 
-        settings_frame = Frame(frame_buttons, bg="#292929")
-        settings_frame.pack(pady=10, padx=30, fill=X)
-        label_settings = Label(settings_frame, text="Settings", font=("Arial", 20), bg="#292929", fg="White", height=1)
-        label_settings.pack(padx=10)
+            self.seed = MAPGENERATOR.Seed(water)
+            self.startButton['state'] = DISABLED
 
+        mapSize = {"150x150" : 150, "300x300" : 300 , "600x600" : 600, "900x900" : 900, "1200x1200" : 1200, "1500x1500" : 1500, "1800x1800" : 1800}
+        clicked = StringVar()
+        clicked.set("300x300")
+        drop = OptionMenu(frame_buttons, clicked, *mapSize)
+        labelMapDetail = Label(frame_buttons, text="Grosseur de la Carte")
+        label = Label(frame_buttons, text="")
+        labelMapDetail.pack()
+        drop.pack()
+        label.pack()
 
-        groupeboutton = Frame(frame_buttons, bg="#292929")
-        groupeboutton.pack(pady=10, padx=30, fill=BOTH, expand=True)
+        waterPerc = {"5%": 5, "10%": 10, "15%": 15, "20%": 20, "25%": 25, "30%": 30, "35%": 35}
+        clicked2 = StringVar()
+        clicked2.set("10%")
+        drop2 = OptionMenu(frame_buttons, clicked2, *waterPerc)
+        labelWater = Label(frame_buttons, text="Pourcentage d'eau")
+        label2 = Label(frame_buttons, text="")
+        labelWater.pack()
+        drop2.pack()
+        label2.pack()
 
-        buttons_frame = Frame(groupeboutton, bg="#292929")
-        buttons_frame.pack()
-
-        # center les buttons
-        buttons_frame.place(relx=0.5, rely=0.5, anchor=CENTER)
-
-        for i in range(4):
-            for j in range(5):
-                entry = Entry(buttons_frame, font=("Arial", 20), bg="gray25",
-                                fg="Black", width=9)
-                entry.grid(row=i, column=j, padx=3, pady=20)
+        button = Button(frame_buttons, text="Valider", command=valider)
+        button.pack()
 
         # DIV start
         start_frame = Frame(Frame_global, bg="#292929")
@@ -72,7 +82,7 @@ class Vue:
         self.root.destroy()
         self.simroot = Tk()
         self.simroot.title("Accueil")
-        self.simroot.geometry("900x700")
+        self.simroot.geometry("1000x1700")
         self.simroot.resizable(False, False)
         self.simroot.config(background="#561C24")
 
@@ -100,39 +110,40 @@ class Vue:
         button_fastforward_frame.pack(side=LEFT, padx=5, pady=5, fill=BOTH, expand=True)
 
         # frame pour la simulation
-        Frame_simulation = Frame(self.simroot, bg="red")
+        Frame_simulation = Frame(self.simroot, bg="gray50")
         Frame_simulation.pack(pady=5, padx=5, fill=BOTH, expand=True)
         self.canva_frame = Canvas(Frame_simulation, bg="gray")
         self.canva_frame.pack(pady=5, padx=5, fill=BOTH, expand=True)
-        self.generate_map_on_canvas(self.canva_frame, False)
+        self.generate_map_on_canvas(self.canva_frame, False, 600)
 
         res = self.res/3
         for i in range(0, 3, 1):
             for j in range(0, 3, 1):
                self.canva_frame.create_rectangle(res*i, res*i, res*(j+1), res*(j+1), fill="", outline="", tags=str(i * j))
 
+
     def on_click(self, event):
         print("salut")
 
-    def generate_map_on_canvas(self, canvas, new):
-        vue = MAPGENERATOR.Vue(self.res, canvas)
+    def generate_map_on_canvas(self, canvas, new, grosseur):
+        vue = MAPGENERATOR.Vue(canvas)
         if(new):
             self.seed.generate_map()
 
-        vue.generate_square(self.seed.diamond_square.heightmapWidth, self.seed.diamond_square.heightmap, self.seed.biomeOrder)
+        vue.generate_square(self.seed.diamond_square.heightmapWidth, self.seed.diamond_square.heightmap, self.seed.biomeOrder, grosseur)
 
     def new_window_preview(self):
+        self.startButton['state'] = NORMAL
+        
         if(self.Frame_Preview_show_map):
             self.Frame_Preview_show_map.destroy()
-        else:
-            self.startButton['state'] = NORMAL
 
         self.Frame_Preview_show_map = Frame(self.root, bg="#292929")
         label_title = Label(self.Frame_Preview_show_map, text="Map qui sera généré :", font=("Arial", 25), bg="#292929", fg="White")
         label_title.pack()
         self.Frame_Preview_show_map.pack(side=RIGHT)
-        canva = Canvas(self.Frame_Preview_show_map, width=self.res, height=self.res)
-        self.generate_map_on_canvas(canva, True)
+        canva = Canvas(self.Frame_Preview_show_map, width=400, height=400)
+        self.generate_map_on_canvas(canva, True, 400)
 
     def simulation(self):
         pass
