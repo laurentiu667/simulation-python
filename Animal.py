@@ -11,7 +11,7 @@ import time
 # classe et methode abstraite
 
 class Animal(ABC):
-    def __init__(self, canvas, vitesse):
+    def __init__(self, canvas, vitesse, heightMap):
         self.y1 = None
         self.x1 = None
         self.x2 = None
@@ -42,6 +42,7 @@ class Animal(ABC):
         self.y = random.randint(0, 500)
         self.isMoving = True
         self.minute = 0
+        self.heightMap = heightMap  # Permet de savoir si il y a de l'eau, Recoit le heightmap dans MAPGENERATOR -> Sub_Section_Generator -> self.UpscaledMap
 
     @abstractmethod
     def manger(self):

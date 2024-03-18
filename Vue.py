@@ -43,7 +43,7 @@ class Vue:
             self.res = (mapSize[clicked.get()])
             water = waterPerc[clicked2.get()]
 
-            self.seed = MAPGENERATOR.Seed(water)
+            self.seed = MAPGENERATOR.Seed(water)  #SEED GENERATES HERE!!!!!!!!
             self.startButton['state'] = DISABLED
 
         # SCROLL DOWN MENU
@@ -135,10 +135,10 @@ class Vue:
                 self.carre = 8
             elif 399 < event.x < 599 and 399 < event.y < 599:
                 self.carre = 9
-            labelCellSelect.config(text=self.carre)
+            labelCellSelect.config(text="Cellule choisie : " + str(self.carre))
 
         # frame pour la simulation
-        labelCellSelect = Label(self.simroot)
+        labelCellSelect = Label(self.simroot, font=("Arial", 30), fg="white", bg="#292929")
         labelCellSelect.pack(padx=20, expand=True, anchor=W)
 
         self.canva_frame_general = Canvas(self.simroot, bg="#292929", width=self.mapGeneral, height=self.mapGeneral)
