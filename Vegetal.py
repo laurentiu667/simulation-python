@@ -45,7 +45,7 @@ class Vegetal(ABC):
     def updateCapaciteFruit(self):
         None
         
-class Plante(Vegetal):
+class PlanteComestible(Vegetal):
     def __init__(self):
         super().__init__()
         self.capaciteFruit = 5
@@ -80,9 +80,13 @@ class Fruit(ABC):
         self.energie = None
         
         
-class PlanteFruit(Fruit):
+class PlanteFruit(Fruit): #plus tard pomme,bleuet 
     def __init__(self):
         super().__init__()
         self.energie = random.randint(10, 20)
 
-   
+class PlanteNonComestible(Vegetal):
+    def __init__(self):
+        super().__init__()
+        
+        
