@@ -3,7 +3,10 @@ from abc import ABC, abstractmethod  # biblioteque pour les classes abstraites d
 from helper import Helper as hp
 import random
 import tkinter as tk
-from PIL import Image, ImageTk
+# from PIL import Image, ImageTk
+import datetime
+import time
+
 
 # classe et methode abstraite
 
@@ -38,11 +41,11 @@ class Animal(ABC):
         self.x = random.randint(0, 500)  # changer les valeurs de déplacement en fonction de la map
         self.y = random.randint(0, 500)
         self.isMoving = True
+        self.minute = 0
 
-
-@abstractmethod
-def manger(self):
-    self.energie += 2
+    @abstractmethod
+    def manger(self):
+        self.energie += 2
 
     @abstractmethod
     def boire(self):
@@ -67,6 +70,26 @@ def manger(self):
         else:
             self.isMoving = True
             self.IsSleeping = False
+
+    @abstractmethod
+    def motivation(self):
+        rnd = random.Random()
+        if self.faim <= 50:
+            self.isStarvings = True
+            return self.isStarvings
+        elif self.soif <= 50:
+            self.isAssoife = True
+            return self.isAssoife
+        elif rnd <= 0.25:
+            self.isHorny = True
+            return self.isHorny
+        elif rnd > 0.25 and rnd <= 0.50:
+            self.isStarvings = True
+            return self.isStarvings
+        elif rnd > 0.50 and rnd <= 0.75:
+            self.isAssoife = True
+            return self.isAssoife
+        # motivation pour dormir
 
     @abstractmethod
     def deplacer(self):
@@ -116,7 +139,57 @@ def manger(self):
         print(self.dureDeVie)
 
     @abstractmethod
+    def gererTick(self):
+        pass
+
+    @abstractmethod
     def perceptionTemps(self):
+        start_time = time.time()
+
+        while True:
+            current_time = time.time() - start_time
+            minutes, secondes = divmod(current_time, 60)
+
+            print("Minutes :", int(minutes))
+            print("Secondes :", int(secondes))
+
+            if minutes >= 4:
+                minutes = 0
+
+            if int(secondes) == 0:
+                minutes += 1
+
+            if int(secondes) >= 0 and int(secondes) <= 20:
+
+                self.isStarving
+
+                # deplacer(self);
+                # chasser
+                # manger
+                # boire
+
+            elif int(secondes) > 20 and int(secondes) < 60:
+                pass
+                # deplacer(self);
+                # reproduction
+                # trouver femme
+            elif minutes == 1 and int(secondes) <= 20:
+                pass
+                # deplacer(self);
+                # chasser
+                # manger
+                # boire
+            elif minutes == 1 and int(secondes) > 20 and int(secondes) < 60:
+                pass
+                # deplacer(self);
+                # reproduction
+                # trouver femme
+            elif minutes >= 2 and minutes <= 4:
+                pass
+                # dort
+
+    @abstractmethod
+    def chasser(self):
         pass
 
 
@@ -131,6 +204,8 @@ class Ours(Animal):
         canvas = tk.Canvas()
         ours = Ours(canvas)
         ours.deplacer()
+        if self.isStarvings == true:
+            ours.faim
 
     def hibernation(self):
         pass
