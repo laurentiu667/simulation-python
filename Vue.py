@@ -10,7 +10,7 @@ class Vue:
         self.simroot = None
         self.seed = None
         self.startButton = None
-        self.canva_frame = None
+        self.canva_frame_general = None
         self.squares = []
         self.res = 0
 
@@ -33,39 +33,44 @@ class Vue:
 
         # Div des Configurations
         frame_buttons = Frame(Frame_global, bg="#292929")
-        frame_buttons.pack(padx=30, fill=BOTH)
+        frame_buttons.pack(padx=30, anchor=W)
 
+        # Confirmer les changement et les appliquées
         def valider():
             label.config(text=clicked.get())
             label2.config(text=clicked2.get())
+
             self.res = (mapSize[clicked.get()])
             water = waterPerc[clicked2.get()]
 
             self.seed = MAPGENERATOR.Seed(water)
             self.startButton['state'] = DISABLED
 
+        # SCROLL DOWN MENU
         mapSize = {"150x150" : 150, "300x300" : 300 , "600x600" : 600, "900x900" : 900, "1200x1200" : 1200, "1500x1500" : 1500, "1800x1800" : 1800}
         clicked = StringVar()
         clicked.set("300x300")
-        drop = OptionMenu(frame_buttons, clicked, *mapSize)
-        labelMapDetail = Label(frame_buttons, text="Grosseur de la Carte")
-        label = Label(frame_buttons, text="")
-        labelMapDetail.pack()
-        drop.pack()
-        label.pack()
+        drop = OptionMenu(frame_buttons, clicked, *mapSize, )
+        drop.config(bg="#292929", fg="WHITE")
+        labelMapDetail = Label(frame_buttons, text="Grosseur de la Carte", bg="#292929", fg="WHITE", font=("Arial", 15))
+        label = Label(frame_buttons, text="", bg="#292929", font=("Arial", 15), fg="WHITE")
+        labelMapDetail.pack(anchor=W)
+        drop.pack(anchor=W)
+        label.pack(anchor=W, ipady=20)
 
         waterPerc = {"5%": 5, "10%": 10, "15%": 15, "20%": 20, "25%": 25, "30%": 30, "35%": 35}
         clicked2 = StringVar()
         clicked2.set("10%")
         drop2 = OptionMenu(frame_buttons, clicked2, *waterPerc)
-        labelWater = Label(frame_buttons, text="Pourcentage d'eau")
-        label2 = Label(frame_buttons, text="")
-        labelWater.pack()
-        drop2.pack()
-        label2.pack()
+        drop2.config(bg="#292929", fg="WHITE")
+        labelWater = Label(frame_buttons, text="Pourcentage d'eau", bg="#292929", fg="WHITE", font=("Arial", 15))
+        label2 = Label(frame_buttons, text="", bg="#292929", font=("Arial", 15), fg="WHITE")
+        labelWater.pack(anchor=W)
+        drop2.pack(anchor=W)
+        label2.pack(anchor=W, ipady=20)
 
-        button = Button(frame_buttons, text="Valider", command=valider)
-        button.pack()
+        button = Button(frame_buttons, text="Valider", command=valider, bg="#292929", fg="WHITE", font=("Arial", 15))
+        button.pack(anchor=W, pady=20)
 
         # DIV start
         start_frame = Frame(Frame_global, bg="#292929")
@@ -82,44 +87,65 @@ class Vue:
         self.root.destroy()
         self.simroot = Tk()
         self.simroot.title("Accueil")
-        self.simroot.geometry("1000x1700")
+        self.simroot.geometry("1500x800")
         self.simroot.resizable(False, False)
-        self.simroot.config(background="#561C24")
+        self.simroot.config(background="#292929")
+        self.mapGeneral = 600
+        self.carre = 0
 
         # frame pour les conditions meteo et heure
-        conditions_frame = Frame(self.simroot, bg="white", height=50)
+        conditions_frame = Frame(self.simroot, bg="#292929", height=50)
         conditions_frame.pack(pady=5, padx=5,fill=X)
 
         # frame pour les conditions meteo
-        conditions_heures_frame = Frame(conditions_frame, bg="blue", height=40)
+        conditions_heures_frame = Frame(conditions_frame, bg="gray50", height=40)
         conditions_heures_frame.pack(side=LEFT, padx=5, pady=5, fill=BOTH, expand=True)
 
-        conditions_meteo_frame = Frame(conditions_frame, bg="blue")
+        conditions_meteo_frame = Frame(conditions_frame, bg="gray50")
         conditions_meteo_frame.pack(side=LEFT, padx=5, pady=5, fill=BOTH, expand=True)
 
-        conditions_precipitation_frame = Frame(conditions_frame, bg="blue")
+        conditions_precipitation_frame = Frame(conditions_frame, bg="gray50")
         conditions_precipitation_frame.pack(side=LEFT, padx=5, pady=5, fill=BOTH, expand=True)
 
-        button_pause_frame = Frame(conditions_frame, bg="blue")
+        button_pause_frame = Frame(conditions_frame, bg="gray50")
         button_pause_frame.pack(side=LEFT, padx=5, pady=5, fill=BOTH, expand=True)
 
-        button_arrêter_frame = Frame(conditions_frame, bg="blue")
+        button_arrêter_frame = Frame(conditions_frame, bg="gray50")
         button_arrêter_frame.pack(side=LEFT, padx=5, pady=5, fill=BOTH, expand=True)
 
-        button_fastforward_frame = Frame(conditions_frame, bg="blue")
+        button_fastforward_frame = Frame(conditions_frame, bg="gray50")
         button_fastforward_frame.pack(side=LEFT, padx=5, pady=5, fill=BOTH, expand=True)
 
-        # frame pour la simulation
-        Frame_simulation = Frame(self.simroot, bg="gray50")
-        Frame_simulation.pack(pady=5, padx=5, fill=BOTH, expand=True)
-        self.canva_frame = Canvas(Frame_simulation, bg="gray")
-        self.canva_frame.pack(pady=5, padx=5, fill=BOTH, expand=True)
-        self.generate_map_on_canvas(self.canva_frame, False, 600)
+        def show(event):
+            if 0 < event.x < 199 and 0 < event.y < 199:
+                self.carre = 1
+            elif 199 < event.x < 399 and 0 < event.y < 199:
+                self.carre = 2
+            elif 399 < event.x < 599 and 0 < event.y < 199:
+                self.carre = 3
+            elif 0 < event.x < 199 and 199 < event.y < 399:
+                self.carre = 4
+            elif 199 < event.x < 399 and 199 < event.y < 399:
+                self.carre = 5
+            elif 399 < event.x < 599 and 199 < event.y < 399:
+                self.carre = 6
+            elif 0 < event.x < 199 and 399 < event.y < 599:
+                self.carre = 7
+            elif 199 < event.x < 399 and 399 < event.y < 599:
+                self.carre = 8
+            elif 399 < event.x < 599 and 399 < event.y < 599:
+                self.carre = 9
+            labelCellSelect.config(text=self.carre)
 
-        res = self.res/3
-        for i in range(0, 3, 1):
-            for j in range(0, 3, 1):
-               self.canva_frame.create_rectangle(res*i, res*i, res*(j+1), res*(j+1), fill="", outline="", tags=str(i * j))
+        # frame pour la simulation
+        labelCellSelect = Label(self.simroot)
+        labelCellSelect.pack(padx=20, expand=True, anchor=W)
+
+        self.canva_frame_general = Canvas(self.simroot, bg="#292929", width=self.mapGeneral, height=self.mapGeneral)
+        self.canva_frame_general.pack(padx=20,expand=True, anchor=W)
+        self.generate_map_on_canvas(self.canva_frame_general, False, self.mapGeneral)
+        self.canva_frame_general.bind("<Button-1>", show)
+
 
 
     def on_click(self, event):
@@ -134,11 +160,11 @@ class Vue:
 
     def new_window_preview(self):
         self.startButton['state'] = NORMAL
-        
+
         if(self.Frame_Preview_show_map):
             self.Frame_Preview_show_map.destroy()
 
-        self.Frame_Preview_show_map = Frame(self.root, bg="#292929")
+        self.Frame_Preview_show_map = Frame(self.root, bg="#292929", borderwidth=10)
         label_title = Label(self.Frame_Preview_show_map, text="Map qui sera généré :", font=("Arial", 25), bg="#292929", fg="White")
         label_title.pack()
         self.Frame_Preview_show_map.pack(side=RIGHT)
