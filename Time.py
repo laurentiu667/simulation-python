@@ -1,39 +1,57 @@
+from datetime import datetime, timedelta
+import threading
 import time
-from datetime import datetime
-
-# Classe pour suivre le temps écoulé et effectuer toute manipulation le concernant
-# pourrait inclure la gestion  d'actualisation de l'ecran (fps)
 
 class Time:
+    LOCK = threading.Lock() # Verrou  n'autorise qu'un seul repre temporelle 
     def __init__(self):
-        self.start_time = None
+        self.date_initiale = self.date = datetime(1, 1, 1, 0, 0, 0)
+        self.thread = threading.Thread(target=self.update_timer).start()  # Démarre le thread de mise à jour du timer
 
-    def set_start_time(self, time=None):
-        """Définit le temps de départ. Si aucun temps n'est fourni, utilise l'heure actuelle."""
-        if time is None:
-            self.start_time = datetime.now()
+    def update_timer(self):
+        """Avance le temps d'une seconde."""
+        with Time.LOCK:  # Acquiert le verrou
+            while True:
+                self.date += timedelta(seconds=1)
+                time.sleep(1)
+        
+    def get_heure(self):
+        return self.date.hour
+
+    def get_minute(self):
+        return self.date.minute
+
+    def get_seconde(self):
+        return self.date.second
+
+    def get_jour(self):
+        return self.date.day
+
+    def get_mois(self):
+        return self.date.month
+
+    def get_annee(self):
+        return self.date.year
+    
+    def temps_ecoule(self, format='secondes'):
+        """Retourne le temps total écoulé depuis l'initialisation de l'objet."""
+        temps_ecoule = self.date - self.date_initiale
+        total_seconds = temps_ecoule.total_seconds()
+
+        if format == 'secondes':
+            return total_seconds
+        elif format == 'minutes':
+            return total_seconds / 60
+        elif format == 'heures':
+            return total_seconds / 3600
+        elif format == 'jours':
+            return total_seconds / (24 * 3600)
+        elif format == 'mois':
+            return total_seconds / (30 * 24 * 3600)
+        elif format == 'annees':
+            return total_seconds / (365 * 24 * 3600)
         else:
-            self.start_time = time
+            return "Format non reconnu"
 
-    def time_elapsed(self, end_time=None):
-        """Calcule le temps écoulé depuis le temps de départ jusqu'à l'heure actuelle ou un temps donné."""
-        if self.start_time is None:
-            raise ValueError("Le temps de départ n'a pas été défini.")
-        
-        if end_time is None:
-            end_time = datetime.now()
-        
-        elapsed = end_time - self.start_time
-        return elapsed
-
-# Exemple d'utilisation
-time_tracker = Time()
-
-# Définit le temps de départ à maintenant
-time_tracker.set_start_time()
-
-# Calcul et affichage du temps écoulé après un certain délai (par exemple, après quelques secondes)
-time.sleep(5)  # Attend 5 secondes
-
-elapsed_time = time_tracker.time_elapsed()
-print(f"Temps écoulé: {elapsed_time}")
+    def __str__(self): # permet de print(self.temps) directment le temps
+        return self.date.strftime("%d/%m/%Y %H:%M:%S")
