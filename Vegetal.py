@@ -9,7 +9,8 @@ class Vegetal(ABC):
         self.croissance = None
         self.capaciteFruit = None
         self.coefCroissance = None
-        
+        self.humidite = 0
+        self.photosynthese  = 0
 
     def perceptionTemps():
         starttime = time.time()
@@ -29,19 +30,18 @@ class Vegetal(ABC):
             if int(secondes) == 0:
                 minutes += 1
     
-    @abstractmethod   
+   
     def ajoutFruit(self):
         None
     
-    @abstractmethod
+   
     def fruitMange(self):
         None
     
-    @abstractmethod
+  
     def croitre(self):
         None
-        
-    @abstractmethod
+ 
     def updateCapaciteFruit(self):
         None
         
@@ -88,5 +88,8 @@ class PlanteFruit(Fruit): #plus tard pomme,bleuet
 class PlanteNonComestible(Vegetal):
     def __init__(self):
         super().__init__()
-        
+
+class Sapin(Vegetal):
+    def __init__(self):
+        super().__init__()
         

@@ -11,12 +11,14 @@ import time
 # classe et methode abstraite
 
 class Animal(ABC):
-    def __init__(self, canvas, vitesse, heightMap):
+    # canvas, vitesse, heightMap
+    def __init__(self):
         self.y1 = None
         self.x1 = None
         self.x2 = None
         self.y2 = None
         self.champDeVision = None
+        self.cacher = False
         self.faim = 100
         self.soif = 100
         self.vie = 100
@@ -36,13 +38,13 @@ class Animal(ABC):
         self.diete = None
         self.social = None
         self.position = None
-        self.canvas = canvas
-        self.vitesse = vitesse
+        # self.canvas = canvas
+        # self.vitesse = vitesse
         self.x = random.randint(0, 500)  # changer les valeurs de déplacement en fonction de la map
         self.y = random.randint(0, 500)
         self.isMoving = True
         self.minute = 0
-        self.heightMap = heightMap  # Permet de savoir si il y a de l'eau, Recoit le heightmap dans MAPGENERATOR -> Sub_Section_Generator -> self.UpscaledMap
+        # self.heightMap = heightMap  # Permet de savoir si il y a de l'eau, Recoit le heightmap dans MAPGENERATOR -> Sub_Section_Generator -> self.UpscaledMap
 
     def manger(self):
         self.energie += 2
@@ -209,7 +211,7 @@ class Ours(Animal):
 
 class Cerf(Animal):
     def __init__(self):
-        super().__init__(self)
+        super().__init__()
 
         # Attribus respectif
 
