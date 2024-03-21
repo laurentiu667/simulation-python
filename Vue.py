@@ -15,6 +15,7 @@ class Vue:
         self.res = 0
 
 
+
     def accueil(self):
         self.root.title("Accueil")
         self.root.geometry("1300x700")
@@ -155,6 +156,7 @@ class Vue:
         vue = MAPGENERATOR.Vue(canvas)
         if(new):
             self.seed.generate_map()
+
 
         vue.generate_square(self.seed.diamond_square.heightmapWidth, self.seed.diamond_square.heightmap, self.seed.biomeOrder, grosseur)
 

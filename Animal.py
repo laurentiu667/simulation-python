@@ -48,6 +48,7 @@ class Animal(ABC):
     def manger(self):
         self.energie += 2
 
+
     @abstractmethod
     def boire(self):
         self.soif += 2
@@ -207,6 +208,8 @@ class Ours(Animal):
         ours.deplacer()
         if self.isStarvings == true:
             ours.faim
+
+
 
     def hibernation(self):
         pass
