@@ -17,13 +17,13 @@ class Environnement:
         self.isTempetes_tropicale = None
         self.isNuageux = None
         self.isSoleil = None
-        self.ours = Ours()
+        self.animal = Animal.Cerf()
 
 
 
 
     def CatastropheMeteorologique(self):
-        print(self.ours.soif)
+        print(self.animal.soif)
 
 
         def orages(self):

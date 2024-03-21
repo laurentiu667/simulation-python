@@ -44,20 +44,16 @@ class Animal(ABC):
         self.minute = 0
         self.heightMap = heightMap  # Permet de savoir si il y a de l'eau, Recoit le heightmap dans MAPGENERATOR -> Sub_Section_Generator -> self.UpscaledMap
 
-    @abstractmethod
     def manger(self):
         self.energie += 2
 
 
-    @abstractmethod
     def boire(self):
         self.soif += 2
 
-    @abstractmethod
     def mourir(self):
         self.isAlive = False
 
-    @abstractmethod
     def dormir(self):
         # PAS OBULIER DE METTRE SOI DANS LE TICK OU A UNE AUTRE PLACE: IsSleeping = False
         self.IsSleeping = True
@@ -73,7 +69,6 @@ class Animal(ABC):
             self.isMoving = True
             self.IsSleeping = False
 
-    @abstractmethod
     def motivation(self):
         rnd = random.Random()
         if self.faim <= 50:
@@ -93,7 +88,6 @@ class Animal(ABC):
             return self.isAssoife
         # motivation pour dormir
 
-    @abstractmethod
     def deplacer(self):
         if self.isMoving:
             dest_x = self.x + random.choice([-self.vitesse, self.vitesse])
@@ -102,11 +96,10 @@ class Animal(ABC):
             self.x, self.y = dest_x, dest_y
             self.canvas.update()
 
-    @abstractmethod
+    
     def repro(self):
         pass
 
-    @abstractmethod
     def isStarving(self):
         self.faim -= 0.05
         if self.faim <= 70:
@@ -116,7 +109,6 @@ class Animal(ABC):
             if self.vie == 0:
                 self.isAlive = False
 
-    @abstractmethod
     def calculerEndurance(self):
         if self.isMoving == True:
             if self.isRunning == True:
@@ -132,7 +124,6 @@ class Animal(ABC):
         else:
             pass
 
-    @abstractmethod
     def calculerDureDeVie(self):
         vieMoyen = 30
         marge_erreur = 15
@@ -140,11 +131,11 @@ class Animal(ABC):
         self.dureDeVie = vieMoyen - erreur
         print(self.dureDeVie)
 
-    @abstractmethod
+    
     def gererTick(self):
         pass
 
-    @abstractmethod
+    
     def perceptionTemps(self):
         start_time = time.time()
 
@@ -190,10 +181,8 @@ class Animal(ABC):
                 pass
                 # dort
 
-    @abstractmethod
     def chasser(self):
         pass
-
 
 class Ours(Animal):
     def __init__(self, canvas):
