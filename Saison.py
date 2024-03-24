@@ -1,0 +1,60 @@
+from abc import ABC
+
+
+class Saison(ABC):
+    def __init__(self, temp, nom):
+        self.nom = nom
+        self.tempSaisonniere = temp
+
+    def __str__(self):
+        return self.nom
+       
+
+
+
+class Ete(Saison):
+    def __init__(self):
+        super().__init__(15,'été')
+        
+class Hiver(Saison):
+    def __init__(self):
+        super().__init__(-15,'hiver')
+        
+class Printemps(Saison):
+    def __init__(self):
+        super().__init__(5,'printemps')
+
+class Automne(Saison):
+    def __init__(self):
+        super().__init__(5,'automne')
+        
+    # def __init__(self, name, temperature, precipitation, humdite, dominant_flora, dominant_fauna):
+    #     self.name = name
+    #     self.temperature = temperature
+    #     self.precipitation = precipitation
+    #     self.dominant_flora = dominant_flora
+    #     self.dominant_fauna = dominant_fauna
+    #     self.humidite = humdite
+    
+    # def __init__(self):
+    #     self.saison = Saison("Ete", 0, 0, "incounnu", "incounnu")
+    #     self.biome = Biome("Ete", False, "incounnu", 0, 0, "incounnu", "incounnu")
+
+    # def comportement_estivale(self, temp, precip, humidite):
+    #     if self.saison.temperature > 30:
+    #         if self.saison.precipitation != 0: 
+    #             for animal in self.testAnimaux:
+    #                 animal.soif -= animal.soif * 0.15
+    #                 animal.energie -= animal.energie * 0.05
+    #             if self.saison.humidite > 50:
+    #                 for vegetal in self.testVegetaux:
+    #                     vegetal.humidite += 20
+    #         elif self.saison.precipitation > 0:
+    #             for animal in self.testAnimaux:
+    #                 animal.soif -= animal.soif * 0.05
+    #             for vegetal in self.testVegetaux:
+    #                 vegetal.humidite += 15  
+    #             if self.saison.humidite > 75:
+    #                 for vegetal in self.testVegetaux:
+    #                     vegetal.photosynthese += 10 
+    

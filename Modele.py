@@ -1,5 +1,5 @@
 import Environnement
-import Time
+import Timer
 
 class Modele:
     def __init__(self, parent):
@@ -9,7 +9,7 @@ class Modele:
         #self.debuterTemps() #initialisation du temps seulement si c'est le model final
         
     def debuterTemps(self):
-        self.date = Time() #class codé en sorte qu'il n'y ai qu'un seul repere temporelle
+        self.date = Timer() #class codé en sorte qu'il n'y ai qu'un seul repere temporelle
         
     def stopperTemps(self):
         self.date.thread.stop() #stopper la mise a jour du repere temporelle pour pouvoir en creer un autre plus tard

@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 import threading
 import time
 
-class Time:
+class Timer:
     LOCK = threading.Lock() # Verrou  n'autorise qu'un seul repre temporelle 
     def __init__(self):
         self.date_initiale = self.date = datetime(1, 1, 1, 0, 0, 0)
@@ -10,7 +10,7 @@ class Time:
 
     def update_timer(self):
         """Avance le temps d'une seconde."""
-        with Time.LOCK:  # Acquiert le verrou
+        with Timer.LOCK:  # Acquiert le verrou
             while True:
                 self.date += timedelta(seconds=1)
                 time.sleep(1)
