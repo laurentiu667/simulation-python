@@ -23,6 +23,13 @@ class Vu:
         self.biome_titre.pack(side='left')
         self.biome_info = Label(self.biome_frame, text=self.env.biome)
         self.biome_info.pack(side='left')
+        
+        self.saison_frame = Frame(self.root, background="red")
+        self.saison_frame.pack()
+        self.saison_titre = Label(self.saison_frame, text="Saison :")  # Change here
+        self.saison_titre.pack(side='left')
+        self.saison_info = Label(self.saison_frame, text=self.env.saison)  # And here
+        self.saison_info.pack(side='left')
 
         self.date_frame = Frame(self.root)
         self.date_frame.pack()
@@ -36,7 +43,6 @@ class Vu:
         self.heure_titre = Label(self.heure_frame, text="Heure :")
         self.heure_titre.pack(side='left')
         self.heure_info = Label(self.heure_frame, text=self.env.date.get_time())
-        print(self.env.date.get_time())
         self.heure_info.pack(side='left')
 
         self.isSoleil_frame = Frame(self.root)
@@ -59,11 +65,14 @@ class Vu:
         self.humidite_titre.pack(side='left')
         self.humidite_info = Label(self.humidite_frame, text=f"{self.env.humiditeActuel*100}" + " %")
         self.humidite_info.pack(side='left')
+        
+        
 
     def update(self):
         self.env.updateEnv()
         
         self.biome_info.config(text=self.env.biome)
+        self.saison_info.config(text=self.env.saison)
         self.date_info.config(text=self.env.date.get_date())
         self.heure_info.config(text=self.env.date.get_time())
         self.temperature_info.config(text=self.env.temperatureActuel)
@@ -71,8 +80,6 @@ class Vu:
         
         self.root.update()
         self.root.after(1000, self.update)
-        
-    
 
 
 class Environnement:
@@ -82,7 +89,9 @@ class Environnement:
         self.humiditeMoyenne = None
         self.humiditeActuel = None
         self.ensoleillementMoyen = None
+        self.ensoleillementActuel = None
         self.precipitationMoyenne = None
+        self.impactEnsoleillement = None
         self.biome = PrairiesEtSavanes()
         self.saison = Ete()
         self.statEnv()
@@ -94,20 +103,45 @@ class Environnement:
         self.humiditeMoyenne = 0.73
         self.ensoleillementMoyen = 0.6
         self.precipitationMoyenne = 978 #en mm/an
+        self.impactEnsoleillement = 5
         self.calculTemperature()
         
     def updateEnv(self):
+        self.liaisonSaisonMois()
         self.calculTemperature()
         
+    def calculerEnsoleillement(self):
+        self.ensoleillementActuel = statistics.mean([self.ensoleillementMoyen, self.biome.ensoleillementBiome])
+
+    def caclculerPrecipitation(self):
+        pass
+
+    def calculerPhotosynthese(self):
+        pass
+     
         
     def calculerHumidite(self):
-        self.humiditeActuel = statistics.mean([self.humiditeMoyenne, self.biome.humidité])
+        self.humiditeActuel = statistics.mean([self.humiditeMoyenne, self.biome.humidite])
+        
+    def liaisonSaisonMois(self):
+        mois = self.date.date.month  # Assurez-vous que self.date est un objet datetime ou date
+        if(mois in (12,1,2,)):
+            self.saison = Hiver()
+        elif(mois in (3,4,5)):
+            self.saison = Printemps()
+        elif(mois in (6,7,8)):
+            self.saison = Ete()
+        elif(mois in (9,10,11)):
+            self.saison = Automne()
     
     def calculTemperature(self):
         self.calculerHumidite()
+        self.calculerEnsoleillement()
         impactHumidite = self.humiditeActuel * statistics.mean([self.saison.impacteHumidite, self.biome.impacteHumidite])
+        impactEnsoleillement = self.ensoleillementActuel * self.impactEnsoleillement
         
-        self.temperatureActuel = int (self.tempDeBase + self.saison.tempSaisonniere + self.biome.tempBiome + impactHumidite)
+        self.temperatureActuel = int (self.tempDeBase + self.saison.tempSaisonniere + self.biome.tempBiome + impactHumidite + impactEnsoleillement)
+    
             
         
         # #variable

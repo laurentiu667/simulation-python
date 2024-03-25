@@ -1,11 +1,13 @@
 from abc import ABC
 
 class Biome(ABC):
-    def __init__(self, nom, temp, humidité, impHum):
+    def __init__(self, nom, temp, humidite, impHum, ensoleillementBiome):
         self.nom = nom
         self.tempBiome = temp
-        self.humidité = humidité
+        self.humidite = humidite
         self.impacteHumidite = impHum
+        self.ensoleillementBiome = ensoleillementBiome
+
         
         
         # def __init__(self, name, orage, night,climate, average_temperature, precipitation, dominant_flora, dominant_fauna):
@@ -24,20 +26,20 @@ class Biome(ABC):
 
 class ForetsBoreales(Biome):
     def __init__(self):
-        super().__init__('Forêts Boréales', -5, 0.7, -0.05)
+        super().__init__('Forêts Boréales', -5, 0.7, -0.05,0.4)
 
 class Toundra(Biome):
     def __init__(self):
-        super().__init__('Toundra', -8, 0.6, -0.02)
+        super().__init__('Toundra', -8, 0.6, -0.02, 0.5)
 
 class RivieresEtLacs(Biome):
     def __init__(self):
-        super().__init__('Rivières et Lacs', 0, 0.8, -0.03)
+        super().__init__('Rivières et Lacs', 0, 0.8, -0.03, 0.60)
 
 class MontagnesEtPlateaux(Biome):
     def __init__(self):
-        super().__init__('Montagnes et Plateaux', -0.6, 0.5, -0.06)
+        super().__init__('Montagnes et Plateaux', -0.6, 0.5, -0.06, 0.70)
 
 class PrairiesEtSavanes(Biome):
     def __init__(self):
-        super().__init__('Prairies et Savanes', 2, 0.5, -0.05)
+        super().__init__('Prairies et Savanes', 2, 0.5, -0.05,0.8)

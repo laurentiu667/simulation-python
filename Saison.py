@@ -15,19 +15,19 @@ class Saison(ABC):
 
 class Ete(Saison):
     def __init__(self):
-        super().__init__(15, 'été', -0.07)
+        super().__init__(15, 'été', -7)
         
 class Hiver(Saison):
     def __init__(self):
-        super().__init__(-15, 'hiver', -0.02)
+        super().__init__(-15, 'hiver', -2)
         
 class Printemps(Saison):
     def __init__(self):
-        super().__init__(5, 'printemps', -0.04)
+        super().__init__(5, 'printemps', -4)
 
 class Automne(Saison):
     def __init__(self):
-        super().__init__(5, 'automne', -0.03)
+        super().__init__(5, 'automne', -3)
         
     # def __init__(self, name, temperature, precipitation, humdite, dominant_flora, dominant_fauna):
     #     self.name = name
