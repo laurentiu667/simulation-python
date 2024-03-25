@@ -1,6 +1,7 @@
 from tkinter import *
 import MAPGENERATOR
 from MAPGENERATOR import *
+import Modele
 
 class Vue:
     def __init__(self, parent):
@@ -12,7 +13,7 @@ class Vue:
         self.canva_frame_general = None
         self.squares = []
         self.res = 0
-        self.submap = MAPGENERATOR.Sub_Section_Generator()
+        self.submap = None
 
 
     def accueil(self):
@@ -43,7 +44,7 @@ class Vue:
             self.res = (mapSize[clicked.get()])
             water = waterPerc[clicked2.get()]
 
-            self.seed = self.MAPGENERATOR.Seed(water)  #SEED GENERATES HERE!!!!!!!!
+            self.seed = MAPGENERATOR.Seed(water)  #SEED GENERATES HERE!!!!!!!!
             self.startButton['state'] = DISABLED
 
         # SCROLL DOWN MENU
@@ -146,7 +147,13 @@ class Vue:
         self.generate_map_on_canvas(self.canva_frame_general, False, self.mapGeneral)
         self.canva_frame_general.bind("<Button-1>", show)
 
-        self.submap.create_whole_map(self.res, self.mapGeneral, self.seed.diamond_square.heightmap)
+        self.modele = Modele.Modele(self.canva_frame_general, self.seed.diamond_square.heightmap)
+        self.modele.creer_animaux(self.canva_frame_general)
+        self.modele.deplacement_animaux()
+
+        #self.submap = MAPGENERATOR.Sub_Section_Generator(self.res, self.mapGeneral, self.seed.diamond_square.heightmap)
+        #self.submap.create_whole_map()
+        #print(self.submap.UPSCALEDMAP)
 
     def on_click(self, event):
         print("salut")
@@ -155,7 +162,6 @@ class Vue:
         vue = MAPGENERATOR.Vue(canvas)
         if(new):
             self.seed.generate_map()
-
 
         vue.generate_square(self.seed.diamond_square.heightmapWidth, self.seed.diamond_square.heightmap, self.seed.biomeOrder, grosseur)
 
