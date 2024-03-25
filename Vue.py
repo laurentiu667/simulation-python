@@ -3,9 +3,8 @@ import MAPGENERATOR
 from MAPGENERATOR import *
 
 class Vue:
-    def __init__(self, parent, model):
+    def __init__(self, parent):
         self.parent = parent
-        self.model = model
         self.root = Tk()
         self.simroot = None
         self.seed = None
@@ -13,7 +12,7 @@ class Vue:
         self.canva_frame_general = None
         self.squares = []
         self.res = 0
-
+        self.submap = MAPGENERATOR.Sub_Section_Generator()
 
 
     def accueil(self):
@@ -44,13 +43,13 @@ class Vue:
             self.res = (mapSize[clicked.get()])
             water = waterPerc[clicked2.get()]
 
-            self.seed = MAPGENERATOR.Seed(water)  #SEED GENERATES HERE!!!!!!!!
+            self.seed = self.MAPGENERATOR.Seed(water)  #SEED GENERATES HERE!!!!!!!!
             self.startButton['state'] = DISABLED
 
         # SCROLL DOWN MENU
-        mapSize = {"150x150" : 150, "300x300" : 300 , "600x600" : 600, "900x900" : 900, "1200x1200" : 1200, "1500x1500" : 1500, "1800x1800" : 1800}
+        mapSize = {"200x200" : 200, "400x400" : 400 , "600x600" : 600, "800x800" : 800, "1000x1000" : 1000, "1200x1200" : 1200, "1400x1400" : 1400}
         clicked = StringVar()
-        clicked.set("300x300")
+        clicked.set("200x200")
         drop = OptionMenu(frame_buttons, clicked, *mapSize, )
         drop.config(bg="#292929", fg="WHITE")
         labelMapDetail = Label(frame_buttons, text="Grosseur de la Carte", bg="#292929", fg="WHITE", font=("Arial", 15))
@@ -147,7 +146,7 @@ class Vue:
         self.generate_map_on_canvas(self.canva_frame_general, False, self.mapGeneral)
         self.canva_frame_general.bind("<Button-1>", show)
 
-
+        self.submap.create_whole_map(self.res, self.mapGeneral, self.seed.diamond_square.heightmap)
 
     def on_click(self, event):
         print("salut")

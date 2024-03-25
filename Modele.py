@@ -2,8 +2,9 @@ import Environnement
 import Timer
 
 class Modele:
-    def __init__(self, parent):
+    def __init__(self, parent, map):
         self.parent = parent
+        self.map = map
         self.environnement= None
         self.date=None
         #self.debuterTemps() #initialisation du temps seulement si c'est le model final

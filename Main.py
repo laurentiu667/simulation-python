@@ -7,8 +7,9 @@ from Modele import Modele
 class Controller:
 
     def __init__(self):
-        self.model = Modele(self)
         self.view = Vue(self, self.model)
+        self.model = Modele(self, self.view.submap.UPSCALEDMAP)
+
 
 
         self.view.accueil()

@@ -118,8 +118,10 @@ class Diamond_square:
 
 
 class Sub_Section_Generator():
-    def __init__(self, res):
-        self.res = res
+    def __init__(self, res, originalMap, heightmap):
+        self.res = res                  #RESOLUTION CHOISI PAR L'UTILISATEUR
+        self.originalMap = originalMap  #TAILLE DE LA CARTE ORIGINAL
+        self.heighMap = heightmap       #HEIGHT MAP ORIGNINAL
         self.subHeightMap1 = [[0] * self.res for i in range(self.res)]
         self.subHeightMap2 = [[0] * self.res for i in range(self.res)]
         self.subHeightMap3 = [[0] * self.res for i in range(self.res)]
@@ -130,11 +132,20 @@ class Sub_Section_Generator():
         self.subHeightMap8 = [[0] * self.res for i in range(self.res)]
         self.subHeightMap9 = [[0] * self.res for i in range(self.res)]
 
-        self.UpscaledMap = [self.subHeightMap1, self.subHeightMap2, self.subHeightMap3,
+        self.UPSCALEDMAP = [self.subHeightMap1, self.subHeightMap2, self.subHeightMap3,
                             self.subHeightMap4, self.subHeightMap5, self.subHeightMap6,
                             self.subHeightMap7, self.subHeightMap8, self.subHeightMap9]  #TOUT LES ZOOMS
 
-        #def create_whole_map(self):
+    def create_whole_map(self):
+        facteur = self.res / (self.originalMap / 3)
+        for i in range(len(self.UPSCALEDMAP)):
+
+            for j in range(self.res):
+                for k in (self.res)
+
+
+
+
 
 class Seed():
     def __init__(self, waterPerc):
