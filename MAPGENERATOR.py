@@ -118,15 +118,31 @@ class Diamond_square:
 
 
 class Sub_Section_Generator():
-    def __init__(self, res, originalMap, heightmap):
-        self.res = res * 3                  #RESOLUTION CHOISI PAR L'UTILISATEUR
+    def __init__(self, res, heightmap):
+        self.res = res                      #RESOLUTION CHOISI PAR L'UTILISATEUR
         self.originalMap = 257              #TAILLE DE LA CARTE ORIGINAL
         self.heighMap = heightmap           #HEIGHT MAP ORIGNINAL
-        self.UPSCALEDMAP = [[0] * self.res for i in range(self.res)]
+        self.scalling = math.floor(self.originalMap * self.res)
+        self.UPSCALEDMAP = [[0] * self.scalling for i in range(self.scalling)]
+
+        self.length = math.floor(self.scalling/3)
+        self.sect1 = [[0] * self.length for i in range(self.length)]
+        self.sect2 = [[0] * self.length for i in range(self.length)]
+        self.sect3 = [[0] * self.length for i in range(self.length)]
+        self.sect4 = [[0] * self.length for i in range(self.length)]
+        self.sect5 = [[0] * self.length for i in range(self.length)]
+        self.sect6 = [[0] * self.length for i in range(self.length)]
+        self.sect7 = [[0] * self.length for i in range(self.length)]
+        self.sect8 = [[0] * self.length for i in range(self.length)]
+        self.sect9 = [[0] * self.length for i in range(self.length)]
+
+        self.ALL = [self.sect1, self.sect2, self.sect3,
+                    self.sect4, self.sect5, self.sect6,
+                    self.sect7, self.sect8, self.sect9]
+
 
     def create_whole_map(self):
-        facteur = math.floor(self.res/self.originalMap)
-        print(facteur)
+        facteur = math.floor(self.scalling/self.originalMap)
 
         for i in range(self.originalMap):
             for j in range(self.originalMap):
@@ -134,9 +150,24 @@ class Sub_Section_Generator():
                 upsacled_j = j * facteur
                 for x in range(facteur):
                     for y in range(facteur):
-                        pass
-                        #self.UPSCALEDMAP[upsacled_i + x][upsacled_j + y] = self.heighMap[i][j]
+                        self.UPSCALEDMAP[upsacled_i + x][upsacled_j + y] = self.heighMap[i][j]
 
+    def sub_divide(self):
+        index = -1
+        for x in range(3):
+            for y in range(3):
+                index += 1
+                index2 = -1
+                l1 = self.length * x
+                l2 = self.length * y
+                l3 = self.length * (x + 1)
+                l4 = self.length * (y + 1)
+                for i in range(l1, l3, 1):
+                    index2 += 1
+                    index3 = -1
+                    for j in range(l2, l4, 1):
+                        index3 += 1
+                        self.ALL[index][index2][index3] = self.UPSCALEDMAP[i][j]
 
 class Seed():
     def __init__(self, waterPerc):

@@ -48,9 +48,9 @@ class Vue:
             self.startButton['state'] = DISABLED
 
         # SCROLL DOWN MENU
-        mapSize = {"200x200" : 200, "400x400" : 400 , "600x600" : 600, "800x800" : 800, "1000x1000" : 1000, "1200x1200" : 1200, "1400x1400" : 1400}
+        mapSize = {"x1" : 1 , "x1.5" : 1.5, "x2" : 2, "x2.5" : 2.5, "x3" : 3, "x3.5" : 3.5, "x4" : 4}
         clicked = StringVar()
-        clicked.set("200x200")
+        clicked.set("x1")
         drop = OptionMenu(frame_buttons, clicked, *mapSize, )
         drop.config(bg="#292929", fg="WHITE")
         labelMapDetail = Label(frame_buttons, text="Grosseur de la Carte", bg="#292929", fg="WHITE", font=("Arial", 15))
@@ -147,13 +147,13 @@ class Vue:
         self.generate_map_on_canvas(self.canva_frame_general, False, self.mapGeneral)
         self.canva_frame_general.bind("<Button-1>", show)
 
+        self.submap = MAPGENERATOR.Sub_Section_Generator(self.res, self.seed.diamond_square.heightmap)
+        self.submap.create_whole_map()
+        self.submap.sub_divide()
+
         self.modele = Modele.Modele(self.canva_frame_general, self.seed.diamond_square.heightmap)
         self.modele.creer_animaux(self.canva_frame_general)
         self.modele.deplacement_animaux()
-
-        #self.submap = MAPGENERATOR.Sub_Section_Generator(self.res, self.mapGeneral, self.seed.diamond_square.heightmap)
-        #self.submap.create_whole_map()
-        #print(self.submap.UPSCALEDMAP)
 
     def on_click(self, event):
         print("salut")
