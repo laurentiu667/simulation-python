@@ -12,7 +12,7 @@ class Timer:
         """Avance le temps d'une seconde."""
         with Timer.LOCK:  # Acquiert le verrou
             while True:
-                self.date += timedelta(seconds=1)
+                self.date += timedelta(seconds=60)
                 time.sleep(1)
         
     def get_heure(self):
@@ -32,6 +32,12 @@ class Timer:
 
     def get_annee(self):
         return self.date.year
+    
+    def get_date(self):
+        return self.date.strftime("%d/%m/%Y")
+    
+    def get_time(self):
+        return self.date.strftime("%H:%M %S")    
     
     def temps_ecoule(self, format='secondes'):
         """Retourne le temps total écoulé depuis l'initialisation de l'objet."""

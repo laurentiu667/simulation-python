@@ -1,93 +1,114 @@
 import time
+import statistics
 import Timer
 from tkinter import *
 from abc import ABC, abstractmethod
+from Biome import *
+from Saison import *
 
 
 class Vu:
-    def __init__(self):
+    def __init__(self, environnement):
+        self.env = environnement
         self.root = Tk()
         self.root.title("Environnement")
         self.canvas = Canvas(self.root, width=500, height=500)
         self.canvas.pack()
-    
         
     def afficher(self):
         
-        biome_frame = Frame(self.root, background="red")
-        biome_frame.pack()
-        biome_titre = Label(biome_frame, text="Biomes :")
-        biome_titre.pack(side='left')
-        biome_info = Label(biome_frame, text="Temple")
-        biome_info.pack(side='left')
+        self.biome_frame = Frame(self.root, background="red")
+        self.biome_frame.pack()
+        self.biome_titre = Label(self.biome_frame, text="Biomes :")
+        self.biome_titre.pack(side='left')
+        self.biome_info = Label(self.biome_frame, text=self.env.biome)
+        self.biome_info.pack(side='left')
 
-        date_frame = Frame(self.root)
-        date_frame.pack()
-        date_titre = Label(date_frame, text="Date :")
-        date_titre.pack(side='left')
-        date_info = Label(date_frame, text="2024-04-22")
-        date_info.pack(side='left')
+        self.date_frame = Frame(self.root)
+        self.date_frame.pack()
+        self.date_titre = Label(self.date_frame, text="Date :")
+        self.date_titre.pack(side='left')
+        self.date_info = Label(self.date_frame, text=self.env.date.get_date())
+        self.date_info.pack(side='left')
 
-        heure_frame = Frame(self.root)
-        heure_frame.pack()
-        heure_titre = Label(heure_frame, text="Heure :")
-        heure_titre.pack(side='left')
-        heure_info = Label(heure_frame, text="11:52")
-        heure_info.pack(side='left')
+        self.heure_frame = Frame(self.root)
+        self.heure_frame.pack()
+        self.heure_titre = Label(self.heure_frame, text="Heure :")
+        self.heure_titre.pack(side='left')
+        self.heure_info = Label(self.heure_frame, text=self.env.date.get_time())
+        print(self.env.date.get_time())
+        self.heure_info.pack(side='left')
 
-        isSoleil_frame = Frame(self.root)
-        isSoleil_frame.pack()
-        isSoleil_titre = Label(isSoleil_frame, text="Soleil :")
-        isSoleil_titre.pack(side='left')
-        isSoleil_info = Label(isSoleil_frame, text="Nuageux")
-        isSoleil_info.pack(side='left')
+        self.isSoleil_frame = Frame(self.root)
+        self.isSoleil_frame.pack()
+        self.isSoleil_titre = Label(self.isSoleil_frame, text="Soleil :")
+        self.isSoleil_titre.pack(side='left')
+        self.isSoleil_info = Label(self.isSoleil_frame, text=None)
+        self.isSoleil_info.pack(side='left')
 
-        temperature_frame = Frame(self.root)
-        temperature_frame.pack()
-        temperature_titre = Label(temperature_frame, text="Temperature :")
-        temperature_titre.pack(side='left')
-        temperature_info = Label(temperature_frame, text="23")
-        temperature_info.pack(side='left')
+        self.temperature_frame = Frame(self.root)
+        self.temperature_frame.pack()
+        self.temperature_titre = Label(self.temperature_frame, text="Temperature :")
+        self.temperature_titre.pack(side='left')
+        self.temperature_info = Label(self.temperature_frame, text=self.env.temperatureActuel)
+        self.temperature_info.pack(side='left')
 
-        humidite_frame = Frame(self.root)
-        humidite_frame.pack()
-        humidite_titre = Label(humidite_frame, text="Humidite :")
-        humidite_titre.pack(side='left')
-        humidite_info = Label(humidite_frame, text="36%")
-        humidite_info.pack(side='left')
+        self.humidite_frame = Frame(self.root)
+        self.humidite_frame.pack()
+        self.humidite_titre = Label(self.humidite_frame, text="Humidite :")
+        self.humidite_titre.pack(side='left')
+        self.humidite_info = Label(self.humidite_frame, text=f"{self.env.humiditeActuel*100}" + " %")
+        self.humidite_info.pack(side='left')
 
-        isOrage_frame = Frame(self.root)
-        isOrage_frame.pack()
-        isOrage_titre = Label(isOrage_frame, text="Orage :")
-        isOrage_titre.pack(side='left')
-        isOrage_info = Label(isOrage_frame, text="Il faut nuageux")
-        isOrage_info.pack(side='left')
+    def update(self):
+        self.env.updateEnv()
+        
+        self.biome_info.config(text=self.env.biome)
+        self.date_info.config(text=self.env.date.get_date())
+        self.heure_info.config(text=self.env.date.get_time())
+        self.temperature_info.config(text=self.env.temperatureActuel)
+        self.humidite_info.config(text=f"{self.env.humiditeActuel*100}" + " %")
+        
+        self.root.update()
+        self.root.after(1000, self.update)
+        
+    
 
-        isTornade_frame = Frame(self.root)
-        isTornade_frame.pack()
-        isTornade_titre = Label(isTornade_frame, text="Tornade :")
-        isTornade_titre.pack(side='left')
-        isTornade_info = Label(isTornade_frame, text="Une tornade en approche")
-        isTornade_info.pack(side='left')
-
-        isTempetes_tropicale_frame = Frame(self.root)
-        isTempetes_tropicale_frame.pack()
-        isTempetes_tropicale_titre = Label(isTempetes_tropicale_frame, text="Tempetes tropicale :")
-        isTempetes_tropicale_titre.pack(side='left')
-        isTempetes_tropicale_info = Label(isTempetes_tropicale_frame, text="Tempetes tropicale")
-        isTempetes_tropicale_info.pack(side='left')
-
-    def actualiser(self):
-        self.root.mainloop()
 
 class Environnement:
     def __init__(self):
         self.tempDeBase = None
+        self.temperatureActuel = None
         self.humiditeMoyenne = None
+        self.humiditeActuel = None
         self.ensoleillementMoyen = None
         self.precipitationMoyenne = None
+        self.biome = PrairiesEtSavanes()
+        self.saison = Ete()
         self.statEnv()
+        self.date = Timer.Timer()
         
+    def statEnv(self):
+        #selon stats moyenne de montreal
+        self.tempDeBase = 6 #en degrés Celsius
+        self.humiditeMoyenne = 0.73
+        self.ensoleillementMoyen = 0.6
+        self.precipitationMoyenne = 978 #en mm/an
+        self.calculTemperature()
+        
+    def updateEnv(self):
+        self.calculTemperature()
+        
+        
+    def calculerHumidite(self):
+        self.humiditeActuel = statistics.mean([self.humiditeMoyenne, self.biome.humidité])
+    
+    def calculTemperature(self):
+        self.calculerHumidite()
+        impactHumidite = self.humiditeActuel * statistics.mean([self.saison.impacteHumidite, self.biome.impacteHumidite])
+        
+        self.temperatureActuel = int (self.tempDeBase + self.saison.tempSaisonniere + self.biome.tempBiome + impactHumidite)
+            
         
         # #variable
         # self.biome = None
@@ -118,13 +139,6 @@ class Environnement:
         # }
         # self.testAnimaux = [Animal.Cerf, Animal.Castor]
         # self.testVegetaux = [Vegetal.Sapin, Vegetal.Sapin]
-        
-    def statEnv(self):
-        #selon stats moyenne de montreal
-        self.tempDeBase = 6 #en degrés Celsius
-        self.humiditeMoyenne = 0.73
-        self.ensoleillementMoyen = 0.6
-        self.precipitationMoyenne = 978 #en mm/an
 
     # def CatastropheMeteorologique(self):
     #     def orages(self):
@@ -138,11 +152,11 @@ class Environnement:
 
 if __name__ == "__main__":
     e = Environnement()
-    vue = Vu()
-    
-    
+    vue = Vu(e)
+        
     vue.afficher()
-    vue.actualiser()
+    vue.update()
+    vue.root.mainloop()
 
     
     

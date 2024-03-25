@@ -2,9 +2,10 @@ from abc import ABC
 
 
 class Saison(ABC):
-    def __init__(self, temp, nom):
+    def __init__(self, temp, nom, impHum):
         self.nom = nom
         self.tempSaisonniere = temp
+        self.impacteHumidite = impHum
 
     def __str__(self):
         return self.nom
@@ -14,19 +15,19 @@ class Saison(ABC):
 
 class Ete(Saison):
     def __init__(self):
-        super().__init__(15,'été')
+        super().__init__(15, 'été', -0.07)
         
 class Hiver(Saison):
     def __init__(self):
-        super().__init__(-15,'hiver')
+        super().__init__(-15, 'hiver', -0.02)
         
 class Printemps(Saison):
     def __init__(self):
-        super().__init__(5,'printemps')
+        super().__init__(5, 'printemps', -0.04)
 
 class Automne(Saison):
     def __init__(self):
-        super().__init__(5,'automne')
+        super().__init__(5, 'automne', -0.03)
         
     # def __init__(self, name, temperature, precipitation, humdite, dominant_flora, dominant_fauna):
     #     self.name = name
