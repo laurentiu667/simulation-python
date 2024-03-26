@@ -4,7 +4,7 @@ from PIL import Image, ImageDraw
 image = Image.new("RGBA", (400, 400), (255, 255, 255, 100))
 draw = ImageDraw.Draw(image)
 
-tronc = "forestgreen"
+tronc = "saddlebrown"
 feuille = "khaki"
 boule = "white"
 

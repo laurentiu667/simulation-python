@@ -1,6 +1,6 @@
 import time
 import statistics
-import Timer
+from Timer import Timer
 from tkinter import *
 from abc import ABC, abstractmethod
 from Biome import *
@@ -35,14 +35,14 @@ class Vu:
         self.date_frame.pack()
         self.date_titre = Label(self.date_frame, text="Date :")
         self.date_titre.pack(side='left')
-        self.date_info = Label(self.date_frame, text=self.env.date.get_date())
+        self.date_info = Label(self.date_frame, text=self.env.temps.get_time())
         self.date_info.pack(side='left')
 
         self.heure_frame = Frame(self.root)
         self.heure_frame.pack()
         self.heure_titre = Label(self.heure_frame, text="Heure :")
         self.heure_titre.pack(side='left')
-        self.heure_info = Label(self.heure_frame, text=self.env.date.get_time())
+        self.heure_info = Label(self.heure_frame, text=self.env.temps.get_time())
         self.heure_info.pack(side='left')
 
         self.isSoleil_frame = Frame(self.root)
@@ -73,8 +73,8 @@ class Vu:
         
         self.biome_info.config(text=self.env.biome)
         self.saison_info.config(text=self.env.saison)
-        self.date_info.config(text=self.env.date.get_date())
-        self.heure_info.config(text=self.env.date.get_time())
+        self.date_info.config(text=self.env.temps.get_date())
+        self.heure_info.config(text=self.env.temps.get_time())
         self.temperature_info.config(text=self.env.temperatureActuel)
         self.humidite_info.config(text=f"{self.env.humiditeActuel*100}" + " %")
         
@@ -84,6 +84,7 @@ class Vu:
 
 class Environnement:
     def __init__(self):
+        self.temps = Timer()
         self.tempDeBase = None
         self.temperatureActuel = None
         self.humiditeMoyenne = None
@@ -95,8 +96,8 @@ class Environnement:
         self.biome = PrairiesEtSavanes()
         self.saison = Ete()
         self.statEnv()
-        self.date = Timer.Timer()
-        
+
+
     def statEnv(self):
         #selon stats moyenne de montreal
         self.tempDeBase = 6 #en degrés Celsius
@@ -109,9 +110,29 @@ class Environnement:
     def updateEnv(self):
         self.liaisonSaisonMois()
         self.calculTemperature()
-        
+
     def calculerEnsoleillement(self):
-        self.ensoleillementActuel = statistics.mean([self.ensoleillementMoyen, self.biome.ensoleillementBiome])
+
+        secondes_courantes = self.temps.get_secondes()
+
+        secondes_6h = 6 * 60 * 60
+        secondes_18h = 18 * 60 * 60
+        secondes_minuit = 24 * 60 * 60
+
+        if secondes_6h <= secondes_courantes < secondes_18h:
+            # entre 6 heure du mat et 18h
+            pourcentage_soleil = ((secondes_courantes - secondes_6h) / (secondes_18h - secondes_6h)) * 100
+        elif secondes_18h <= secondes_courantes < secondes_minuit:
+            # entre 18heure et minuit
+            pourcentage_soleil = 100 - ((secondes_courantes - secondes_18h) / (secondes_minuit - secondes_18h)) * 100
+        else:
+            # entre minuit et 6 h du mat
+            pourcentage_soleil = 0
+
+        # Update ensoleillementActuel as a decimal percentage (0-1)
+        self.ensoleillementActuel = pourcentage_soleil / 100
+
+        print("Pourcentage de soleil:", pourcentage_soleil)
 
     def caclculerPrecipitation(self):
         pass
@@ -124,7 +145,7 @@ class Environnement:
         self.humiditeActuel = statistics.mean([self.humiditeMoyenne, self.biome.humidite])
         
     def liaisonSaisonMois(self):
-        mois = self.date.date.month  # Assurez-vous que self.date est un objet datetime ou date
+        mois = self.temps.date.month  # Assurez-vous que self.date est un objet datetime ou date
         if(mois in (12,1,2,)):
             self.saison = Hiver()
         elif(mois in (3,4,5)):
@@ -139,10 +160,10 @@ class Environnement:
         self.calculerEnsoleillement()
         impactHumidite = self.humiditeActuel * statistics.mean([self.saison.impacteHumidite, self.biome.impacteHumidite])
         impactEnsoleillement = self.ensoleillementActuel * self.impactEnsoleillement
-        
+
         self.temperatureActuel = int (self.tempDeBase + self.saison.tempSaisonniere + self.biome.tempBiome + impactHumidite + impactEnsoleillement)
-    
-            
+
+
         
         # #variable
         # self.biome = None
@@ -187,7 +208,7 @@ class Environnement:
 if __name__ == "__main__":
     e = Environnement()
     vue = Vu(e)
-        
+    e.calculerEnsoleillement()
     vue.afficher()
     vue.update()
     vue.root.mainloop()
