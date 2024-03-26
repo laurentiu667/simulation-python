@@ -1,5 +1,5 @@
 import Environnement
-import Timer
+from Timer import Timer
 import tkinter as tk
 import random
 import Animal

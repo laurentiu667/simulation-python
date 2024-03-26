@@ -12,7 +12,7 @@ class Timer:
         """Avance le temps d'une seconde."""
         with Timer.LOCK:  # Acquiert le verrou
             while True:
-                self.date += timedelta(seconds=360)
+                self.date += timedelta(seconds=3600)
                 time.sleep(1)
     
     def get_date(self):
