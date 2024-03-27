@@ -6,7 +6,7 @@ class Biome(ABC):
         self.tempBiome = temp
         self.humidite = humidite
         self.impacteHumidite = impHum
-        self.ensoleillementBiome = ensoleillementBiome
+        self.ensoleillement = ensoleillementBiome
 
         
         

@@ -1,5 +1,5 @@
-import time
 import statistics
+import math
 from Timer import Timer
 from tkinter import *
 from abc import ABC, abstractmethod
@@ -35,22 +35,15 @@ class Vu:
         self.date_frame.pack()
         self.date_titre = Label(self.date_frame, text="Date :")
         self.date_titre.pack(side='left')
-        self.date_info = Label(self.date_frame, text=self.env.dateHeure.get_time())
+        self.date_info = Label(self.date_frame, text=self.env.dateHeure.get_date())
         self.date_info.pack(side='left')
 
         self.heure_frame = Frame(self.root)
         self.heure_frame.pack()
         self.heure_titre = Label(self.heure_frame, text="Heure :")
         self.heure_titre.pack(side='left')
-        self.heure_info = Label(self.heure_frame, text=self.env.dateHeure.get_time())
+        self.heure_info = Label(self.heure_frame, text=self.env.dateHeure.date.time())
         self.heure_info.pack(side='left')
-
-        self.isSoleil_frame = Frame(self.root)
-        self.isSoleil_frame.pack()
-        self.isSoleil_titre = Label(self.isSoleil_frame, text="Soleil :")
-        self.isSoleil_titre.pack(side='left')
-        self.isSoleil_info = Label(self.isSoleil_frame, text=None)
-        self.isSoleil_info.pack(side='left')
 
         self.temperature_frame = Frame(self.root)
         self.temperature_frame.pack()
@@ -66,12 +59,47 @@ class Vu:
         self.humidite_info = Label(self.humidite_frame, text=f"{self.env.humiditeActuel*100}" + " %")
         self.humidite_info.pack(side='left')
         
-        self.ensoleillement_frame = Frame(self.root)
-        self.ensoleillement_frame.pack()
-        self.ensoleillement_titre = Label(self.ensoleillement_frame, text="Ensoleillement :")
-        self.ensoleillement_titre.pack(side='left')
-        self.ensoleillement_info = Label(self.ensoleillement_frame, text=f"{self.env.ensoleillementActuel*100}" + " %")
-        self.ensoleillement_info.pack(side='left')
+        self.soleil_frame = Frame(self.root)
+        self.soleil_frame.pack()
+        self.soleil_titre = Label(self.soleil_frame, text="Soleil :")
+        self.soleil_titre.pack(side='left')
+        self.soleil_info = Label(self.soleil_frame, text= self.env.soleil)
+        self.soleil_info.pack(side='left')
+        
+        self.leveeDuSoleil_frame = Frame(self.root)
+        self.leveeDuSoleil_frame.pack()
+        self.leveeDuSoleil_titre = Label(self.leveeDuSoleil_frame, text="Heure du levée de Soleil :")
+        self.leveeDuSoleil_titre.pack(side='left')
+        self.leveeDuSoleil_info = Label(self.leveeDuSoleil_frame, text=self.env.dateHeure.get_time(self.env.leveeDuSoleil))
+        self.leveeDuSoleil_info.pack(side='left')
+        
+        self.apogeeSolaire_frame = Frame(self.root)
+        self.apogeeSolaire_frame.pack()
+        self.apogeeSolaire_titre = Label(self.apogeeSolaire_frame, text="Apogée du Soleil :")
+        self.apogeeSolaire_titre.pack(side='left')
+        self.apogeeSolaire_info = Label(self.apogeeSolaire_frame, text=self.env.dateHeure.get_time(self.env.apogeeSolaire))
+        self.apogeeSolaire_info.pack(side='left')
+        
+        self.coucheeDuSoleil_frame = Frame(self.root)
+        self.coucheeDuSoleil_frame.pack()
+        self.coucheeDuSoleil_titre = Label(self.coucheeDuSoleil_frame, text="Heure du couchée de Soleil :")
+        self.coucheeDuSoleil_titre.pack(side='left')
+        self.coucheeDuSoleil_info = Label(self.coucheeDuSoleil_frame, text=self.env.dateHeure.get_time(self.env.coucherDuSoleil))
+        self.coucheeDuSoleil_info.pack(side='left')
+        
+        self.ensoleillementMax_frame = Frame(self.root)
+        self.ensoleillementMax_frame.pack()
+        self.ensoleillementMax_titre = Label(self.ensoleillementMax_frame, text="Ensoleillement Max :")
+        self.ensoleillementMax_titre.pack(side='left')
+        self.ensoleillementMax_info = Label(self.ensoleillementMax_frame, text=f"{self.env.ensoleillementMax*100}" + " %")
+        self.ensoleillementMax_info.pack(side='left')
+        
+        self.ensoleillementActuel_frame = Frame(self.root)
+        self.ensoleillementActuel_frame.pack()
+        self.ensoleillementActuel_titre = Label(self.ensoleillementActuel_frame, text="Ensoleillement  Actuel : ")
+        self.ensoleillementActuel_titre.pack(side='left')
+        self.ensoleillementActuel_info = Label(self.ensoleillementActuel_frame, text=f"{self.env.ensoleillementActuel*100}" + " %")
+        self.ensoleillementActuel_info.pack(side='left')
         
         
 
@@ -81,10 +109,15 @@ class Vu:
         self.biome_info.config(text=self.env.biome)
         self.saison_info.config(text=self.env.saison)
         self.date_info.config(text=self.env.dateHeure.get_date())
-        self.heure_info.config(text=self.env.dateHeure.get_time())
+        self.heure_info.config(text=self.env.dateHeure.date.time())
         self.temperature_info.config(text=self.env.temperatureActuel)
         self.humidite_info.config(text=f"{self.env.humiditeActuel*100}" + " %")
-        self.ensoleillement_info.config(text=f"{self.env.ensoleillementActuel*100}" + " %")
+        self.ensoleillementMax_info.config(text=f"{self.env.ensoleillementMax*100}" + " %")
+        self.ensoleillementActuel_info.config(text=f"{self.env.ensoleillementActuel*100}" + " %")
+        self.leveeDuSoleil_info.config(text=self.env.dateHeure.get_time(self.env.leveeDuSoleil))
+        self.coucheeDuSoleil_info.config(text=self.env.dateHeure.get_time(self.env.coucherDuSoleil))
+        self.apogeeSolaire_info.config(text=self.env.dateHeure.get_time(self.env.apogeeSolaire))
+        self.soleil_info.config(text= "Levée" if self.env.soleil else "Couchée")
         
         self.root.update()
         self.root.after(1000, self.update)
@@ -94,15 +127,23 @@ class Environnement:
     def __init__(self):
         self.tempDeBase = None
         self.temperatureActuel = None
+        
         self.humiditeMoyenne = None
         self.humiditeActuel = None
+        
+        self.soleil = False
         self.ensoleillementMoyen = None
         self.ensoleillementActuel = None
+        self.ensoleillementMax = None
         self.precipitationMoyenne = None
         self.impactEnsoleillement = None
+        self.leveeDuSoleil = None
+        self.coucherDuSoleil = None
+        self.apogeeSolaire = None
+        
         self.biome = PrairiesEtSavanes()
         self.saison = Ete()
-        self.dateHeure = Timer()
+        self.dateHeure = Timer() # definit init ici ou dans le modele
         self.statEnv()
 
 
@@ -119,25 +160,82 @@ class Environnement:
         self.liaisonSaisonMois()
         self.calculTemperature()
 
+    def ajuster_temps_soleil(self, temps_soleil):
+        # ((difference tranche d'heure)/ nb jours dans le mois) * jours actuel
+        #permet au lever et coucher du soleil de s'ajuster selon les jours
+        diffTrancheHeure = self.dateHeure.total_seconds(temps_soleil[1]) - self.dateHeure.total_seconds(temps_soleil[0])
+        diffParNbjours = diffTrancheHeure / self.dateHeure.NombreDeJoursDumois()
+        return self.dateHeure.addTime(temps_soleil[0], Timer.convertirSecondeEnDuree(diffParNbjours * self.dateHeure.date.day))
+
     def calculerEnsoleillement(self):
-        secondes_courantes = self.dateHeure.get_secondes()
-
-        secondes_6h = 6 * 60 * 60
-        secondes_18h = 18 * 60 * 60
-        secondes_minuit = 24 * 60 * 60
-
-        if secondes_6h <= secondes_courantes < secondes_18h:
-            # entre 6 heure du mat et 18h
-            pourcentage_soleil = ((secondes_courantes - secondes_6h) / (secondes_18h - secondes_6h)) * 100
-        elif secondes_18h <= secondes_courantes < secondes_minuit:
-            # entre 18heure et minuit
-            pourcentage_soleil = 100 - ((secondes_courantes - secondes_18h) / (secondes_minuit - secondes_18h)) * 100
+        
+        self.ensoleillementMax = statistics.mean([self.ensoleillementMoyen, self.biome.ensoleillement])
+        self.ensoleillementActuel = 0
+        etatDuSoleil = None
+        # si opti doit vrm etre faite ajuster soleil pour levee,couchee,apogee sera appeler une seule fois par jour
+        self.leveeDuSoleil = self.ajuster_temps_soleil(self.saison.leverDuSoleil)
+        self.coucherDuSoleil = self.ajuster_temps_soleil(self.saison.coucherDuSoleil)
+        self.apogeeSolaire = self.ajuster_temps_soleil(self.saison.apogeeSolaire)
+        
+        #ajuste la position du soleil en fonctionde l'heure actuelle 
+        if self.leveeDuSoleil <= self.dateHeure.date.time() < self.apogeeSolaire:
+            totalHeure = self.dateHeure.total_seconds(self.apogeeSolaire) - self.dateHeure.total_seconds(self.leveeDuSoleil)
+            heureCible = self.dateHeure.total_seconds(self.dateHeure.date.time()) - self.dateHeure.total_seconds(self.leveeDuSoleil)
+            etatDuSoleil = (heureCible / totalHeure)
+        elif  self.apogeeSolaire <= self.dateHeure.date.time() < self.coucherDuSoleil :
+            totalHeure = self.dateHeure.total_seconds(self.coucherDuSoleil) - self.dateHeure.total_seconds(self.apogeeSolaire)
+            heureCible = self.dateHeure.total_seconds(self.dateHeure.date.time()) - self.dateHeure.total_seconds(self.apogeeSolaire)
+            etatDuSoleil = (heureCible / totalHeure)
+        
+            
+        if etatDuSoleil is not None:
+            if self.dateHeure.date.time() < self.apogeeSolaire:
+                self.ensoleillementActuel = round(etatDuSoleil * self.ensoleillementMax,2)
+            else:
+                self.ensoleillementActuel = round(1 - (etatDuSoleil * self.ensoleillementMax),2)
         else:
-            # entre minuit et 6 h du mat
-            pourcentage_soleil = 0
+            self.ensoleillementActuel = 0
+        
+        if self.ensoleillementActuel >  0:
+            self.soleil = True
+        elif self.ensoleillementActuel <= 0:
+            self.soleil = False
+            
+        
+        
+        
+        
+        
+        # if leveeSoleil <= self.dateHeure.date.time() < primeSoleil:
+        #     print(self.dateHeure.date.time())
+        #     print("soleil")
+        # elif primeSoleil <= self.dateHeure.date.time() < coucheSoleil:
+        #     print(self.dateHeure.date.time())
+        #     print("ombre")
+        # else:
+        #     print(self.dateHeure.NombreDeJoursDumois())
+        #     print("nuit")
+        
+        
 
-        # Update ensoleillementActuel as a decimal percentage (0-1)
-        self.ensoleillementActuel = pourcentage_soleil
+        # secondes_courantes = self.dateHeure.get_secondes()
+
+        # secondes_6h = 6 * 60 * 60
+        # secondes_18h = 18 * 60 * 60
+        # secondes_minuit = 24 * 60 * 60
+
+        # if secondes_6h <= secondes_courantes < secondes_18h:
+        #     # entre 6 heure du mat et 18h
+        #     pourcentage_soleil = ((secondes_courantes - secondes_6h) / (secondes_18h - secondes_6h)) * 100
+        # elif secondes_18h <= secondes_courantes < secondes_minuit:
+        #     # entre 18heure et minuit
+        #     pourcentage_soleil = 100 - ((secondes_courantes - secondes_18h) / (secondes_minuit - secondes_18h)) * 100
+        # else:
+        #     # entre minuit et 6 h du mat
+        #     pourcentage_soleil = 0
+
+        # # Update ensoleillementActuel as a decimal percentage (0-1)
+        # self.ensoleillementActuel = pourcentage_soleil
 
     def caclculerPrecipitation(self):
         pass
@@ -163,10 +261,11 @@ class Environnement:
     def calculTemperature(self):
         self.calculerHumidite()
         self.calculerEnsoleillement()
+        
         impactHumidite = self.humiditeActuel * statistics.mean([self.saison.impacteHumidite, self.biome.impacteHumidite])
         impactEnsoleillement = self.ensoleillementActuel * self.impactEnsoleillement
 
-        self.temperatureActuel = int (self.tempDeBase + self.saison.tempSaisonniere + self.biome.tempBiome + impactHumidite + impactEnsoleillement)
+        self.temperatureActuel =  round(self.tempDeBase + self.saison.tempSaisonniere + self.biome.tempBiome + impactHumidite + impactEnsoleillement,2)
 
 
         

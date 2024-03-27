@@ -1,11 +1,15 @@
 from abc import ABC
+from Timer import Timer
 
 
 class Saison(ABC):
-    def __init__(self, temp, nom, impHum):
+    def __init__(self, temp, nom, impHum, leverDuSoleil, coucherDuSoleil, apogeeSolaire):
         self.nom = nom
         self.tempSaisonniere = temp
         self.impacteHumidite = impHum
+        self.leverDuSoleil = leverDuSoleil
+        self.coucherDuSoleil = coucherDuSoleil
+        self.apogeeSolaire = apogeeSolaire
 
     def __str__(self):
         return self.nom
@@ -15,19 +19,31 @@ class Saison(ABC):
 
 class Ete(Saison):
     def __init__(self):
-        super().__init__(15, 'été', -7)
+        leverDuSoleil = [Timer.obtenirUneHeure(5),Timer.obtenirUneHeure(5,30)]
+        coucherDuSoleil = [Timer.obtenirUneHeure(20,30),Timer.obtenirUneHeure(21)]
+        apogeeSolaire = [Timer.obtenirUneHeure(12),Timer.obtenirUneHeure(13)]
+        super().__init__(15, 'été', -7, leverDuSoleil, coucherDuSoleil, apogeeSolaire)
         
 class Hiver(Saison):
     def __init__(self):
-        super().__init__(-15, 'hiver', -2)
+        leverDuSoleil = [Timer.obtenirUneHeure(7,15),Timer.obtenirUneHeure(7,30)]
+        coucherDuSoleil = [Timer.obtenirUneHeure(16),Timer.obtenirUneHeure(17,30)]
+        apogeeSolaire = [Timer.obtenirUneHeure(11,45),Timer.obtenirUneHeure(12,30)]
+        super().__init__(-15, 'hiver', -2, leverDuSoleil, coucherDuSoleil, apogeeSolaire)
         
 class Printemps(Saison):
     def __init__(self):
-        super().__init__(5, 'printemps', -4)
+        leverDuSoleil = [Timer.obtenirUneHeure(6),Timer.obtenirUneHeure(7,15)]
+        coucherDuSoleil = [Timer.obtenirUneHeure(17,30),Timer.obtenirUneHeure(20,30)]
+        apogeeSolaire = [Timer.obtenirUneHeure(12,15),Timer.obtenirUneHeure(13,15)]
+        super().__init__(5, 'printemps', -4, leverDuSoleil, coucherDuSoleil, apogeeSolaire)
 
 class Automne(Saison):
     def __init__(self):
-        super().__init__(5, 'automne', -3)
+        leverDuSoleil = [Timer.obtenirUneHeure(6,30),Timer.obtenirUneHeure(7,30)]
+        coucherDuSoleil = [Timer.obtenirUneHeure(16),Timer.obtenirUneHeure(17,30)]
+        apogeeSolaire = [Timer.obtenirUneHeure(11,45),Timer.obtenirUneHeure(12,30)]
+        super().__init__(5, 'automne', -3, leverDuSoleil, coucherDuSoleil, apogeeSolaire)
         
     # def __init__(self, name, temperature, precipitation, humdite, dominant_flora, dominant_fauna):
     #     self.name = name
