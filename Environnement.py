@@ -26,9 +26,9 @@ class Vu:
         
         self.saison_frame = Frame(self.root, background="red")
         self.saison_frame.pack()
-        self.saison_titre = Label(self.saison_frame, text="Saison :")  # Change here
+        self.saison_titre = Label(self.saison_frame, text="Saison :") 
         self.saison_titre.pack(side='left')
-        self.saison_info = Label(self.saison_frame, text=self.env.saison)  # And here
+        self.saison_info = Label(self.saison_frame, text=self.env.saison) 
         self.saison_info.pack(side='left')
 
         self.date_frame = Frame(self.root)
@@ -178,6 +178,7 @@ class Environnement:
         self.apogeeSolaire = self.ajuster_temps_soleil(self.saison.apogeeSolaire)
         
         #ajuste la position du soleil en fonctionde l'heure actuelle 
+        #si l'heure actuelle est entre le lever et l'apogée du soleil
         if self.leveeDuSoleil <= self.dateHeure.date.time() < self.apogeeSolaire:
             totalHeure = self.dateHeure.total_seconds(self.apogeeSolaire) - self.dateHeure.total_seconds(self.leveeDuSoleil)
             heureCible = self.dateHeure.total_seconds(self.dateHeure.date.time()) - self.dateHeure.total_seconds(self.leveeDuSoleil)
