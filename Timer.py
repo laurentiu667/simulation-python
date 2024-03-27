@@ -64,9 +64,9 @@ class Timer:
         import Saison
 
         if saison is not None:
-            return sum([calendar.monthrange(self.date.year, month)[1] for month in saison.mois])
-        SAISON = self.e.saison
-        return  sum([calendar.monthrange(self.date.year, month)[1] for month in SAISON.mois])
+            return sum([calendar.monthrange(self.date.year, month)[1] for month in self.e.saison.mois])
+
+        return  sum([calendar.monthrange(self.date.year, month)[1] for month in self.e.saison.mois])
 
 
     def total_seconds(self, timeObj = None): # par default renvoie le nombre de seconde de la journée en cours 
