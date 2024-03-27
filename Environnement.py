@@ -143,7 +143,7 @@ class Environnement:
         
         self.biome = PrairiesEtSavanes()
         self.saison = Ete()
-        self.dateHeure = Timer() # definit init ici ou dans le modele
+        self.dateHeure = Timer(self) # definit init ici ou dans le modele
         self.statEnv()
 
 
@@ -161,10 +161,10 @@ class Environnement:
         self.calculTemperature()
 
     def ajuster_temps_soleil(self, temps_soleil):
-        # ((difference tranche d'heure)/ nb jours dans le mois) * jours actuel
-        #permet au lever et coucher du soleil de s'ajuster selon les jours
+        # ((difference tranche d'heure)/ nb jours dans la saison) * jours actuel
+        #permet au lever et coucher du soleil de s'ajuster selon les jours durant la saison
         diffTrancheHeure = self.dateHeure.total_seconds(temps_soleil[1]) - self.dateHeure.total_seconds(temps_soleil[0])
-        diffParNbjours = diffTrancheHeure / self.dateHeure.NombreDeJoursDumois()
+        diffParNbjours = diffTrancheHeure / self.dateHeure.nombreDeJoursDeLaSaison()
         return self.dateHeure.addTime(temps_soleil[0], Timer.convertirSecondeEnDuree(diffParNbjours * self.dateHeure.date.day))
 
     def calculerEnsoleillement(self):
@@ -202,41 +202,6 @@ class Environnement:
             self.soleil = False
             
         
-        
-        
-        
-        
-        # if leveeSoleil <= self.dateHeure.date.time() < primeSoleil:
-        #     print(self.dateHeure.date.time())
-        #     print("soleil")
-        # elif primeSoleil <= self.dateHeure.date.time() < coucheSoleil:
-        #     print(self.dateHeure.date.time())
-        #     print("ombre")
-        # else:
-        #     print(self.dateHeure.NombreDeJoursDumois())
-        #     print("nuit")
-        
-        
-
-        # secondes_courantes = self.dateHeure.get_secondes()
-
-        # secondes_6h = 6 * 60 * 60
-        # secondes_18h = 18 * 60 * 60
-        # secondes_minuit = 24 * 60 * 60
-
-        # if secondes_6h <= secondes_courantes < secondes_18h:
-        #     # entre 6 heure du mat et 18h
-        #     pourcentage_soleil = ((secondes_courantes - secondes_6h) / (secondes_18h - secondes_6h)) * 100
-        # elif secondes_18h <= secondes_courantes < secondes_minuit:
-        #     # entre 18heure et minuit
-        #     pourcentage_soleil = 100 - ((secondes_courantes - secondes_18h) / (secondes_minuit - secondes_18h)) * 100
-        # else:
-        #     # entre minuit et 6 h du mat
-        #     pourcentage_soleil = 0
-
-        # # Update ensoleillementActuel as a decimal percentage (0-1)
-        # self.ensoleillementActuel = pourcentage_soleil
-
     def caclculerPrecipitation(self):
         pass
 
@@ -248,14 +213,14 @@ class Environnement:
         self.humiditeActuel = statistics.mean([self.humiditeMoyenne, self.biome.humidite])
         
     def liaisonSaisonMois(self):
-        mois = self.dateHeure.date.month  # Assurez-vous que self.date est un objet datetime ou date
-        if(mois in (12,1,2,)):
+        mois = self.dateHeure.date.month 
+        if(mois in Hiver.mois):
             self.saison = Hiver()
-        elif(mois in (3,4,5)):
+        elif(mois in Printemps.mois):
             self.saison = Printemps()
-        elif(mois in (6,7,8)):
+        elif(mois in Ete.mois):
             self.saison = Ete()
-        elif(mois in (9,10,11)):
+        elif(mois in Automne.mois):
             self.saison = Automne()
     
     def calculTemperature(self):
@@ -282,20 +247,6 @@ class Environnement:
         # self.isNuageux = None
         # self.isSoleil = None
     
-        # self.montreal_temperatures = {
-        #     "Janvier": -9.3,  # en degrés Celsius
-        #     "Février": -7.7,
-        #     "Mars": -2.3,
-        #     "Avril": 6.0,
-        #     "Mai": 14.0,
-        #     "Juin": 19.2,
-        #     "Juillet": 22.3,
-        #     "Août": 21.1,
-        #     "Septembre": 16.0,
-        #     "Octobre": 9.6,
-        #     "Novembre": 2.5,
-        #     "Décembre": -5.4,
-        # }
         # self.testAnimaux = [Animal.Cerf, Animal.Castor]
         # self.testVegetaux = [Vegetal.Sapin, Vegetal.Sapin]
 

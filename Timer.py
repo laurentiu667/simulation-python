@@ -6,7 +6,8 @@ import calendar
 
 class Timer:
     LOCK = threading.Lock() # Verrou  n'autorise qu'un seul repre temporelle 
-    def __init__(self):
+    def __init__(self, e):
+        self.e = e
         self.date_initiale = self.date = datetime(1, 1, 1, 0, 0, 0)
         self.thread = threading.Thread(target=self.update_timer).start()  # Démarre le thread de mise à jour du timer
     
@@ -53,8 +54,19 @@ class Timer:
         return self.date.strftime("%H:%M:%S")
         
     
-    def NombreDeJoursDumois(self):
+    def nombreDeJoursDumois(self, month = None):
+        if month is not None:
+            return calendar.monthrange(self.date.year, month)[1]
         return calendar.monthrange(self.date.year, self.date.month)[1]
+    
+    
+    def nombreDeJoursDeLaSaison(self, saison = None):
+        import Saison
+
+        if saison is not None:
+            return sum([calendar.monthrange(self.date.year, month)[1] for month in saison.mois])
+        SAISON = self.e.saison
+        return  sum([calendar.monthrange(self.date.year, month)[1] for month in SAISON.mois])
 
 
     def total_seconds(self, timeObj = None): # par default renvoie le nombre de seconde de la journée en cours 

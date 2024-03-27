@@ -18,13 +18,17 @@ class Saison(ABC):
 
 
 class Ete(Saison):
+    mois =(6,7,8)
     def __init__(self):
         leverDuSoleil = [Timer.obtenirUneHeure(5),Timer.obtenirUneHeure(5,30)]
         coucherDuSoleil = [Timer.obtenirUneHeure(20,30),Timer.obtenirUneHeure(21)]
         apogeeSolaire = [Timer.obtenirUneHeure(12),Timer.obtenirUneHeure(13)]
         super().__init__(15, 'été', -7, leverDuSoleil, coucherDuSoleil, apogeeSolaire)
+    
+        
         
 class Hiver(Saison):
+    mois = (12,1,2)
     def __init__(self):
         leverDuSoleil = [Timer.obtenirUneHeure(7,15),Timer.obtenirUneHeure(7,30)]
         coucherDuSoleil = [Timer.obtenirUneHeure(16),Timer.obtenirUneHeure(17,30)]
@@ -32,6 +36,7 @@ class Hiver(Saison):
         super().__init__(-15, 'hiver', -2, leverDuSoleil, coucherDuSoleil, apogeeSolaire)
         
 class Printemps(Saison):
+    mois = (3,4,5)
     def __init__(self):
         leverDuSoleil = [Timer.obtenirUneHeure(6),Timer.obtenirUneHeure(7,15)]
         coucherDuSoleil = [Timer.obtenirUneHeure(17,30),Timer.obtenirUneHeure(20,30)]
@@ -39,6 +44,7 @@ class Printemps(Saison):
         super().__init__(5, 'printemps', -4, leverDuSoleil, coucherDuSoleil, apogeeSolaire)
 
 class Automne(Saison):
+    mois = (9,10,11)
     def __init__(self):
         leverDuSoleil = [Timer.obtenirUneHeure(6,30),Timer.obtenirUneHeure(7,30)]
         coucherDuSoleil = [Timer.obtenirUneHeure(16),Timer.obtenirUneHeure(17,30)]
