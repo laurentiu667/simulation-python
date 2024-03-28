@@ -1,5 +1,4 @@
 import statistics
-import math
 from Timer import Timer
 from tkinter import *
 from abc import ABC, abstractmethod
