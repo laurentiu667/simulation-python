@@ -61,14 +61,23 @@ class Timer:
     
     
     def nombreDeJoursDeLaSaison(self, saison = None):
-        import Saison
-
         if saison is not None:
-            return sum([calendar.monthrange(self.date.year, month)[1] for month in self.e.saison.mois])
+            return sum([calendar.monthrange(self.date.year, month)[1] for month in saison.mois])
 
         return  sum([calendar.monthrange(self.date.year, month)[1] for month in self.e.saison.mois])
 
-
+    def joursDepuisDebutSaison(self):
+        from Saison import Hiver # import ici pour eviter les import circulaire
+        if isinstance(self.e.saison, Hiver):
+            if self.date.year == 1:
+                date_debut_saison = self.date_initiale
+            else:
+                date_debut_saison = datetime(self.date.year - 1, self.e.saison.mois[0], 1)
+        else:
+            date_debut_saison = datetime(self.date.year, self.e.saison.mois[0], 1)  # Assumons que la saison commence le premier jour du premier mois de la saison
+        jours_ecoules = (self.date - date_debut_saison).days
+        return 1 if jours_ecoules == 0 else jours_ecoules
+    
     def total_seconds(self, timeObj = None): # par default renvoie le nombre de seconde de la journée en cours 
         if timeObj is None:
             timeObj = self.date

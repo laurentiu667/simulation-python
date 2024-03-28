@@ -11,7 +11,6 @@ class Biome(ABC):
         
         
         # def __init__(self, name, orage, night,climate, average_temperature, precipitation, dominant_flora, dominant_fauna):
-    #     self.name = name
     #     self.climate = climate
     #     self.average_temperature = average_temperature
     #     self.precipitation = precipitation

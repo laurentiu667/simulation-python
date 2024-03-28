@@ -52,12 +52,11 @@ class Automne(Saison):
         super().__init__(5, 'automne', -3, leverDuSoleil, coucherDuSoleil, apogeeSolaire)
         
     # def __init__(self, name, temperature, precipitation, humdite, dominant_flora, dominant_fauna):
-    #     self.name = name
-    #     self.temperature = temperature
+
     #     self.precipitation = precipitation
     #     self.dominant_flora = dominant_flora
     #     self.dominant_fauna = dominant_fauna
-    #     self.humidite = humdite
+
     
     # def __init__(self):
     #     self.saison = Saison("Ete", 0, 0, "incounnu", "incounnu")

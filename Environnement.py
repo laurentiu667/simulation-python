@@ -141,13 +141,15 @@ class Environnement:
         self.coucherDuSoleil = None
         self.apogeeSolaire = None
         
+        self.saison = None
+        
         self.biome = PrairiesEtSavanes()
-        self.saison = Ete()
         self.dateHeure = Timer(self) # definit init ici ou dans le modele
         self.statEnv()
 
 
     def statEnv(self):
+        self.liaisonSaisonMois()
         #selon stats moyenne de montreal
         self.tempDeBase = 6 #en degrés Celsius
         self.humiditeMoyenne = 0.73
@@ -165,7 +167,7 @@ class Environnement:
         #permet au lever et coucher du soleil de s'ajuster selon les jours durant la saison
         diffTrancheHeure = self.dateHeure.total_seconds(temps_soleil[1]) - self.dateHeure.total_seconds(temps_soleil[0])
         diffParNbjours = diffTrancheHeure / self.dateHeure.nombreDeJoursDeLaSaison()
-        return self.dateHeure.addTime(temps_soleil[0], Timer.convertirSecondeEnDuree(diffParNbjours * self.dateHeure.date.day))
+        return self.dateHeure.addTime(temps_soleil[0], Timer.convertirSecondeEnDuree(diffParNbjours * self.dateHeure.joursDepuisDebutSaison()))
 
     def calculerEnsoleillement(self):
         
@@ -232,34 +234,6 @@ class Environnement:
         impactEnsoleillement = self.ensoleillementActuel * self.impactEnsoleillement
 
         self.temperatureActuel =  round(self.tempDeBase + self.saison.tempSaisonniere + self.biome.tempBiome + impactHumidite + impactEnsoleillement,2)
-
-
-        
-        # #variable
-        # self.biome = None
-        # self.saison = None
-        # self.temperature = None
-        # self.isPrecipitation = None
-        # self.chance_precipitations = None
-        # self.humidite = None
-        # self.isOrages = None
-        # self.isTornades = None
-        # self.isTempetes_tropicale = None
-        # self.isNuageux = None
-        # self.isSoleil = None
-    
-        # self.testAnimaux = [Animal.Cerf, Animal.Castor]
-        # self.testVegetaux = [Vegetal.Sapin, Vegetal.Sapin]
-
-    # def CatastropheMeteorologique(self):
-    #     def orages(self):
-    #         pass
-
-    #     def tornades(self):
-    #         pass
-
-    #     def tempeteTropicales(self):
-    #         pass
 
 if __name__ == "__main__":
     e = Environnement()
