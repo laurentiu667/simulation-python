@@ -6,7 +6,7 @@ import tkinter as tk
 from PIL import Image, ImageTk
 import datetime
 import time
-
+import Environnement
 
 # classe et methode abstraite
 
@@ -44,6 +44,13 @@ class Animal(ABC):
         self.y = random.randint(0, 500)
         self.isMoving = True
         self.minute = 0
+        
+        #VARIABLE POUR LES MOTIVATION ET DEPLACEMENT DES ANIMAUX ET LEUR ACTION
+        self.isHorny = False
+        self.trouverFemme = False
+        self.trouverBouffe = False
+        self.proieTuer = False
+        self.trouverEau = False
         # self.heightMap = heightMap  # Permet de savoir si il y a de l'eau, Recoit le heightmap dans MAPGENERATOR -> Sub_Section_Generator -> self.UpscaledMap
 
     def manger(self):
@@ -58,18 +65,17 @@ class Animal(ABC):
     def dormir(self):
         # PAS OBULIER DE METTRE SOI DANS LE TICK OU A UNE AUTRE PLACE: IsSleeping = False
         self.IsSleeping = True
-        if self.IsSleeping == True:
-            self.faim -= 1.67
-            self.soif -= 1.67
-            self.isMoving = False
-            if self.energie < 100:
-                self.energie += 1.67
-            elif self.energie == 100:
-                self.energie += 0
-        else:
-            self.isMoving = True
-            self.IsSleeping = False
-
+        self.faim -= 1.67
+        self.soif -= 1.67
+        self.isMoving = False
+        if self.energie < 100:
+            self.energie += 1.67
+        elif self.energie == 100:
+            self.energie += 0
+            
+    def reveil(self):
+        self.IsSleeping = False
+    
     def motivation(self):
         rnd = random.Random()
         if self.faim <= 50:
@@ -94,11 +100,13 @@ class Animal(ABC):
             dest_x = self.x + random.uniform(-vitesse, vitesse)
             dest_y = self.y + random.uniform(-vitesse, vitesse)
             self.canvas.move(self.rect, dest_x - self.x, dest_y - self.y)
+            self.calculerEndurance()
             self.x, self.y = dest_x, dest_y
             self.canvas.update()
 
     def repro(self):
-        pass
+        if self.isFucking == True:
+            pass
 
     def isStarving(self):
         self.faim -= 0.05
@@ -110,19 +118,16 @@ class Animal(ABC):
                 self.isAlive = False
 
     def calculerEndurance(self):
-        if self.isMoving == True:
-            if self.isRunning == True:
-                self.endurance -= 6.68
-                self.energie -= 3.34
-                self.soif -= 5
-                self.faim -= 1
-            elif self.isRunning == False:
-                self.soif -= 1
-                self.faim -= 0.5
-                self.endurance -= 3.34
-                self.energie -= 1.67
-        else:
-            pass
+        if self.isRunning == True:
+            self.endurance -= 6.68
+            self.energie -= 3.34
+            self.soif -= 5
+            self.faim -= 1
+        elif self.isRunning == False:
+            self.soif -= 1
+            self.faim -= 0.5
+            self.endurance -= 3.34
+            self.energie -= 1.67
 
     def calculerDureDeVie(self):
         vieMoyen = 30
@@ -138,7 +143,7 @@ class Animal(ABC):
         start_time = time.time()
 
         while True:
-            current_time = time.time() - start_time
+            current_time = Environnement.dateHeure #Timer(environnement)   classe simgleton donc peut etre initialiser n'importe ou
             minutes, secondes = divmod(current_time, 60)
 
             print("Minutes :", int(minutes))
@@ -151,35 +156,54 @@ class Animal(ABC):
                 minutes += 1
 
             if int(secondes) >= 0 and int(secondes) <= 20:
-
-                self.isStarving
-
-                # deplacer(self);
-                # chasser
-                # manger
-                # boire
+                self.reveil()
+                self.motivation()
+                if self.isStarvings == True:
+                    self.deplacer()
+                    if self.trouverBouffe == True:
+                        self.chasser
+                        if self.proieTuer == True:
+                            self.manger()
+                            
+                if self.isAssoife == True:
+                    self.deplacer()
+                    if self.trouverEau == True:
+                        self.boire()
 
             elif int(secondes) > 20 and int(secondes) < 60:
-                pass
-                # deplacer(self);
-                # reproduction
-                # trouver femme
+                self.motivation()
+                if self.isHorny == True:
+                    self.deplacer()
+                    if self.trouverFemme == True:
+                        self.isFucking == True
+                        self.repro()
             elif minutes == 1 and int(secondes) <= 20:
-                pass
-                # deplacer(self);
-                # chasser
-                # manger
-                # boire
+                self.motivation()
+                if self.isStarvings == True:
+                    self.deplacer()
+                    if self.trouverBouffe == True:
+                        self.chasser
+                        if self.proieTuer == True:
+                            self.manger()
+                            
+                if self.isAssoife == True:
+                    self.deplacer()
+                    if self.trouverEau == True:
+                        self.boire()
             elif minutes == 1 and int(secondes) > 20 and int(secondes) < 60:
-                pass
-                # deplacer(self);
-                # reproduction
-                # trouver femme
+                self.motivation()
+                if self.isHorny == True:
+                    self.deplacer()
+                    if self.trouverFemme == True:
+                        self.isFucking == True
+                        self.repro()
             elif minutes >= 2 and minutes <= 4:
-                pass
-                # dort
+                self.dormir()
 
     def chasser(self):
+        pass
+
+    def trouverFemelle(self):
         pass
 
 
