@@ -1,4 +1,4 @@
-import Environnement
+from Environnement import Environnement
 from Timer import Timer
 import tkinter as tk
 import random
@@ -14,7 +14,14 @@ class Modele:
         self.environnement = None
         self.date = None
         self.animaux = []
+        self.env = Environnement()
 
+    def boucler_simulation(self):
+        self.env.updateEnv()
+        print("boucle")
+        self.parent.view.simroot.after(1000, self.boucler_simulation)
+
+    
         # self.debuterTemps() #initialisation du temps seulement si c'est le model final
 
     def debuterTemps(self):

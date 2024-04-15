@@ -14,6 +14,7 @@ class Vue:
         self.squares = []
         self.res = 0
         self.submap = None      #ZOOM DE LA MAP
+        self.bool = False
 
 
     def accueil(self):
@@ -161,9 +162,10 @@ class Vue:
         self.canva_frame_zoom = Canvas(self.simroot, bg="#292929", width=self.mapGeneral, height=self.mapGeneral)
         self.canva_frame_zoom.pack(side=LEFT, padx=10)
 
-        self.modele = Modele.Modele(self.canva_frame_general, self.seed.diamond_square.heightmap)
-        self.modele.creer_animaux(self.canva_frame_general)
-        self.modele.deplacement_animaux()
+        # self.modele = Modele.Modele(self.canva_frame_general, self.seed.diamond_square.heightmap)
+        # self.modele.creer_animaux(self.canva_frame_general)
+        # self.modele.deplacement_animaux()
+        self.parent.model.boucler_simulation()
 
     def on_click(self, event):
         print("salut")
