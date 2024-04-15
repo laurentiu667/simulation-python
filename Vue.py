@@ -13,7 +13,7 @@ class Vue:
         self.canva_frame_general = None
         self.squares = []
         self.res = 0
-        self.submap = None
+        self.submap = None      #ZOOM DE LA MAP
 
 
     def accueil(self):
@@ -88,11 +88,13 @@ class Vue:
         self.root.destroy()
         self.simroot = Tk()
         self.simroot.title("Accueil")
-        self.simroot.geometry("1500x800")
+        self.simroot.geometry("1600x900")
         self.simroot.resizable(False, False)
         self.simroot.config(background="#292929")
-        self.mapGeneral = 600
+        self.mapGeneral = 800
         self.carre = 0
+        self.currSectionView = None
+        self.canva_frame_zoom = None
 
         # frame pour les conditions meteo et heure
         conditions_frame = Frame(self.simroot, bg="#292929", height=50)
@@ -118,38 +120,46 @@ class Vue:
         button_fastforward_frame.pack(side=LEFT, padx=5, pady=5, fill=BOTH, expand=True)
 
         def show(event):
-            if 0 < event.x < 199 and 0 < event.y < 199:
+            if 0 < event.x < 266 and 0 < event.y < 266:
                 self.carre = 1
-            elif 199 < event.x < 399 and 0 < event.y < 199:
+            elif 266 < event.x < 532 and 0 < event.y < 266:
                 self.carre = 2
-            elif 399 < event.x < 599 and 0 < event.y < 199:
+            elif 532 < event.x < 800 and 0 < event.y < 266:
                 self.carre = 3
-            elif 0 < event.x < 199 and 199 < event.y < 399:
+            elif 0 < event.x < 266 and 266 < event.y < 532:
                 self.carre = 4
-            elif 199 < event.x < 399 and 199 < event.y < 399:
+            elif 266 < event.x < 532 and 266 < event.y < 532:
                 self.carre = 5
-            elif 399 < event.x < 599 and 199 < event.y < 399:
+            elif 532 < event.x < 800 and 266 < event.y < 532:
                 self.carre = 6
-            elif 0 < event.x < 199 and 399 < event.y < 599:
+            elif 0 < event.x < 266 and 532 < event.y < 800:
                 self.carre = 7
-            elif 199 < event.x < 399 and 399 < event.y < 599:
+            elif 266 < event.x < 532 and 532 < event.y < 800:
                 self.carre = 8
-            elif 399 < event.x < 599 and 399 < event.y < 599:
+            elif 532 < event.x < 800 and 532 < event.y < 800:
                 self.carre = 9
             labelCellSelect.config(text="Cellule choisie : " + str(self.carre))
+            self.currSectionView = self.submap.ALL[self.carre -1]
+            zoomView = MAPGENERATOR.Vue(self.canva_frame_zoom)
+            zoomView.generate_square(len(self.submap.ALL[self.carre - 1]), self.currSectionView, self.seed.biomeOrder, self.mapGeneral, False)
 
         # frame pour la simulation
         labelCellSelect = Label(self.simroot, font=("Arial", 30), fg="white", bg="#292929")
-        labelCellSelect.pack(padx=20, expand=True, anchor=W)
+        labelCellSelect.pack(padx=20, expand=True)
 
+        # GROSSE MAP
         self.canva_frame_general = Canvas(self.simroot, bg="#292929", width=self.mapGeneral, height=self.mapGeneral)
-        self.canva_frame_general.pack(padx=20,expand=True, anchor=W)
+        self.canva_frame_general.pack(side=LEFT, padx=10)
         self.generate_map_on_canvas(self.canva_frame_general, False, self.mapGeneral)
         self.canva_frame_general.bind("<Button-1>", show)
 
+        # ZOOM CANVAS
         self.submap = MAPGENERATOR.Sub_Section_Generator(self.res, self.seed.diamond_square.heightmap)
         self.submap.create_whole_map()
         self.submap.sub_divide()
+
+        self.canva_frame_zoom = Canvas(self.simroot, bg="#292929", width=self.mapGeneral, height=self.mapGeneral)
+        self.canva_frame_zoom.pack(side=LEFT, padx=10)
 
         self.modele = Modele.Modele(self.canva_frame_general, self.seed.diamond_square.heightmap)
         self.modele.creer_animaux(self.canva_frame_general)
@@ -163,7 +173,7 @@ class Vue:
         if(new):
             self.seed.generate_map()
 
-        vue.generate_square(self.seed.diamond_square.heightmapWidth, self.seed.diamond_square.heightmap, self.seed.biomeOrder, grosseur)
+        vue.generate_square(self.seed.diamond_square.heightmapWidth, self.seed.diamond_square.heightmap, self.seed.biomeOrder, grosseur, True)
 
     def new_window_preview(self):
         self.startButton['state'] = NORMAL

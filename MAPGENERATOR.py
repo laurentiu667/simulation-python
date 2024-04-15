@@ -8,7 +8,7 @@ class Vue():
         self.root = root
         self.width = None
 
-    def generate_square(self, size, array, biomes, res):
+    def generate_square(self, size, array, biomes, res, genBiome):
         self.width = res
         square_size = res / size
         x1 = 0
@@ -52,7 +52,8 @@ class Vue():
                     x2 = square_size
                     x1 = 0
 
-        self.draw_biome_limitaion(biomes)
+        if(genBiome):
+            self.draw_biome_limitaion(biomes)
         self.root.pack()
 
     def draw_biome_limitaion(self, biomes):
