@@ -5,11 +5,26 @@ import calendar
 
 
 class Timer:
-    LOCK = threading.Lock() # Verrou  n'autorise qu'un seul repre temporelle 
+    LOCK = threading.Lock() # Verrou  n'autorise qu'un seul thread a la fois a acceder a la 
+    _instance = None
     def __init__(self, e):
-        self.e = e
+        self.envi = e
         self.date_initiale = self.date = datetime(1, 1, 1, 0, 0, 0)
         self.thread = threading.Thread(target=self.update_timer).start()  # Démarre le thread de mise à jour du timer
+    
+    def __new__(cls, e): # singleton on verra ça en orienté objets 2
+        if not cls._instance:
+            cls._instance = super(Timer, cls).__new__(cls)
+            cls.e = e
+        return cls._instance
+    
+    def update_timer(self):
+        """Avance le temps d'une seconde."""
+        with Timer.LOCK:  # Acquiert le verrou
+            while True:
+                self.date += timedelta(seconds=3600)
+                T.sleep(1) # peut etre penser a synchro l'affichage et le temps si on veut tout voir en temps reel 
+                # mais utile si le programme lag le temps ne sera pas affecté !
     
     
     @staticmethod
@@ -35,15 +50,6 @@ class Timer:
        
     def __str__(self): # permet de print(self.temps) directment le temps
         return self.date.strftime("%d/%m/%Y %H:%M:%S")
-
-
-    def update_timer(self):
-        """Avance le temps d'une seconde."""
-        with Timer.LOCK:  # Acquiert le verrou
-            while True:
-                self.date += timedelta(seconds=1800)
-                T.sleep(1) # peut etre penser a synchro l'affichage et le temps si on veut tout voir en temps reel
-    
     
     def get_date(self):
         return self.date.strftime("%d/%m/%Y")
@@ -64,17 +70,17 @@ class Timer:
         if saison is not None:
             return sum([calendar.monthrange(self.date.year, month)[1] for month in saison.mois])
 
-        return  sum([calendar.monthrange(self.date.year, month)[1] for month in self.e.saison.mois])
+        return  sum([calendar.monthrange(self.date.year, month)[1] for month in self.envi.saison.mois])
 
     def joursDepuisDebutSaison(self):
         from Saison import Hiver # import ici pour eviter les import circulaire
-        if isinstance(self.e.saison, Hiver):
+        if isinstance(self.envi.saison, Hiver):
             if self.date.year == 1:
                 date_debut_saison = self.date_initiale
             else:
-                date_debut_saison = datetime(self.date.year - 1, self.e.saison.mois[0], 1)
+                date_debut_saison = datetime(self.date.year - 1, self.envi.saison.mois[0], 1)
         else:
-            date_debut_saison = datetime(self.date.year, self.e.saison.mois[0], 1)  # Assumons que la saison commence le premier jour du premier mois de la saison
+            date_debut_saison = datetime(self.date.year, self.envi.saison.mois[0], 1)  # Assumons que la saison commence le premier jour du premier mois de la saison
         jours_ecoules = (self.date - date_debut_saison).days
         return 1 if jours_ecoules == 0 else jours_ecoules
     

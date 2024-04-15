@@ -5,13 +5,13 @@ from abc import ABC, abstractmethod
 from Biome import *
 from Saison import *
 
-
+#classe vu temporaire pour afficher les test sur l'environnement
 class Vu:
     def __init__(self, environnement):
         self.env = environnement
         self.root = Tk()
         self.root.title("Environnement")
-        self.canvas = Canvas(self.root, width=500, height=500)
+        self.canvas = Canvas(self.root, width=500, height=300)
         self.canvas.pack()
         
     def afficher(self):
@@ -105,6 +105,8 @@ class Vu:
     def update(self):
         self.env.updateEnv()
         
+        self.env.dateHeure.date
+        
         self.biome_info.config(text=self.env.biome)
         self.saison_info.config(text=self.env.saison)
         self.date_info.config(text=self.env.dateHeure.get_date())
@@ -119,7 +121,7 @@ class Vu:
         self.soleil_info.config(text= "Levée" if self.env.soleil else "Couchée")
         
         self.root.update()
-        self.root.after(1000, self.update)
+        self.root.after(100, self.update)
 
 
 class Environnement:
@@ -141,9 +143,9 @@ class Environnement:
         self.apogeeSolaire = None
         
         self.saison = None
-        
         self.biome = PrairiesEtSavanes()
         self.dateHeure = Timer(self) # definit init ici ou dans le modele
+        
         self.statEnv()
 
 
@@ -160,10 +162,13 @@ class Environnement:
     def updateEnv(self):
         self.liaisonSaisonMois()
         self.calculTemperature()
+        
 
     def ajuster_temps_soleil(self, temps_soleil):
         # ((difference tranche d'heure)/ nb jours dans la saison) * jours actuel
         #permet au lever et coucher du soleil de s'ajuster selon les jours durant la saison
+        #si temps necessaire corriger pour atteindre la 2eme temps soleil au millieux de la saison
+        #et progressivement se rapprocher de 1er temps soleil de sa saison ou (maybe mieux) le 1er temps soleil de la saison suivante
         diffTrancheHeure = self.dateHeure.total_seconds(temps_soleil[1]) - self.dateHeure.total_seconds(temps_soleil[0])
         diffParNbjours = diffTrancheHeure / self.dateHeure.nombreDeJoursDeLaSaison()
         return self.dateHeure.addTime(temps_soleil[0], Timer.convertirSecondeEnDuree(diffParNbjours * self.dateHeure.joursDepuisDebutSaison()))
@@ -184,6 +189,7 @@ class Environnement:
             totalHeure = self.dateHeure.total_seconds(self.apogeeSolaire) - self.dateHeure.total_seconds(self.leveeDuSoleil)
             heureCible = self.dateHeure.total_seconds(self.dateHeure.date.time()) - self.dateHeure.total_seconds(self.leveeDuSoleil)
             etatDuSoleil = (heureCible / totalHeure)
+            
         elif  self.apogeeSolaire <= self.dateHeure.date.time() < self.coucherDuSoleil :
             totalHeure = self.dateHeure.total_seconds(self.coucherDuSoleil) - self.dateHeure.total_seconds(self.apogeeSolaire)
             heureCible = self.dateHeure.total_seconds(self.dateHeure.date.time()) - self.dateHeure.total_seconds(self.apogeeSolaire)
@@ -192,7 +198,8 @@ class Environnement:
             
         if etatDuSoleil is not None:
             if self.dateHeure.date.time() < self.apogeeSolaire:
-                self.ensoleillementActuel = round(etatDuSoleil * self.ensoleillementMax,2)
+                self.ensoleillementActuel = round(etatDuSoleil * self.ensoleillementMax,2)# Corriger a 11h en hiver ensoleillementActuel
+        
             else:
                 self.ensoleillementActuel = round(1 - (etatDuSoleil * self.ensoleillementMax),2)
         else:
