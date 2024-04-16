@@ -48,7 +48,7 @@ class Timer:
         return new_datetime_obj.time()
        
        
-    def __str__(self): # permet de print(self.temps) directment le temps
+    def __str__(self): # permet de print(self.var(stock la classe Timer)) directment le temps
         return self.date.strftime("%d/%m/%Y %H:%M:%S")
     
     def get_date(self):
