@@ -23,8 +23,7 @@ class Timer:
         with Timer.LOCK:  # Acquiert le verrou
             while True:
                 self.date += timedelta(seconds=3600)
-                T.sleep(1) # peut etre penser a synchro l'affichage et le temps si on veut tout voir en temps reel 
-                # mais utile si le programme lag le temps ne sera pas affecté !
+                T.sleep(1) #
     
     
     @staticmethod

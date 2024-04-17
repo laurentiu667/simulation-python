@@ -145,7 +145,6 @@ class Environnement:
         self.saison = None
         self.biome = PrairiesEtSavanes()
         self.dateHeure = Timer(self) # definit init ici ou dans le modele
-        
         self.statEnv()
 
 
@@ -167,8 +166,6 @@ class Environnement:
     def ajuster_temps_soleil(self, temps_soleil):
         # ((difference tranche d'heure)/ nb jours dans la saison) * jours actuel
         #permet au lever et coucher du soleil de s'ajuster selon les jours durant la saison
-        #si temps necessaire corriger pour atteindre la 2eme temps soleil au millieux de la saison
-        #et progressivement se rapprocher de 1er temps soleil de sa saison ou (maybe mieux) le 1er temps soleil de la saison suivante
         diffTrancheHeure = self.dateHeure.total_seconds(temps_soleil[1]) - self.dateHeure.total_seconds(temps_soleil[0])
         diffParNbjours = diffTrancheHeure / self.dateHeure.nombreDeJoursDeLaSaison()
         return self.dateHeure.addTime(temps_soleil[0], Timer.convertirSecondeEnDuree(diffParNbjours * self.dateHeure.joursDepuisDebutSaison()))
@@ -199,7 +196,7 @@ class Environnement:
         if etatDuSoleil is not None:
             if self.dateHeure.date.time() < self.apogeeSolaire:
                 self.ensoleillementActuel = round(etatDuSoleil * self.ensoleillementMax,2)# Corriger a 11h en hiver ensoleillementActuel
-        
+
             else:
                 self.ensoleillementActuel = round(1 - (etatDuSoleil * self.ensoleillementMax),2)
         else:

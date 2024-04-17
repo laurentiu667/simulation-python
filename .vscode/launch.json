@@ -5,10 +5,17 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Débogueur Python : Environnement",
+            "name": "Main",
             "type": "debugpy",
             "request": "launch",
             "program": "${workspaceFolder}/Main.py",
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "Environnement",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/Environnement.py",
             "console": "integratedTerminal"
         }
     ]

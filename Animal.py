@@ -143,7 +143,7 @@ class Animal(ABC):
         start_time = time.time()
 
         while True:
-            current_time = Environnement.dateHeure #Timer(environnement)   classe simgleton donc peut etre initialiser n'importe ou
+            current_time = time.time()#Timer(model.environnement).time() classe simgleton ou (si acces) evironnement.dateHeure.time() les 2 se valent
             minutes, secondes = divmod(current_time, 60)
 
             print("Minutes :", int(minutes))
