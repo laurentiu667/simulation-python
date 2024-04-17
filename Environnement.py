@@ -121,7 +121,7 @@ class Vu:
         self.soleil_info.config(text= "Levée" if self.env.soleil else "Couchée")
         
         self.root.update()
-        self.root.after(1000, self.update)
+        self.root.after(300, self.update)
 
 
 class Environnement:
@@ -146,8 +146,6 @@ class Environnement:
         self.biome = PrairiesEtSavanes()
         self.dateHeure = Timer(self) # definit ici ou dans le modele
         self.statEnv()
-        
-        self.enso = []
 
 
     def statEnv(self):
@@ -197,16 +195,15 @@ class Environnement:
             
         if etatDuSoleil is not None:
             if self.dateHeure.date.time() < self.apogeeSolaire:
-                self.ensoleillementActuel = round(etatDuSoleil * self.ensoleillementMax,2)# Corriger a 11h en hiver ensoleillementActuel
-                self.enso.append(self.ensoleillementActuel)
-            else:
+                self.ensoleillementActuel = round(etatDuSoleil * self.ensoleillementMax,2)
+            else:    
                 self.ensoleillementActuel = round(1 - (etatDuSoleil * self.ensoleillementMax),2)
         else:
             self.ensoleillementActuel = 0
         
         if self.ensoleillementActuel >  0:
             self.soleil = True
-        elif self.ensoleillementActuel <= 0:
+        else:
             self.soleil = False
             
         
