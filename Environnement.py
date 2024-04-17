@@ -103,7 +103,7 @@ class Vu:
         
 
     def update(self):
-        self.env.updateEnv()
+        self.env.updateEnv() # peut etre placer dans la classe Timer peut etre
         
         self.env.dateHeure.date
         
@@ -114,14 +114,14 @@ class Vu:
         self.temperature_info.config(text=self.env.temperatureActuel)
         self.humidite_info.config(text=f"{self.env.humiditeActuel*100}" + " %")
         self.ensoleillementMax_info.config(text=f"{self.env.ensoleillementMax*100}" + " %")
-        self.ensoleillementActuel_info.config(text=f"{self.env.ensoleillementActuel*100}" + " %")
+        self.ensoleillementActuel_info.config(text=f"{round(self.env.ensoleillementActuel*100, 3)}" + " %")
         self.leveeDuSoleil_info.config(text=self.env.dateHeure.get_time(self.env.leveeDuSoleil))
         self.coucheeDuSoleil_info.config(text=self.env.dateHeure.get_time(self.env.coucherDuSoleil))
         self.apogeeSolaire_info.config(text=self.env.dateHeure.get_time(self.env.apogeeSolaire))
         self.soleil_info.config(text= "Levée" if self.env.soleil else "Couchée")
         
         self.root.update()
-        self.root.after(100, self.update)
+        self.root.after(1000, self.update)
 
 
 class Environnement:
@@ -144,8 +144,10 @@ class Environnement:
         
         self.saison = None
         self.biome = PrairiesEtSavanes()
-        self.dateHeure = Timer(self) # definit init ici ou dans le modele
+        self.dateHeure = Timer(self) # definit ici ou dans le modele
         self.statEnv()
+        
+        self.enso = []
 
 
     def statEnv(self):
@@ -180,13 +182,13 @@ class Environnement:
         self.coucherDuSoleil = self.ajuster_temps_soleil(self.saison.coucherDuSoleil)
         self.apogeeSolaire = self.ajuster_temps_soleil(self.saison.apogeeSolaire)
         
-        #ajuste la position du soleil en fonctionde l'heure actuelle 
+        #ajuste la position du soleil en fonction de l'heure actuelle 
         #si l'heure actuelle est entre le lever et l'apogée du soleil
         if self.leveeDuSoleil <= self.dateHeure.date.time() < self.apogeeSolaire:
             totalHeure = self.dateHeure.total_seconds(self.apogeeSolaire) - self.dateHeure.total_seconds(self.leveeDuSoleil)
             heureCible = self.dateHeure.total_seconds(self.dateHeure.date.time()) - self.dateHeure.total_seconds(self.leveeDuSoleil)
             etatDuSoleil = (heureCible / totalHeure)
-            
+        #si l'heure actuelle est entre le coucher et l'apogée du soleil
         elif  self.apogeeSolaire <= self.dateHeure.date.time() < self.coucherDuSoleil :
             totalHeure = self.dateHeure.total_seconds(self.coucherDuSoleil) - self.dateHeure.total_seconds(self.apogeeSolaire)
             heureCible = self.dateHeure.total_seconds(self.dateHeure.date.time()) - self.dateHeure.total_seconds(self.apogeeSolaire)
@@ -196,7 +198,7 @@ class Environnement:
         if etatDuSoleil is not None:
             if self.dateHeure.date.time() < self.apogeeSolaire:
                 self.ensoleillementActuel = round(etatDuSoleil * self.ensoleillementMax,2)# Corriger a 11h en hiver ensoleillementActuel
-
+                self.enso.append(self.ensoleillementActuel)
             else:
                 self.ensoleillementActuel = round(1 - (etatDuSoleil * self.ensoleillementMax),2)
         else:

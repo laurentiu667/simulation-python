@@ -29,7 +29,7 @@ class ForetsBoreales(Biome):
     def __init__(self):
         temperature = -5
         humidite = 0.7
-        coefHumidité = -0.05
+        coefHumidité = -0.5
         ensoleillement = 0.4
         precipitaion = 0.7
         super().__init__('Forêts Boréales', temperature, humidite, coefHumidité, ensoleillement, precipitaion)
@@ -38,7 +38,7 @@ class Toundra(Biome):
     def __init__(self):
         temperature = -8
         humidite = 0.6
-        coefHumidité = -0.02
+        coefHumidité = -0.2
         ensoleillement = 0.5
         precipitaion = 0.3
         super().__init__('Toundra', temperature, humidite, coefHumidité, ensoleillement,precipitaion)
@@ -47,16 +47,16 @@ class RivieresEtLacs(Biome):
     def __init__(self):
         temperature = 0
         humidite = 0.8
-        coefHumidité = -0.03
+        coefHumidité = -0.3
         ensoleillement = 0.60
         precipitaion = 0.8
         super().__init__('Rivières et Lacs', temperature, humidite, coefHumidité, ensoleillement,precipitaion)
 
 class MontagnesEtPlateaux(Biome):
     def __init__(self):
-        temperature = -0.6
+        temperature = -4
         humidite = 0.5
-        coefHumidité = -0.06
+        coefHumidité = -0.6
         ensoleillement = 0.70
         precipitaion = 0.75
         super().__init__('Montagnes et Plateaux', temperature, humidite, coefHumidité, ensoleillement, precipitaion)
@@ -65,7 +65,7 @@ class PrairiesEtSavanes(Biome):
     def __init__(self):
         temperature = 2
         humidite = 0.5
-        coefHumidité = -0.05
+        coefHumidité = -0.5
         ensoleillement = 0.8
         precipitaion = 0.5
         super().__init__('Prairies et Savanes', temperature, humidite, coefHumidité,ensoleillement, precipitaion)

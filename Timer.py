@@ -7,15 +7,21 @@ import calendar
 class Timer:
     LOCK = threading.Lock() # Verrou  n'autorise qu'un seul thread a la fois a acceder a la 
     _instance = None
+    def __init__(self):
+        self.date_initiale = self.date = datetime(1, 1, 1, 0, 0, 0)
+        self.thread = threading.Thread(target=self.update_timer).start()
+        
     def __init__(self, e):
         self.envi = e
         self.date_initiale = self.date = datetime(1, 1, 1, 0, 0, 0)
         self.thread = threading.Thread(target=self.update_timer).start()  # Démarre le thread de mise à jour du timer
     
-    def __new__(cls, e): # singleton on verra ça en orienté objets 2
+    def __new__(cls, e = None): # singleton on verra ça en orienté objets 2
         if not cls._instance:
             cls._instance = super(Timer, cls).__new__(cls)
-            cls.e = e
+            
+            if e is not None:
+                cls.e = e
         return cls._instance
     
     def update_timer(self):
