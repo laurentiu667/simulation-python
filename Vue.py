@@ -16,10 +16,22 @@ class Vue:
         self.submap = None      #ZOOM DE LA MAP
         self.bool = False
 
+#       ANIMAUX
+        self.Loup = 0
+        self.Lievre = 0
+        self.Raton = 0
+        self.Cerf = 0
+        self.Lynx = 0
+        self.Renard = 0
+        self.Orignial = 0
+        self.Ours = 0
+        self.Castor = 0
+        self.Ecureille = 0
+
 
     def accueil(self):
         self.root.title("Accueil")
-        self.root.geometry("1300x700")
+        self.root.geometry("1500x700")
         self.root.resizable(False, False)
         self.root.config(background="#292929")
         self.Frame_Preview_show_map = None
@@ -30,16 +42,16 @@ class Vue:
         # Div du titre
         frame_title = Frame(Frame_global, bg="#292929")
         frame_title.pack(pady=10, padx=30, fill=BOTH)
-        label_title = Label(frame_title, text="Simulation", font=("Arial", 50), bg="#292929", fg="gray")
+        label_title = Label(frame_title, text="Simulation Environnement Naturel Du Quebec", font=("Arial", 25), bg="#292929", fg="gray")
         label_title.pack()
 
         # Div des Configurations
-        frame_buttons = Frame(Frame_global, bg="#292929")
-        frame_buttons.pack(padx=30, anchor=W)
+        frame_buttons = Frame(Frame_global, bg="#292929",  height=50)
+        frame_buttons.pack(padx=30, side=LEFT, anchor=N)
 
         # Confirmer les changement et les appliquées
         def valider():
-            label.config(text=clicked.get())
+            label3.config(text=clicked.get())
             label2.config(text=clicked2.get())
 
             self.res = (mapSize[clicked.get()])
@@ -48,24 +60,39 @@ class Vue:
             self.seed = MAPGENERATOR.Seed(water)  #SEED GENERATES HERE!!!!!!!!
             self.startButton['state'] = DISABLED
 
+            # SET LE NOMBRE ANIMAUX VOULUT DANS LES VARIABLES
+            self.Ours = nbrOurs.get()
+            self.Ecureille = nbrEcureille.get()
+            self.Cerf = nbrCerf.get()
+            self.Lievre = nbrLievre.get()
+            self.Castor = nbrCastor.get()
+            self.Renard = nbrRenard.get()
+            self.Lynx = nbrLynx.get()
+            self.Loup = nbrLoup.get()
+            self.Orignial = nbrOrignial.get()
+            self.Raton = nbrRaton.get()
+
         # SCROLL DOWN MENU
-        mapSize = {"x1" : 1 , "x1.5" : 1.5, "x2" : 2, "x2.5" : 2.5, "x3" : 3, "x3.5" : 3.5, "x4" : 4}
+        labelPrincipal1 = Label(frame_buttons, text="Parametre de la carte", bg="#292929", fg="WHITE", font=("Arial", 20))
+        labelPrincipal1.pack()
+
+        mapSize = {"x1" : 1 , "x2" : 2, "x3" : 3, "x4" : 4}
         clicked = StringVar()
         clicked.set("x1")
         drop = OptionMenu(frame_buttons, clicked, *mapSize, )
         drop.config(bg="#292929", fg="WHITE")
-        labelMapDetail = Label(frame_buttons, text="Grosseur de la Carte", bg="#292929", fg="WHITE", font=("Arial", 15))
-        label = Label(frame_buttons, text="", bg="#292929", font=("Arial", 15), fg="WHITE")
+        labelMapDetail = Label(frame_buttons, text="Grosseur de la Carte", bg="#292929", fg="WHITE", font=("Arial", 10))
+        label3 = Label(frame_buttons, text="", bg="#292929", font=("Arial", 15), fg="WHITE")
         labelMapDetail.pack(anchor=W)
         drop.pack(anchor=W)
-        label.pack(anchor=W, ipady=20)
+        label3.pack(anchor=W, ipady=20)
 
         waterPerc = {"5%": 5, "10%": 10, "15%": 15, "20%": 20, "25%": 25, "30%": 30, "35%": 35}
         clicked2 = StringVar()
         clicked2.set("10%")
         drop2 = OptionMenu(frame_buttons, clicked2, *waterPerc)
         drop2.config(bg="#292929", fg="WHITE")
-        labelWater = Label(frame_buttons, text="Pourcentage d'eau", bg="#292929", fg="WHITE", font=("Arial", 15))
+        labelWater = Label(frame_buttons, text="Pourcentage d'eau", bg="#292929", fg="WHITE", font=("Arial", 10))
         label2 = Label(frame_buttons, text="", bg="#292929", font=("Arial", 15), fg="WHITE")
         labelWater.pack(anchor=W)
         drop2.pack(anchor=W)
@@ -74,9 +101,95 @@ class Vue:
         button = Button(frame_buttons, text="Valider", command=valider, bg="#292929", fg="WHITE", font=("Arial", 15))
         button.pack(anchor=W, pady=20)
 
+
+        #DIV PARAMETRE ANIMAUX
+        frame_animaux = Frame(Frame_global, bg="#292929", height=50)
+        frame_animaux.pack(padx=30, side=LEFT, anchor=N)
+
+        labelPrincipal2 = Label(frame_animaux, text="Parametre des animaux", bg="#292929", fg="WHITE", font=("Arial", 20))
+        labelPrincipal2.pack(anchor=W)
+
+        frameOurs = Frame(frame_animaux, bg="#292929", pady = 5)
+        frameOurs.pack(anchor=W)
+        nbrOurs = Entry(frameOurs, width=10)
+        label = Label(frameOurs, text="Ours : ", bg="#292929", fg="WHITE", font=("Arial", 10), width=15)
+        nbrOurs.pack(side = RIGHT)
+        label.pack(side = LEFT)
+
+        frameCerf = Frame(frame_animaux, bg="#292929", pady = 5)
+        frameCerf.pack(anchor=W)
+        nbrCerf = Entry(frameCerf, width=10)
+        label = Label(frameCerf, text="Cerf : ", bg="#292929", fg="WHITE", font=("Arial", 10), width=15)
+        nbrCerf.pack(side=RIGHT)
+        label.pack(side=LEFT)
+
+        frameLoup = Frame(frame_animaux, bg="#292929", pady = 5)
+        frameLoup.pack(anchor=W)
+        nbrLoup = Entry(frameLoup, width=10)
+        label = Label(frameLoup, text="Loup : ", bg="#292929", fg="WHITE", font=("Arial", 10), width=15)
+        nbrLoup.pack(side=RIGHT)
+        label.pack(side=LEFT)
+
+        frameRaton = Frame(frame_animaux, bg="#292929", pady=5)
+        frameRaton.pack(anchor=W)
+        nbrRaton = Entry(frameRaton, width=10)
+        label = Label(frameRaton, text="Raton : ", bg="#292929", fg="WHITE", font=("Arial", 10), width=15)
+        nbrRaton.pack(side=RIGHT)
+        label.pack(side=LEFT)
+
+        frameEcureille = Frame(frame_animaux, bg="#292929", pady=5)
+        frameEcureille.pack(anchor=W)
+        nbrEcureille = Entry(frameEcureille, width=10)
+        label = Label(frameEcureille, text="Ecureille : ", bg="#292929", fg="WHITE", font=("Arial", 10), width=15)
+        nbrEcureille.pack(side=RIGHT)
+        label.pack(side=LEFT)
+
+        frameCastor = Frame(frame_animaux, bg="#292929", pady=5)
+        frameCastor.pack(anchor=W)
+        nbrCastor = Entry(frameCastor, width=10)
+        label = Label(frameCastor, text="Castor : ", bg="#292929", fg="WHITE", font=("Arial", 10), width=15)
+        nbrCastor.pack(side=RIGHT)
+        label.pack(side=LEFT)
+
+        frameRenard = Frame(frame_animaux, bg="#292929", pady=5)
+        frameRenard.pack(anchor=W)
+        nbrRenard = Entry(frameRenard, width=10)
+        label = Label(frameRenard, text="Renard : ", bg="#292929", fg="WHITE", font=("Arial", 10), width=15)
+        nbrRenard.pack(side=RIGHT)
+        label.pack(side=LEFT)
+
+        frameOrignial = Frame(frame_animaux, bg="#292929", pady=5)
+        frameOrignial.pack(anchor=W)
+        nbrOrignial = Entry(frameOrignial, width=10)
+        label = Label(frameOrignial, text="Orignial : ", bg="#292929", fg="WHITE", font=("Arial", 10), width=15)
+        nbrOrignial.pack(side=RIGHT)
+        label.pack(side=LEFT)
+
+        frameLievre = Frame(frame_animaux, bg="#292929", pady=5)
+        frameLievre.pack(anchor=W)
+        nbrLievre = Entry(frameLievre, width=10)
+        label = Label(frameLievre, text="Lievre : ", bg="#292929", fg="WHITE", font=("Arial", 10), width=15)
+        nbrLievre.pack(side=RIGHT)
+        label.pack(side=LEFT)
+
+        frameLynx = Frame(frame_animaux, bg="#292929", pady=5)
+        frameLynx.pack(anchor=W)
+        nbrLynx = Entry(frameLynx, width=10)
+        label = Label(frameLynx, text="Lynx : ", bg="#292929", fg="WHITE", font=("Arial", 10), width=15)
+        nbrLynx.pack(side=RIGHT)
+        label.pack(side=LEFT)
+
+        # DIV PARAMETRE ENVIRONEMNT
+        frame_environnement = Frame(Frame_global, bg="red", height=50, width=20)
+        frame_environnement.pack(padx=30, side=LEFT, anchor=N)
+
+        labelPrincipal3 = Label(frame_environnement, text="Parametre environnement", bg="#292929", fg="WHITE", font=("Arial", 20))
+        labelPrincipal3.pack(anchor=W)
+
+
         # DIV start
-        start_frame = Frame(Frame_global, bg="#292929")
-        start_frame.pack(fill=X, pady=10, padx=30)
+        start_frame = Frame(frame_buttons, bg="#292929")
+        start_frame.pack(fill=X, side=BOTTOM, anchor=W)
 
         start_preview = Button(start_frame, text="Aperçu", font=("Arial", 20), bg="#292929", fg="gray", command=self.new_window_preview)
         self.startButton = Button(start_frame, text="Commencer", font=("Arial", 20), bg="#292929", fg="gray", command=self.new_window_start_sim, state=DISABLED)
@@ -96,6 +209,7 @@ class Vue:
         self.carre = 0
         self.currSectionView = None
         self.canva_frame_zoom = None
+
 
         # frame pour les conditions meteo et heure
         conditions_frame = Frame(self.simroot, bg="#292929", height=50)
@@ -183,7 +297,7 @@ class Vue:
         if(self.Frame_Preview_show_map):
             self.Frame_Preview_show_map.destroy()
 
-        self.Frame_Preview_show_map = Frame(self.root, bg="#292929", borderwidth=10)
+        self.Frame_Preview_show_map = Frame(self.root, bg="#292929", borderwidth=10, width=200)
         label_title = Label(self.Frame_Preview_show_map, text="Map qui sera généré :", font=("Arial", 25), bg="#292929", fg="White")
         label_title.pack()
         self.Frame_Preview_show_map.pack(side=RIGHT)
