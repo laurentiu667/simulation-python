@@ -62,51 +62,51 @@ class Modele:
     # GENERE TOUT LES ANIMAUX AVEC : NOM DE L'ANIMAL + INDEX
     def creer_animaux(self):
         if int(self.map.Cerf) > 0:
-            for i in range(int(self.map.Cerf)):
+            for i in range(int(self.map.Cerf), self.map.submap.ALL):
                 cerf = Cerf(str(i))
                 self.animaux.append(cerf)
 
         if int(self.map.Loup) > 0:
-            for i in range(int(self.map.Loup)):
+            for i in range(int(self.map.Loup), self.map.submap.ALL):
                 loup = Loup(str(i))
                 self.animaux.append(loup)
 
         if int(self.map.Raton) > 0:
             for i in range(int(self.map.Raton)):
-                raton_laveur = Raton_laveur(str(i))
+                raton_laveur = Raton_laveur(str(i), self.map.submap.ALL)
                 self.animaux.append(raton_laveur)
 
         if int(self.map.Lynx) > 0:
             for i in range(int(self.map.Lynx)):
-                lynx = Lynx(str(i))
+                lynx = Lynx(str(i), self.map.submap.ALL)
                 self.animaux.append(lynx)
 
         if int(self.map.Ecureille) > 0:
             for i in range(int(self.map.Ecureille)):
-                ecureuil = Ecureuil(str(i))
+                ecureuil = Ecureuil(str(i), self.map.submap.ALL)
                 self.animaux.append(ecureuil)
 
         if int(self.map.Renard) > 0:
             for i in range(int(self.map.Renard)):
-                renard = Renard(str(i))
+                renard = Renard(str(i), self.map.submap.ALL)
                 self.animaux.append(renard)
 
         if int(self.map.Castor) > 0:
             for i in range(int(self.map.Castor)):
-                castor = Castor(str(i))
+                castor = Castor(str(i), self.map.submap.ALL)
                 self.animaux.append(castor)
 
         if int(self.map.Orignial) > 0:
             for i in range(int(self.map.Orignial)):
-                orignal = Orignal(str(i))
+                orignal = Orignal(str(i), self.map.submap.ALL)
                 self.animaux.append(orignal)
 
         if int(self.map.Lievre) > 0:
             for i in range(int(self.map.Lievre)):
-                lievre = Lievre(str(i))
+                lievre = Lievre(str(i), self.map.submap.ALL)
                 self.animaux.append(lievre)
 
         if int(self.map.Ours) > 0:
             for i in range(int(self.map.Ours)):
-                ours = Ours(str(i))
+                ours = Ours(str(i), self.map.submap.ALL)
                 self.animaux.append(ours)
