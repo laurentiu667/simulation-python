@@ -15,6 +15,8 @@ class Vue:
         self.res = 0
         self.submap = None      #ZOOM DE LA MAP
         self.bool = False
+        self.currSectionView = None
+        self.canva_frame_zoom = None
 
 #       ANIMAUX
         self.Loup = 0
@@ -215,13 +217,12 @@ class Vue:
         self.root.destroy()
         self.simroot = Tk()
         self.simroot.title("Accueil")
-        self.simroot.geometry("1600x1000")
+        self.simroot.geometry("1600x900")
         self.simroot.resizable(False, False)
         self.simroot.config(background="#292929")
         self.mapGeneral = 800
         self.carre = 0
-        self.currSectionView = None
-        self.canva_frame_zoom = None
+
 
 
         # frame pour les conditions meteo et heure
@@ -321,5 +322,5 @@ class Vue:
         self.generate_map_on_canvas(canva, True, 400)
 
     def simulation(self):
-        label = Label(self.simroot, text=self.hey)
-        label.pack()
+        for i in self.parent.model.animaux:
+            self.canva_frame_zoom.create_image(i.x, i.y, image=i.photo, anchor=tk.CENTER)
