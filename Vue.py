@@ -1,6 +1,7 @@
 from tkinter import *
 import MAPGENERATOR
 from MAPGENERATOR import *
+from Environnement import *
 import Modele
 
 class Vue:
@@ -459,7 +460,12 @@ class Vue:
         if(new):
             self.seed.generate_map()
 
-        vue.generate_square(self.seed.diamond_square.heightmapWidth, self.seed.diamond_square.heightmap, self.seed.biomeOrder, grosseur, True)
+        print("Saison actuelle: ", self.parent.model.env.saison)
+
+        if self.parent.model.env.saison.nom == "été":
+            vue.generate_square(self.seed.diamond_square.heightmapWidth, self.seed.diamond_square.heightmap, self.seed.biomeOrder, grosseur, True)
+        elif self.parent.model.env.saison.nom == "hiver":
+            vue.generate_square_winter(self.seed.diamond_square.heightmapWidth, self.seed.diamond_square.heightmap, self.seed.biomeOrder, grosseur, True)
 
     def new_window_preview(self):
         self.startButton['state'] = NORMAL

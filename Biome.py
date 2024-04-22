@@ -20,10 +20,6 @@ class Biome(ABC):
     #     self.dominant_fauna = dominant_fauna
     #     self.orage = orage
     #     self.night = night
-    
-
-    def __str__(self):
-        return self.nom
 
 class ForetsBoreales(Biome):
     def __init__(self):

@@ -56,6 +56,54 @@ class Vue():
             self.draw_biome_limitaion(biomes)
         self.root.pack()
 
+    def generate_square_winter(self, size, array, biomes, res, genBiome):
+        self.width = res
+        square_size = res / size
+        x1 = 0
+        y1 = 0
+        x2 = square_size
+        y2 = square_size
+        color = "green2"
+        for i in range(size):
+            row = array[i]
+            for j in range(size):
+                if -1 < row[j] < 25:
+                    color = "lightSkyBlue"
+                elif 25 < row[j] < 50:
+                    color = "cornflowerBlue"
+                elif 50 < row[j] < 75:
+                    color = "palegreen"
+                elif 75 < row[j] < 100:
+                    color = "snow"
+                elif 100 < row[j] < 125:
+                    color = "lavender"
+                elif 125 < row[j] < 150:
+                    color = "lavender"
+                elif 150 < row[j] < 175:
+                    color = "lightblue"
+                elif 175 < row[j] < 200:
+                    color = "lightblue"
+                elif 200 < row[j] < 225:
+                    color = "lighsteelblue"
+                elif 225 < row[j] < 250:
+                    color = "lighsteelblue"
+                elif 250 < row[j]:
+                    color = "gray80"
+
+                self.root.create_rectangle(x1, y1, x2, y2, fill=color, outline="")
+                x1 += square_size
+                x2 += square_size
+                limit = round(size * square_size)
+                if round(x1, 0) == limit:
+                    y1 += square_size
+                    y2 += square_size
+                    x2 = square_size
+                    x1 = 0
+
+        if(genBiome):
+            self.draw_biome_limitaion(biomes)
+        self.root.pack()
+
     def draw_biome_limitaion(self, biomes):
         limits = (self.width/3)
         for i in range(1, 3, 1):
