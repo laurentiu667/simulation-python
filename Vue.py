@@ -32,6 +32,30 @@ class Vue:
 
         #ENVIRONNEMENT
         self.hey = None
+        self.biomes_frame = None
+
+        self.saison_frame = None
+
+        self.dates_frame = None
+
+        self.heure_frame = None
+
+        self.temp_frame = None
+
+        self.humidite_frame = None
+
+        self.solei_max_frame = None
+
+        self.solei_actuel_frame = None
+
+        self.leve_solei_frame = None
+
+        self.heure_coucher_solei = None
+
+        self.apogee_solei = None
+
+        self.solei_info = None
+
 
 
     def accueil(self):
@@ -223,30 +247,83 @@ class Vue:
         self.mapGeneral = 800
         self.carre = 0
 
+        # frame pour les conditions météo et heure
+        conditions_frame = Frame(self.simroot, bg="#292929")
+        conditions_frame.pack(pady=5, padx=5, fill=X)
 
+        self.biomes_frame = Frame(conditions_frame, bg="gray50")
+        self.biomes_frame.pack(side=LEFT, padx=5, pady=5)
+        Label(self.biomes_frame, text="Biomes: ").pack(side=LEFT)
+        self.biomes_value_label = Label(self.biomes_frame, text=str(self.parent.model.env.biome))
+        self.biomes_value_label.pack(side=LEFT)
 
-        # frame pour les conditions meteo et heure
-        conditions_frame = Frame(self.simroot, bg="#292929", height=50)
-        conditions_frame.pack(pady=5, padx=5,fill=X)
+        self.saison_frame = Frame(conditions_frame, bg="gray50")
+        self.saison_frame.pack(side=LEFT, padx=5, pady=5)
+        Label(self.saison_frame, text="Saison: ").pack(side=LEFT)
+        self.saison_value_label = Label(self.saison_frame, text=str(self.parent.model.env.saison))
+        self.saison_value_label.pack(side=LEFT)
 
-        # frame pour les conditions meteo
-        conditions_heures_frame = Frame(conditions_frame, bg="gray50", height=40)
-        conditions_heures_frame.pack(side=LEFT, padx=5, pady=5, fill=BOTH, expand=True)
+        self.dates_frame = Frame(conditions_frame, bg="gray50")
+        self.dates_frame.pack(side=LEFT, padx=5, pady=5)
+        Label(self.dates_frame, text="Dates: ").pack(side=LEFT)
+        self.dates_value_label = Label(self.dates_frame, text=str(self.parent.model.env.dateHeure.get_date()))
+        self.dates_value_label.pack(side=LEFT)
 
-        conditions_meteo_frame = Frame(conditions_frame, bg="gray50")
-        conditions_meteo_frame.pack(side=LEFT, padx=5, pady=5, fill=BOTH, expand=True)
+        self.heure_frame = Frame(conditions_frame, bg="gray50")
+        self.heure_frame.pack(side=LEFT, padx=5, pady=5)
+        Label(self.heure_frame, text="Heure: ").pack(side=LEFT)
+        self.heure_value_label = Label(self.heure_frame, text=str(self.parent.model.env.dateHeure.date.time()))
+        self.heure_value_label.pack(side=LEFT)
 
-        conditions_precipitation_frame = Frame(conditions_frame, bg="gray50")
-        conditions_precipitation_frame.pack(side=LEFT, padx=5, pady=5, fill=BOTH, expand=True)
+        self.temp_frame = Frame(conditions_frame, bg="gray50")
+        self.temp_frame.pack(side=LEFT, padx=5, pady=5)
+        Label(self.temp_frame, text="Température: ").pack(side=LEFT)
+        self.temp_value_label = Label(self.temp_frame, text=str(self.parent.model.env.temperatureActuel))
+        self.temp_value_label.pack(side=LEFT)
 
-        button_pause_frame = Frame(conditions_frame, bg="gray50")
-        button_pause_frame.pack(side=LEFT, padx=5, pady=5, fill=BOTH, expand=True)
+        self.humidite_frame = Frame(conditions_frame, bg="gray50")
+        self.humidite_frame.pack(side=LEFT, padx=5, pady=5)
+        Label(self.humidite_frame, text="Humidité: ").pack(side=LEFT)
+        self.humidite_value_label = Label(self.humidite_frame, text=str(self.parent.model.env.humiditeActuel * 100))
+        self.humidite_value_label.pack(side=LEFT)
 
-        button_arrêter_frame = Frame(conditions_frame, bg="gray50")
-        button_arrêter_frame.pack(side=LEFT, padx=5, pady=5, fill=BOTH, expand=True)
+        self.solei_max_frame = Frame(conditions_frame, bg="gray50")
+        self.solei_max_frame.pack(side=LEFT, padx=5, pady=5)
+        Label(self.solei_max_frame, text="Soleil max: ").pack(side=LEFT)
+        self.solei_max = Label(self.solei_max_frame, text=str(self.parent.model.env.ensoleillementMax * 100))
+        self.solei_max.pack(side=LEFT)
 
-        button_fastforward_frame = Frame(conditions_frame, bg="gray50")
-        button_fastforward_frame.pack(side=LEFT, padx=5, pady=5, fill=BOTH, expand=True)
+        self.solei_actuel_frame = Frame(conditions_frame, bg="gray50")
+        self.solei_actuel_frame.pack(side=LEFT, padx=5, pady=5)
+        Label(self.solei_actuel_frame, text="Ensoillement actuel: ").pack(side=LEFT)
+        self.solei_actuel = Label(self.solei_actuel_frame,
+                                  text=f"{round(self.parent.model.env.ensoleillementActuel * 100, 3)}" + " %")
+        self.solei_actuel.pack(side=LEFT)
+
+        self.leve_solei_frame = Frame(conditions_frame, bg="gray50")
+        self.leve_solei_frame.pack(side=LEFT, padx=5, pady=5)
+        Label(self.leve_solei_frame, text="Levé du soleil: ").pack(side=LEFT)
+        self.leve_solei = Label(self.leve_solei_frame, text=str(self.parent.model.env.leveeDuSoleil))
+        self.leve_solei.pack(side=LEFT)
+
+        self.heure_coucher_solei_frame = Frame(conditions_frame, bg="gray50")
+        self.heure_coucher_solei_frame.pack(side=LEFT, padx=5, pady=5)
+        Label(self.heure_coucher_solei_frame, text="Coucher du soleil: ").pack(side=LEFT)
+        self.coucher_solei = Label(self.heure_coucher_solei_frame, text=str(self.parent.model.env.coucherDuSoleil))
+        self.coucher_solei.pack(side=LEFT)
+
+        self.apogee_solei_frame = Frame(conditions_frame, bg="gray50")
+        self.apogee_solei_frame.pack(side=LEFT, padx=5, pady=5)
+        Label(self.apogee_solei_frame, text="Apogée solaire: ").pack(side=LEFT)
+        self.apogee_solei_value_label = Label(self.apogee_solei_frame, text=str(self.parent.model.env.apogeeSolaire))
+        self.apogee_solei_value_label.pack(side=LEFT)
+
+        self.solei_info_frame = Frame(conditions_frame, bg="gray50")
+        self.solei_info_frame.pack(side=LEFT, padx=5, pady=5)
+        Label(self.solei_info_frame, text="Information Soleil: ").pack(side=LEFT)
+        self.solei_info_label = Label(self.solei_info_frame, text="Levé" if self.parent.model.env.soleil else "Couché")
+        self.solei_info_label.pack(side=LEFT)
+
 
 
         labelSize = Label(text="Grosseur de la carte : "+str(self.res * 400)+" x "+str(self.res * 400)+" mètres.", bg="gray50")
@@ -298,6 +375,25 @@ class Vue:
         self.parent.model.creer_animaux()
         self.parent.model.boucler_simulation()
 
+    def update(self):
+
+        # Configurer les labels avec les valeurs actuelles
+        self.biomes_value_label.config(text=str(self.parent.model.env.biome))
+        self.saison_value_label.config(text=str(self.parent.model.env.saison))
+        self.dates_value_label.config(text=str(self.parent.model.env.dateHeure.get_date()))
+        self.heure_value_label.config(text=str(self.parent.model.env.dateHeure.date.time()))
+        self.temp_value_label.config(text=str(self.parent.model.env.temperatureActuel))
+        self.humidite_value_label.config(text=str(self.parent.model.env.humiditeActuel * 100))
+        self.solei_max.config(text=str(self.parent.model.env.ensoleillementMax * 100))
+        self.solei_actuel.config(text=f"{round(self.parent.model.env.ensoleillementActuel * 100, 3)}" + " %")
+        self.leve_solei.config(text=str(self.parent.model.env.leveeDuSoleil))
+        self.coucher_solei.config(text=str(self.parent.model.env.coucherDuSoleil))
+        self.apogee_solei_value_label.config(text=str(self.parent.model.env.apogeeSolaire))
+        self.solei_info_label.config(text="Levé" if self.parent.model.env.soleil else "Couché")
+
+        self.root.update()
+        self.root.after(300, self.update)
+
     def on_click(self, event):
         print("salut")
 
@@ -324,3 +420,6 @@ class Vue:
     def simulation(self):
         for i in self.parent.model.animaux:
             self.canva_frame_zoom.create_image(i.x, i.y, image=i.photo, anchor=tk.CENTER)
+
+        self.update()
+
