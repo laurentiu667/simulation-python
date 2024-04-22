@@ -13,10 +13,13 @@ class Vue:
         self.canva_frame_general = None
         self.squares = []
         self.res = 0
-        self.submap = None      #ZOOM DE LA MAP
+
+        # ZOOM DE LA MAP
+        self.submap = None
         self.bool = False
         self.currSectionView = None
         self.canva_frame_zoom = None
+        self.carre = 0
 
 #       ANIMAUX
         self.Loup = 0
@@ -221,7 +224,6 @@ class Vue:
         self.simroot.resizable(False, False)
         self.simroot.config(background="#292929")
         self.mapGeneral = 800
-        self.carre = 0
 
 
 
@@ -323,4 +325,6 @@ class Vue:
 
     def simulation(self):
         for i in self.parent.model.animaux:
-            self.canva_frame_zoom.create_image(i.x, i.y, image=i.photo, anchor=tk.CENTER)
+            if(i.region == self.carre):
+                self.canva_frame_zoom.create_image(i.x, i.y, image=i.photo, anchor=tk.CENTER)
+            #i.deplacer()
