@@ -8,9 +8,7 @@ class Biome(ABC):
         self.impacteHumidite = impHum
         self.ensoleillement = ensoleillementBiome
         self.precipitation = precipitation
-        
 
-        
         
         # def __init__(self, name, orage, night,climate, average_temperature, precipitation, dominant_flora, dominant_fauna):
     #     self.climate = climate

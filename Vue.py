@@ -58,6 +58,8 @@ class Vue:
         self.apogee_solei = None
         self.solei_info = None
 
+        self.saisonBase = None
+
 
 
     def accueil(self):
@@ -302,6 +304,7 @@ class Vue:
         self.simroot.resizable(False, False)
         self.simroot.config(background="#292929")
         self.mapGeneral = 800
+        self.saisonBase = self.parent.model.env.saison
 
         # frame pour les conditions météo et heure
         conditions_frame = Frame(self.simroot, bg="#292929")
@@ -310,13 +313,13 @@ class Vue:
         self.biomes_frame = Frame(conditions_frame, bg="gray50")
         self.biomes_frame.pack(side=LEFT, padx=5, pady=5)
         Label(self.biomes_frame, text="Biomes: ").pack(side=LEFT)
-        self.biomes_value_label = Label(self.biomes_frame, text=str(self.parent.model.env.biome))
+        self.biomes_value_label = Label(self.biomes_frame, text=str(self.parent.model.env.biome.nom))
         self.biomes_value_label.pack(side=LEFT)
 
         self.saison_frame = Frame(conditions_frame, bg="gray50")
         self.saison_frame.pack(side=LEFT, padx=5, pady=5)
         Label(self.saison_frame, text="Saison: ").pack(side=LEFT)
-        self.saison_value_label = Label(self.saison_frame, text=str(self.parent.model.env.saison))
+        self.saison_value_label = Label(self.saison_frame, text=str(self.parent.model.env.saison.nom))
         self.saison_value_label.pack(side=LEFT)
 
         self.dates_frame = Frame(conditions_frame, bg="gray50")
@@ -436,8 +439,8 @@ class Vue:
     def update(self):
 
         # Configurer les labels avec les valeurs actuelles
-        self.biomes_value_label.config(text=str(self.parent.model.env.biome))
-        self.saison_value_label.config(text=str(self.parent.model.env.saison))
+        self.biomes_value_label.config(text=str(self.parent.model.env.biome.nom))
+        self.saison_value_label.config(text=str(self.parent.model.env.saison.nom))
         self.dates_value_label.config(text=str(self.parent.model.env.dateHeure.get_date()))
         self.heure_value_label.config(text=str(self.parent.model.env.dateHeure.date.time()))
         self.temp_value_label.config(text=str(self.parent.model.env.temperatureActuel))
@@ -459,8 +462,6 @@ class Vue:
         vue = MAPGENERATOR.Vue(canvas)
         if(new):
             self.seed.generate_map()
-
-        print("Saison actuelle: ", self.parent.model.env.saison)
 
         if self.parent.model.env.saison.nom == "été":
             vue.generate_square(self.seed.diamond_square.heightmapWidth, self.seed.diamond_square.heightmap, self.seed.biomeOrder, grosseur, True)
@@ -490,6 +491,10 @@ class Vue:
         for i in self.parent.model.animaux:
             if (i.region == self.carre):
                 self.canva_frame_zoom.create_image(i.x, i.y, image=i.photo, anchor=tk.CENTER)
+        
+        # if(self.saisonBase != self.parent.model.env.saison):
+        #     self.generate_map_on_canvas(self.canva_frame_general, False, self.mapGeneral)
+        #     self.saisonBase = self.parent.model.env.saison
 
         self.update()
 
