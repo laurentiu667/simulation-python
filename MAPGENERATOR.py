@@ -84,9 +84,9 @@ class Vue():
                 elif 175 < row[j] < 200:
                     color = "lightblue"
                 elif 200 < row[j] < 225:
-                    color = "lighsteelblue"
+                    color = "lightSteelBlue"
                 elif 225 < row[j] < 250:
-                    color = "lighsteelblue"
+                    color = "lightSteelBlue"
                 elif 250 < row[j]:
                     color = "gray80"
 

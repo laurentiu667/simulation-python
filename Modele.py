@@ -20,9 +20,8 @@ class Modele:
 
     def boucler_simulation(self):
         self.env.updateEnv()
-        print("boucle")
         self.parent.view.simulation()
-        self.parent.view.simroot.after(500, self.boucler_simulation)
+        self.parent.view.simroot.after(100, self.boucler_simulation)
     
         # self.debuterTemps() #initialisation du temps seulement si c'est le model final
 
@@ -62,13 +61,13 @@ class Modele:
     # GENERE TOUT LES ANIMAUX AVEC : NOM DE L'ANIMAL + INDEX
     def creer_animaux(self):
         if int(self.map.Cerf) > 0:
-            for i in range(int(self.map.Cerf), self.map.submap.ALL):
-                cerf = Cerf(str(i))
+            for i in range(int(self.map.Cerf)):
+                cerf = Cerf(str(i), self.map.submap.ALL)
                 self.animaux.append(cerf)
 
         if int(self.map.Loup) > 0:
-            for i in range(int(self.map.Loup), self.map.submap.ALL):
-                loup = Loup(str(i))
+            for i in range(int(self.map.Loup)):
+                loup = Loup(str(i), self.map.submap.ALL)
                 self.animaux.append(loup)
 
         if int(self.map.Raton) > 0:
@@ -110,3 +109,18 @@ class Modele:
             for i in range(int(self.map.Ours)):
                 ours = Ours(str(i), self.map.submap.ALL)
                 self.animaux.append(ours)
+                
+    def deplacer(self, i):
+        x = random.randint(1, 4)
+        if x == 1:
+            i.x -= 5
+            i.y -= 5
+        elif x == 2:
+            i.x += 5
+            i.y -= 5
+        elif x == 3:
+            i.x -= 5
+            i.y += 5
+        elif x == 4:
+            i.x += 5
+            i.y += 5

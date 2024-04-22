@@ -95,7 +95,7 @@ class Bleuet(Vegetal):
         super().__init__()
         self.nom = ("Bleuet" + index)
         self.image = Image.open("Images_Végétaux/Végétaux (images, code)/Végétaux/bleuet.png")
-        self.image = self.image.resize((30, 30))  # checker la grosseur de l'image
+        self.image = self.image.resize((60, 60))  # checker la grosseur de l'image
         self.photo = ImageTk.PhotoImage(self.image)
         self.region = random.randint(1, 9)
 

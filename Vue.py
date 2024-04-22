@@ -21,7 +21,7 @@ class Vue:
         self.bool = False
         self.currSectionView = None
         self.canva_frame_zoom = None
-        self.carre = 0
+        self.carre = 10
 
 #       ANIMAUX
         self.Loup = 0
@@ -152,7 +152,7 @@ class Vue:
         frameOurs = Frame(frame_animaux, bg="#292929", pady = 5)
         frameOurs.pack(anchor=W)
         nbrOurs = Entry(frameOurs, width=10)
-        nbrOurs.insert(0, 0)
+        nbrOurs.insert(0, 5)
         label = Label(frameOurs, text="Ours : ", bg="#292929", fg="WHITE", font=("Arial", 10), width=15)
         nbrOurs.pack(side = RIGHT)
         label.pack(side = LEFT)
@@ -160,7 +160,7 @@ class Vue:
         frameCerf = Frame(frame_animaux, bg="#292929", pady = 5)
         frameCerf.pack(anchor=W)
         nbrCerf = Entry(frameCerf, width=10)
-        nbrCerf.insert(0, 0)
+        nbrCerf.insert(0, 5)
         label = Label(frameCerf, text="Cerf : ", bg="#292929", fg="WHITE", font=("Arial", 10), width=15)
         nbrCerf.pack(side=RIGHT)
         label.pack(side=LEFT)
@@ -168,7 +168,7 @@ class Vue:
         frameLoup = Frame(frame_animaux, bg="#292929", pady = 5)
         frameLoup.pack(anchor=W)
         nbrLoup = Entry(frameLoup, width=10)
-        nbrLoup.insert(0, 0)
+        nbrLoup.insert(0, 5)
         label = Label(frameLoup, text="Loup : ", bg="#292929", fg="WHITE", font=("Arial", 10), width=15)
         nbrLoup.pack(side=RIGHT)
         label.pack(side=LEFT)
@@ -176,7 +176,7 @@ class Vue:
         frameRaton = Frame(frame_animaux, bg="#292929", pady=5)
         frameRaton.pack(anchor=W)
         nbrRaton = Entry(frameRaton, width=10)
-        nbrRaton.insert(0, 0)
+        nbrRaton.insert(0, 5)
         label = Label(frameRaton, text="Raton : ", bg="#292929", fg="WHITE", font=("Arial", 10), width=15)
         nbrRaton.pack(side=RIGHT)
         label.pack(side=LEFT)
@@ -184,7 +184,7 @@ class Vue:
         frameEcureille = Frame(frame_animaux, bg="#292929", pady=5)
         frameEcureille.pack(anchor=W)
         nbrEcureille = Entry(frameEcureille, width=10)
-        nbrEcureille.insert(0, 0)
+        nbrEcureille.insert(0, 5)
         label = Label(frameEcureille, text="Ecureille : ", bg="#292929", fg="WHITE", font=("Arial", 10), width=15)
         nbrEcureille.pack(side=RIGHT)
         label.pack(side=LEFT)
@@ -192,7 +192,7 @@ class Vue:
         frameCastor = Frame(frame_animaux, bg="#292929", pady=5)
         frameCastor.pack(anchor=W)
         nbrCastor = Entry(frameCastor, width=10)
-        nbrCastor.insert(0, 0)
+        nbrCastor.insert(0, 5)
         label = Label(frameCastor, text="Castor : ", bg="#292929", fg="WHITE", font=("Arial", 10), width=15)
         nbrCastor.pack(side=RIGHT)
         label.pack(side=LEFT)
@@ -200,7 +200,7 @@ class Vue:
         frameRenard = Frame(frame_animaux, bg="#292929", pady=5)
         frameRenard.pack(anchor=W)
         nbrRenard = Entry(frameRenard, width=10)
-        nbrRenard.insert(0, 0)
+        nbrRenard.insert(0, 5)
         label = Label(frameRenard, text="Renard : ", bg="#292929", fg="WHITE", font=("Arial", 10), width=15)
         nbrRenard.pack(side=RIGHT)
         label.pack(side=LEFT)
@@ -208,7 +208,7 @@ class Vue:
         frameOrignial = Frame(frame_animaux, bg="#292929", pady=5)
         frameOrignial.pack(anchor=W)
         nbrOrignial = Entry(frameOrignial, width=10)
-        nbrOrignial.insert(0, 0)
+        nbrOrignial.insert(0, 5)
         label = Label(frameOrignial, text="Orignial : ", bg="#292929", fg="WHITE", font=("Arial", 10), width=15)
         nbrOrignial.pack(side=RIGHT)
         label.pack(side=LEFT)
@@ -216,7 +216,7 @@ class Vue:
         frameLievre = Frame(frame_animaux, bg="#292929", pady=5)
         frameLievre.pack(anchor=W)
         nbrLievre = Entry(frameLievre, width=10)
-        nbrLievre.insert(0, 0)
+        nbrLievre.insert(0, 5)
         label = Label(frameLievre, text="Lievre : ", bg="#292929", fg="WHITE", font=("Arial", 10), width=15)
         nbrLievre.pack(side=RIGHT)
         label.pack(side=LEFT)
@@ -224,7 +224,7 @@ class Vue:
         frameLynx = Frame(frame_animaux, bg="#292929", pady=5)
         frameLynx.pack(anchor=W)
         nbrLynx = Entry(frameLynx, width=10)
-        nbrLynx.insert(0, 0)
+        nbrLynx.insert(0, 5)
         label = Label(frameLynx, text="Lynx : ", bg="#292929", fg="WHITE", font=("Arial", 10), width=15)
         nbrLynx.pack(side=RIGHT)
         label.pack(side=LEFT)
@@ -233,13 +233,13 @@ class Vue:
         frame_environnement = Frame(Frame_global, bg="#292929", height=50, width=20)
         frame_environnement.pack(padx=30, side=LEFT, anchor=N)
 
-        labelPrincipal3 = Label(frame_environnement, text="Parametre environnement", bg="#292929", fg="WHITE", font=("Arial", 20))
+        labelPrincipal3 = Label(frame_environnement, text="Parametre végétaux", bg="#292929", fg="WHITE", font=("Arial", 20))
         labelPrincipal3.pack(anchor=W)
 
         frameSapin = Frame(frame_environnement, bg="#292929", pady=5)
         frameSapin.pack(anchor=W)
         nbrSapin = Entry(frameSapin, width=10)
-        nbrSapin.insert(0, 0)
+        nbrSapin.insert(0, 10)
         label = Label(frameSapin, text="Sapin : ", bg="#292929", fg="WHITE", font=("Arial", 10), width=15)
         nbrSapin.pack(side=RIGHT)
         label.pack(side=LEFT)
@@ -247,7 +247,7 @@ class Vue:
         framBleuet = Frame(frame_environnement, bg="#292929", pady=5)
         framBleuet.pack(anchor=W)
         nbrBleuet = Entry(framBleuet, width=10)
-        nbrBleuet.insert(0, 0)
+        nbrBleuet.insert(0, 25)
         label = Label(framBleuet, text="Bleuet : ", bg="#292929", fg="WHITE", font=("Arial", 10), width=15)
         nbrBleuet.pack(side=RIGHT)
         label.pack(side=LEFT)
@@ -255,7 +255,7 @@ class Vue:
         frameBouleau = Frame(frame_environnement, bg="#292929", pady=5)
         frameBouleau.pack(anchor=W)
         nbrBouleau = Entry(frameBouleau, width=10)
-        nbrBouleau.insert(0, 0)
+        nbrBouleau.insert(0, 10)
         label = Label(frameBouleau, text="Bouleau : ", bg="#292929", fg="WHITE", font=("Arial", 10), width=15)
         nbrBouleau.pack(side=RIGHT)
         label.pack(side=LEFT)
@@ -263,7 +263,7 @@ class Vue:
         frameErable = Frame(frame_environnement, bg="#292929", pady=5)
         frameErable.pack(anchor=W)
         nbrErable = Entry(frameErable, width=10)
-        nbrErable.insert(0, 0)
+        nbrErable.insert(0, 10)
         label = Label(frameErable, text="Erable : ", bg="#292929", fg="WHITE", font=("Arial", 10), width=15)
         nbrErable.pack(side=RIGHT)
         label.pack(side=LEFT)
@@ -271,7 +271,7 @@ class Vue:
         framePissenlit = Frame(frame_environnement, bg="#292929", pady=5)
         framePissenlit.pack(anchor=W)
         nbrPissenlit = Entry(framePissenlit, width=10)
-        nbrPissenlit.insert(0, 0)
+        nbrPissenlit.insert(0, 100)
         label = Label(framePissenlit, text="Pissenlit : ", bg="#292929", fg="WHITE", font=("Arial", 10), width=15)
         nbrPissenlit.pack(side=RIGHT)
         label.pack(side=LEFT)
@@ -279,7 +279,7 @@ class Vue:
         framePomier = Frame(frame_environnement, bg="#292929", pady=5)
         framePomier.pack(anchor=W)
         nbrPomier = Entry(framePomier, width=10)
-        nbrPomier.insert(0, 0)
+        nbrPomier.insert(0, 10)
         label = Label(framePomier, text="Pomier : ", bg="#292929", fg="WHITE", font=("Arial", 10), width=15)
         nbrPomier.pack(side=RIGHT)
         label.pack(side=LEFT)
@@ -305,6 +305,7 @@ class Vue:
         self.simroot.config(background="#292929")
         self.mapGeneral = 800
         self.saisonBase = self.parent.model.env.saison
+        self.imageIDs = []
 
         # frame pour les conditions météo et heure
         conditions_frame = Frame(self.simroot, bg="#292929")
@@ -452,8 +453,8 @@ class Vue:
         self.apogee_solei_value_label.config(text=str(self.parent.model.env.apogeeSolaire))
         self.solei_info_label.config(text="Levé" if self.parent.model.env.soleil else "Couché")
 
-        self.root.update()
-        self.root.after(300, self.update)
+        #self.root.update()
+        #self.root.after(300, self.update)
 
     def on_click(self, event):
         print("salut")
@@ -488,9 +489,14 @@ class Vue:
                 if (i.region == self.carre):
                     self.canva_frame_zoom.create_image(i.x, i.y, image=i.photo, anchor=tk.CENTER)
 
+        if self.imageIDs:
+            for i in self.imageIDs:
+                self.canva_frame_zoom.delete(i)
+
         for i in self.parent.model.animaux:
             if (i.region == self.carre):
-                self.canva_frame_zoom.create_image(i.x, i.y, image=i.photo, anchor=tk.CENTER)
+                self.parent.model.deplacer(i)
+                self.imageIDs.append(self.canva_frame_zoom.create_image(i.x, i.y, image=i.photo, anchor=tk.CENTER))
         
         # if(self.saisonBase != self.parent.model.env.saison):
         #     self.generate_map_on_canvas(self.canva_frame_general, False, self.mapGeneral)
