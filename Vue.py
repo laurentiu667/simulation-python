@@ -287,7 +287,7 @@ class Vue:
         self.canva_frame_general.pack(side=LEFT, padx=10)
         self.generate_map_on_canvas(self.canva_frame_general, False, self.mapGeneral)
         self.canva_frame_general.bind("<Button-1>", show)
-
+    
         # ZOOM CANVAS
         self.submap = MAPGENERATOR.Sub_Section_Generator(self.res, self.seed.diamond_square.heightmap)
         self.submap.create_whole_map()
@@ -328,3 +328,8 @@ class Vue:
             if(i.region == self.carre):
                 self.canva_frame_zoom.create_image(i.x, i.y, image=i.photo, anchor=tk.CENTER)
             #i.deplacer()
+            
+        for i in self.parent.model.vegetaux:
+            if(i.region == self.carre):
+                self.canva_frame_zoom.create_image(i.x, i.y, image=i.photo, anchor=tk.CENTER)
+                
