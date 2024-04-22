@@ -20,7 +20,8 @@ class Modele:
         self.env.updateEnv()
         print("boucle")
         self.parent.view.simroot.after(1000, self.boucler_simulation)
-
+        self.parent.view.hey = self.env.dateHeure
+        self.parent.view.simulation()
     
         # self.debuterTemps() #initialisation du temps seulement si c'est le model final
 
@@ -31,42 +32,56 @@ class Modele:
         self.date.thread.stop()  # stopper la mise a jour du repere temporelle pour pouvoir en creer un autre plus tard
         self.date.thread.join()  # Attendre que le thread se termine proprement
 
-    def creer_animaux(self, canvas):
 
-        cerf = Cerf(canvas)
-        self.animaux.append(cerf)
 
-        loup = Loup(canvas)
-        self.animaux.append(loup)
+    # GENERE TOUT LES ANIMAUX AVEC : NOM DE L'ANIMAL + INDEX
+    def creer_animaux(self):
+        if int(self.map.Cerf) > 0:
+            for i in range(int(self.map.Cerf)):
+                cerf = Cerf(str(i))
+                self.animaux.append(cerf)
 
-        raton_laveur = Raton_laveur(canvas)
-        self.animaux.append(raton_laveur)
+        if int(self.map.Loup) > 0:
+            for i in range(int(self.map.Loup)):
+                loup = Loup(str(i))
+                self.animaux.append(loup)
 
-        lynx = Lynx(canvas)
-        self.animaux.append(lynx)
+        if int(self.map.Raton) > 0:
+            for i in range(int(self.map.Raton)):
+                raton_laveur = Raton_laveur(str(i))
+                self.animaux.append(raton_laveur)
 
-        ecureuil = Ecureuil(canvas)
-        self.animaux.append(ecureuil)
+        if int(self.map.Lynx) > 0:
+            for i in range(int(self.map.Lynx)):
+                lynx = Lynx(str(i))
+                self.animaux.append(lynx)
 
-        renard = Renard(canvas)
-        self.animaux.append(renard)
+        if int(self.map.Ecureille) > 0:
+            for i in range(int(self.map.Ecureille)):
+                ecureuil = Ecureuil(str(i))
+                self.animaux.append(ecureuil)
 
-        achigan = Achigan(canvas)
-        self.animaux.append(achigan)
+        if int(self.map.Renard) > 0:
+            for i in range(int(self.map.Renard)):
+                renard = Renard(str(i))
+                self.animaux.append(renard)
 
-        castor = Castor(canvas)
-        self.animaux.append(castor)
+        if int(self.map.Castor) > 0:
+            for i in range(int(self.map.Castor)):
+                castor = Castor(str(i))
+                self.animaux.append(castor)
 
-        orignal = Orignal(canvas)
-        self.animaux.append(orignal)
+        if int(self.map.Orignial) > 0:
+            for i in range(int(self.map.Orignial)):
+                orignal = Orignal(str(i))
+                self.animaux.append(orignal)
 
-        lievre = Lievre(canvas)
-        self.animaux.append(lievre)
+        if int(self.map.Lievre) > 0:
+            for i in range(int(self.map.Lievre)):
+                lievre = Lievre(str(i))
+                self.animaux.append(lievre)
 
-        ours = Ours(canvas)
-        self.animaux.append(ours)
-
-    def deplacement_animaux(self):
-        while True:
-            for animal in self.animaux:
-                animal.deplacer()
+        if int(self.map.Ours) > 0:
+            for i in range(int(self.map.Ours)):
+                ours = Ours(str(i))
+                self.animaux.append(ours)

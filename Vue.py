@@ -28,10 +28,13 @@ class Vue:
         self.Castor = 0
         self.Ecureille = 0
 
+        #ENVIRONNEMENT
+        self.hey = None
+
 
     def accueil(self):
         self.root.title("Accueil")
-        self.root.geometry("1500x700")
+        self.root.geometry("1500x500")
         self.root.resizable(False, False)
         self.root.config(background="#292929")
         self.Frame_Preview_show_map = None
@@ -112,6 +115,7 @@ class Vue:
         frameOurs = Frame(frame_animaux, bg="#292929", pady = 5)
         frameOurs.pack(anchor=W)
         nbrOurs = Entry(frameOurs, width=10)
+        nbrOurs.insert(0, 0)
         label = Label(frameOurs, text="Ours : ", bg="#292929", fg="WHITE", font=("Arial", 10), width=15)
         nbrOurs.pack(side = RIGHT)
         label.pack(side = LEFT)
@@ -119,6 +123,7 @@ class Vue:
         frameCerf = Frame(frame_animaux, bg="#292929", pady = 5)
         frameCerf.pack(anchor=W)
         nbrCerf = Entry(frameCerf, width=10)
+        nbrCerf.insert(0, 0)
         label = Label(frameCerf, text="Cerf : ", bg="#292929", fg="WHITE", font=("Arial", 10), width=15)
         nbrCerf.pack(side=RIGHT)
         label.pack(side=LEFT)
@@ -126,6 +131,7 @@ class Vue:
         frameLoup = Frame(frame_animaux, bg="#292929", pady = 5)
         frameLoup.pack(anchor=W)
         nbrLoup = Entry(frameLoup, width=10)
+        nbrLoup.insert(0, 0)
         label = Label(frameLoup, text="Loup : ", bg="#292929", fg="WHITE", font=("Arial", 10), width=15)
         nbrLoup.pack(side=RIGHT)
         label.pack(side=LEFT)
@@ -133,6 +139,7 @@ class Vue:
         frameRaton = Frame(frame_animaux, bg="#292929", pady=5)
         frameRaton.pack(anchor=W)
         nbrRaton = Entry(frameRaton, width=10)
+        nbrRaton.insert(0, 0)
         label = Label(frameRaton, text="Raton : ", bg="#292929", fg="WHITE", font=("Arial", 10), width=15)
         nbrRaton.pack(side=RIGHT)
         label.pack(side=LEFT)
@@ -140,6 +147,7 @@ class Vue:
         frameEcureille = Frame(frame_animaux, bg="#292929", pady=5)
         frameEcureille.pack(anchor=W)
         nbrEcureille = Entry(frameEcureille, width=10)
+        nbrEcureille.insert(0, 0)
         label = Label(frameEcureille, text="Ecureille : ", bg="#292929", fg="WHITE", font=("Arial", 10), width=15)
         nbrEcureille.pack(side=RIGHT)
         label.pack(side=LEFT)
@@ -147,6 +155,7 @@ class Vue:
         frameCastor = Frame(frame_animaux, bg="#292929", pady=5)
         frameCastor.pack(anchor=W)
         nbrCastor = Entry(frameCastor, width=10)
+        nbrCastor.insert(0, 0)
         label = Label(frameCastor, text="Castor : ", bg="#292929", fg="WHITE", font=("Arial", 10), width=15)
         nbrCastor.pack(side=RIGHT)
         label.pack(side=LEFT)
@@ -154,6 +163,7 @@ class Vue:
         frameRenard = Frame(frame_animaux, bg="#292929", pady=5)
         frameRenard.pack(anchor=W)
         nbrRenard = Entry(frameRenard, width=10)
+        nbrRenard.insert(0, 0)
         label = Label(frameRenard, text="Renard : ", bg="#292929", fg="WHITE", font=("Arial", 10), width=15)
         nbrRenard.pack(side=RIGHT)
         label.pack(side=LEFT)
@@ -161,6 +171,7 @@ class Vue:
         frameOrignial = Frame(frame_animaux, bg="#292929", pady=5)
         frameOrignial.pack(anchor=W)
         nbrOrignial = Entry(frameOrignial, width=10)
+        nbrOrignial.insert(0, 0)
         label = Label(frameOrignial, text="Orignial : ", bg="#292929", fg="WHITE", font=("Arial", 10), width=15)
         nbrOrignial.pack(side=RIGHT)
         label.pack(side=LEFT)
@@ -168,6 +179,7 @@ class Vue:
         frameLievre = Frame(frame_animaux, bg="#292929", pady=5)
         frameLievre.pack(anchor=W)
         nbrLievre = Entry(frameLievre, width=10)
+        nbrLievre.insert(0, 0)
         label = Label(frameLievre, text="Lievre : ", bg="#292929", fg="WHITE", font=("Arial", 10), width=15)
         nbrLievre.pack(side=RIGHT)
         label.pack(side=LEFT)
@@ -175,6 +187,7 @@ class Vue:
         frameLynx = Frame(frame_animaux, bg="#292929", pady=5)
         frameLynx.pack(anchor=W)
         nbrLynx = Entry(frameLynx, width=10)
+        nbrLynx.insert(0, 0)
         label = Label(frameLynx, text="Lynx : ", bg="#292929", fg="WHITE", font=("Arial", 10), width=15)
         nbrLynx.pack(side=RIGHT)
         label.pack(side=LEFT)
@@ -202,7 +215,7 @@ class Vue:
         self.root.destroy()
         self.simroot = Tk()
         self.simroot.title("Accueil")
-        self.simroot.geometry("1600x900")
+        self.simroot.geometry("1600x1000")
         self.simroot.resizable(False, False)
         self.simroot.config(background="#292929")
         self.mapGeneral = 800
@@ -233,6 +246,10 @@ class Vue:
 
         button_fastforward_frame = Frame(conditions_frame, bg="gray50")
         button_fastforward_frame.pack(side=LEFT, padx=5, pady=5, fill=BOTH, expand=True)
+
+
+        labelSize = Label(text="Grosseur de la carte : "+str(self.res * 400)+" x "+str(self.res * 400)+" mètres.", bg="gray50")
+        labelSize.pack()
 
         def show(event):
             if 0 < event.x < 266 and 0 < event.y < 266:
@@ -272,13 +289,12 @@ class Vue:
         self.submap = MAPGENERATOR.Sub_Section_Generator(self.res, self.seed.diamond_square.heightmap)
         self.submap.create_whole_map()
         self.submap.sub_divide()
-
         self.canva_frame_zoom = Canvas(self.simroot, bg="#292929", width=self.mapGeneral, height=self.mapGeneral)
         self.canva_frame_zoom.pack(side=LEFT, padx=10)
 
-        # self.modele = Modele.Modele(self.canva_frame_general, self.seed.diamond_square.heightmap)
-        # self.modele.creer_animaux(self.canva_frame_general)
-        # self.modele.deplacement_animaux()
+
+
+        self.parent.model.creer_animaux()
         self.parent.model.boucler_simulation()
 
     def on_click(self, event):
@@ -305,4 +321,5 @@ class Vue:
         self.generate_map_on_canvas(canva, True, 400)
 
     def simulation(self):
-        pass
+        label = Label(self.simroot, text=self.hey)
+        label.pack()

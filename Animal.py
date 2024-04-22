@@ -42,8 +42,10 @@ class Animal(ABC):
         # self.vitesse = vitesse
         self.x = random.randint(0, 500)  # changer les valeurs de déplacement en fonction de la map
         self.y = random.randint(0, 500)
+        self.region = None  #Region dans la carte
         self.isMoving = True
         self.minute = 0
+        self.nom = None
         
         #VARIABLE POUR LES MOTIVATION ET DEPLACEMENT DES ANIMAUX ET LEUR ACTION
         self.isHorny = False
@@ -208,13 +210,13 @@ class Animal(ABC):
 
 
 class Ours(Animal):
-    def __init__(self, canvas):
+    def __init__(self, index):
         super().__init__()
-        self.canvas = canvas
+        self.nom = ("Ours" + index)
         self.image = Image.open("zone_test/animaux_pillow/bear.png")
         self.image = self.image.resize((50, 50))  # checker la grosseur de l'image
         self.photo = ImageTk.PhotoImage(self.image)
-        self.rect = canvas.create_image(self.x, self.y, image=self.photo, anchor=tk.CENTER)
+        #self.rect = canvas.create_image(self.x, self.y, image=self.photo, anchor=tk.CENTER)
 
     def hibernation(self):
         pass
@@ -224,26 +226,24 @@ class Ours(Animal):
 
 
 class Cerf(Animal):
-    def __init__(self, canvas):
+    def __init__(self, index):
         super().__init__()
-        self.canvas = canvas
+        self.nom = ("Cerf" + index)
         self.image = Image.open("zone_test/animaux_pillow/cerf.png")
         self.image = self.image.resize((50, 50))  # checker la grosseur de l'image
         self.photo = ImageTk.PhotoImage(self.image)
-        self.rect = canvas.create_image(self.x, self.y, image=self.photo, anchor=tk.CENTER)
 
     def deplacer(self):
         super().deplacer(vitesse=5)
 
 
 class Loup(Animal):
-    def __init__(self, canvas):
+    def __init__(self, index):
         super().__init__()
-        self.canvas = canvas
+        self.nom = ("Loup" + index)
         self.image = Image.open("zone_test/animaux_pillow/loup.png")
         self.image = self.image.resize((50, 50))  # checker la grosseur de l'image
         self.photo = ImageTk.PhotoImage(self.image)
-        self.rect = canvas.create_image(self.x, self.y, image=self.photo, anchor=tk.CENTER)
 
     def deplacer(self):
         super().deplacer(vitesse=5)
@@ -253,104 +253,96 @@ class Loup(Animal):
 
 
 class Raton_laveur(Animal):
-    def __init__(self, canvas):
+    def __init__(self, index):
         super().__init__()
-        self.canvas = canvas
+        self.nom = ("Raton" + index)
         self.image = Image.open("zone_test/animaux_pillow/laveur.png")
         self.image = self.image.resize((50, 50))  # checker la grosseur de l'image
         self.photo = ImageTk.PhotoImage(self.image)
-        self.rect = canvas.create_image(self.x, self.y, image=self.photo, anchor=tk.CENTER)
 
     def deplacer(self):
         super().deplacer(vitesse=5)
 
 
 class Lynx(Animal):
-    def __init__(self, canvas):
+    def __init__(self, index):
         super().__init__()
-        self.canvas = canvas
+        self.nom = ("Lynx" + index)
         self.image = Image.open("zone_test/animaux_pillow/lynx.png")
         self.image = self.image.resize((50, 50))  # checker la grosseur de l'image
         self.photo = ImageTk.PhotoImage(self.image)
-        self.rect = canvas.create_image(self.x, self.y, image=self.photo, anchor=tk.CENTER)
 
     def deplacer(self):
         super().deplacer(vitesse=5)
 
 
 class Ecureuil(Animal):
-    def __init__(self, canvas):
+    def __init__(self, index):
         super().__init__()
-        self.canvas = canvas
+        self.nom = ("Ecureille" + index)
         self.image = Image.open("zone_test/animaux_pillow/ecureuil.png")
         self.image = self.image.resize((25, 25))  # checker la grosseur de l'image
         self.photo = ImageTk.PhotoImage(self.image)
-        self.rect = canvas.create_image(self.x, self.y, image=self.photo, anchor=tk.CENTER)
 
     def deplacer(self):
         super().deplacer(vitesse=5)
 
 
 class Renard(Animal):
-    def __init__(self, canvas):
+    def __init__(self, index):
         super().__init__()
-        self.canvas = canvas
+        self.nom = ("Renard" + index)
         self.image = Image.open("zone_test/animaux_pillow/renard.png")
         self.image = self.image.resize((50, 50))  # checker la grosseur de l'image
         self.photo = ImageTk.PhotoImage(self.image)
-        self.rect = canvas.create_image(self.x, self.y, image=self.photo, anchor=tk.CENTER)
 
     def deplacer(self):
         super().deplacer(vitesse=5)
 
 
 class Achigan(Animal):
-    def __init__(self, canvas):
+    def __init__(self, index):
         super().__init__()
-        self.canvas = canvas
+        self.nom = ("Achigan" + index)
         self.image = Image.open("zone_test/animaux_pillow/poisson.png")
         self.image = self.image.resize((50, 50))  # checker la grosseur de l'image
         self.photo = ImageTk.PhotoImage(self.image)
-        self.rect = canvas.create_image(self.x, self.y, image=self.photo, anchor=tk.CENTER)
 
     def deplacer(self):
         super().deplacer(vitesse=5)
 
 
 class Castor(Animal):
-    def __init__(self, canvas):
+    def __init__(self, index):
         super().__init__()
-        self.canvas = canvas
+        self.nom = ("Castor" + index)
         self.image = Image.open("zone_test/animaux_pillow/castord.png")
         self.image = self.image.resize((50, 50))  # checker la grosseur de l'image
         self.photo = ImageTk.PhotoImage(self.image)
-        self.rect = canvas.create_image(self.x, self.y, image=self.photo, anchor=tk.CENTER)
 
     def deplacer(self):
         super().deplacer(vitesse=5)
 
 
 class Orignal(Animal):
-    def __init__(self, canvas):
+    def __init__(self, index):
         super().__init__()
-        self.canvas = canvas
+        self.nom = ("Orignial" + index)
         self.image = Image.open("zone_test/animaux_pillow/orignal.png")
         self.image = self.image.resize((50, 50))  # checker la grosseur de l'image
         self.photo = ImageTk.PhotoImage(self.image)
-        self.rect = canvas.create_image(self.x, self.y, image=self.photo, anchor=tk.CENTER)
 
     def deplacer(self):
         super().deplacer(vitesse=5)
 
 
 class Lievre(Animal):
-    def __init__(self, canvas):
+    def __init__(self, index):
         super().__init__()
-        self.canvas = canvas
+        self.nom = ("Lievre" + index)
         self.image = Image.open("zone_test/animaux_pillow/lapin.png")
         self.image = self.image.resize((50, 50))  # checker la grosseur de l'image
         self.photo = ImageTk.PhotoImage(self.image)
-        self.rect = canvas.create_image(self.x, self.y, image=self.photo, anchor=tk.CENTER)
 
     def deplacer(self):
         super().deplacer(vitesse=5)

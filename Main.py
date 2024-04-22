@@ -10,12 +10,6 @@ class Controller:
         self.model = Modele(self, self.view)
         self.view.accueil()
         self.view.root.mainloop()
-        
-        
-        
-    
 
-        
-        
 if __name__ == "__main__":
     c = Controller()
