@@ -13,10 +13,13 @@ class Vue:
         self.canva_frame_general = None
         self.squares = []
         self.res = 0
-        self.submap = None      #ZOOM DE LA MAP
+
+        # ZOOM DE LA MAP
+        self.submap = None
         self.bool = False
         self.currSectionView = None
         self.canva_frame_zoom = None
+        self.carre = 0
 
 #       ANIMAUX
         self.Loup = 0
@@ -245,7 +248,6 @@ class Vue:
         self.simroot.resizable(False, False)
         self.simroot.config(background="#292929")
         self.mapGeneral = 800
-        self.carre = 0
 
         # frame pour les conditions météo et heure
         conditions_frame = Frame(self.simroot, bg="#292929")
@@ -362,7 +364,7 @@ class Vue:
         self.canva_frame_general.pack(side=LEFT, padx=10)
         self.generate_map_on_canvas(self.canva_frame_general, False, self.mapGeneral)
         self.canva_frame_general.bind("<Button-1>", show)
-
+    
         # ZOOM CANVAS
         self.submap = MAPGENERATOR.Sub_Section_Generator(self.res, self.seed.diamond_square.heightmap)
         self.submap.create_whole_map()
@@ -419,7 +421,18 @@ class Vue:
 
     def simulation(self):
         for i in self.parent.model.animaux:
+<<<<<<< HEAD
             self.canva_frame_zoom.create_image(i.x, i.y, image=i.photo, anchor=tk.CENTER)
 
         self.update()
 
+=======
+            if(i.region == self.carre):
+                self.canva_frame_zoom.create_image(i.x, i.y, image=i.photo, anchor=tk.CENTER)
+            #i.deplacer()
+            
+        for i in self.parent.model.vegetaux:
+            if(i.region == self.carre):
+                self.canva_frame_zoom.create_image(i.x, i.y, image=i.photo, anchor=tk.CENTER)
+                
+>>>>>>> 0b65177d1d44fc17b61b7a2aa5dc9405014a2dd5

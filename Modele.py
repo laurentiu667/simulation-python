@@ -4,6 +4,7 @@ import tkinter as tk
 import random
 import Animal
 from Animal import Ours, Cerf, Loup, Raton_laveur, Lynx, Ecureuil, Renard, Achigan, Castor, Orignal, Lievre
+from Vegetal import Sapin, Bleuet, Bouleau, Erable, Pissenlit, Pomier
 import time
 
 
@@ -14,6 +15,7 @@ class Modele:
         self.environnement = None
         self.date = None
         self.animaux = []
+        self.vegetaux = []
         self.env = Environnement()
 
     def boucler_simulation(self):
@@ -31,8 +33,32 @@ class Modele:
         self.date.thread.stop()  # stopper la mise a jour du repere temporelle pour pouvoir en creer un autre plus tard
         self.date.thread.join()  # Attendre que le thread se termine proprement
 
-
-
+    # GENERE TOUT LES VEGETAUX AVEC : NOM DES VEGETAUX + INDEX
+    def creer_vegetaux(self):
+        if int(self.map.Sapin):
+            for i in range(int(self.map.Sapin)):
+                sapin = Sapin(str(i))
+                self.vegetaux.append(sapin)
+        if int(self.map.Bleuet):
+            for i in range(int(self.map.Bleuet)):
+                bleuet = Bleuet(str(i))
+                self.vegetaux.append(bleuet)
+        if int(self.map.Bouleau):
+            for i in range(int(self.map.Bouleau)):
+                bouleau = Bouleau(str(i))
+                self.vegetaux.append(bouleau)
+        if int(self.map.Erable):
+            for i in range(int(self.map.Erable)):
+                erable = Erable(str(i))
+                self.vegetaux.append(erable)
+        if int(self.map.Pomier):
+            for i in range(int(self.map.Pomier)):
+                pomier = Pomier(str(i))
+                self.vegetaux.append(pomier)
+        if int(self.map.Pissenlit):
+            for i in range(int(self.map.Pissenlit)):
+                pissenlit = Pissenlit(str(i))
+                self.vegetaux.append(pissenlit)
     # GENERE TOUT LES ANIMAUX AVEC : NOM DE L'ANIMAL + INDEX
     def creer_animaux(self):
         if int(self.map.Cerf) > 0:

@@ -1,6 +1,8 @@
-from abc     import ABC, abstractmethod  # biblioteque pour les classes abstraites defini
+from abc import ABC, abstractmethod  # biblioteque pour les classes abstraites defini
 import random
 import time
+from PIL import Image, ImageTk
+
 
 
 class Vegetal(ABC):
@@ -11,6 +13,8 @@ class Vegetal(ABC):
         self.coefCroissance = None
         self.humidite = 0
         self.photosynthese  = 0
+        self.nom = None
+        self.region = None
 
     def perceptionTemps():
         starttime = time.time()
@@ -54,10 +58,10 @@ class PlanteComestible(Vegetal):
         self.esperanceVie = random.randint(100, 120)
         self.age = 1
         
-    def ajoutFruit(self):
-        if (len(self.fruits) < self.capaciteFruit):
-            fruit = PlanteFruit()
-            self.fruits.append(fruit)
+    # def ajoutFruit(self):
+    #     if (len(self.fruits) < self.capaciteFruit):
+    #         fruit = PlanteFruit()
+    #         self.fruits.append(fruit)
         
     def fruitMange(self):
         if len(self.fruits) > 0:
@@ -75,21 +79,56 @@ class PlanteComestible(Vegetal):
         facteur = 1+ self.age * random.uniform(0.1, 0.15)
         self.capaciteFruit = self.capaciteFruit * facteur
             
-class Fruit(ABC):
-    def __init__(self):
-        self.energie = None
-        
-        
-class PlanteFruit(Fruit): #plus tard pomme,bleuet 
-    def __init__(self):
-        super().__init__()
-        self.energie = random.randint(10, 20)
-
-class PlanteNonComestible(Vegetal):
-    def __init__(self):
-        super().__init__()
-
 class Sapin(Vegetal):
-    def __init__(self):
+    def __init__(self, index):
         super().__init__()
+        self.nom = ("Sapin" + index)
+        self.image = Image.open("Végétaux (images, code)/Végétaux/sapin.png")
+        self.image = self.image.resize((80, 80))  # checker la grosseur de l'image
+        self.photo = ImageTk.PhotoImage(self.image)
+        self.region = random.randint(0, 8)
+
+class Bleuet(Vegetal):
+    def __init__(self, index):
+        super().__init__()
+        self.nom = ("Bleuet" + index)
+        self.image = Image.open("Végétaux (images, code)/Végétaux/bleuet.png")
+        self.image = self.image.resize((30, 30))  # checker la grosseur de l'image
+        self.photo = ImageTk.PhotoImage(self.image)
+        self.region = random.randint(0, 8)
+
+class Bouleau(Vegetal):
+    def __init__(self, index):
+        super().__init__()
+        self.nom = ("Bouleau" + index)
+        self.image = Image.open("Végétaux (images, code)/Végétaux/bouleaujaune.png")
+        self.image = self.image.resize((65, 65))  # checker la grosseur de l'image
+        self.photo = ImageTk.PhotoImage(self.image)
+        self.region = random.randint(0, 8)
         
+class Erable(Vegetal):
+    def __init__(self, index):
+        super().__init__()
+        self.nom = ("Erable" + index)
+        self.image = Image.open("Végétaux (images, code)/Végétaux/erable_de_sucre.png")
+        self.image = self.image.resize((65, 65))  # checker la grosseur de l'image
+        self.photo = ImageTk.PhotoImage(self.image)
+        self.region = random.randint(0, 8)
+        
+class Pomier(Vegetal):
+    def __init__(self, index):
+        super().__init__()
+        self.nom = ("Pomier" + index)
+        self.image = Image.open("Végétaux (images, code)/Végétaux/pommiersauvage.png")
+        self.image = self.image.resize((65, 65))  # checker la grosseur de l'image
+        self.photo = ImageTk.PhotoImage(self.image)
+        self.region = random.randint(0, 8)
+
+class Pissenlit(Vegetal):
+    def __init__(self, index):
+        super().__init__()
+        self.nom = ("Pissenlit" + index)
+        self.image = Image.open("Végétaux (images, code)/Végétaux/pissenlit.png")
+        self.image = self.image.resize((15, 15))  # checker la grosseur de l'image
+        self.photo = ImageTk.PhotoImage(self.image)
+        self.region = random.randint(0, 8)

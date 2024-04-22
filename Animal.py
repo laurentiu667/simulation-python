@@ -40,8 +40,8 @@ class Animal(ABC):
         self.position = None
         # self.canvas = canvas
         # self.vitesse = vitesse
-        self.x = random.randint(0, 500)  # changer les valeurs de déplacement en fonction de la map
-        self.y = random.randint(0, 500)
+        self.x = random.randint(0, 800)  # changer les valeurs de déplacement en fonction de la map
+        self.y = random.randint(0, 800)
         self.region = None  #Region dans la carte
         self.isMoving = True
         self.minute = 0
