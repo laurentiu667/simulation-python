@@ -216,7 +216,7 @@ class Ours(Animal):
         self.image = Image.open("zone_test/animaux_pillow/bear.png")
         self.image = self.image.resize((50, 50))  # checker la grosseur de l'image
         self.photo = ImageTk.PhotoImage(self.image)
-        self.region = random.randint(0, 8)
+        self.region = random.randint(1, 9)
         #self.rect = canvas.create_image(self.x, self.y, image=self.photo, anchor=tk.CENTER)
 
     def hibernation(self):
@@ -233,7 +233,7 @@ class Cerf(Animal):
         self.image = Image.open("zone_test/animaux_pillow/cerf.png")
         self.image = self.image.resize((50, 50))  # checker la grosseur de l'image
         self.photo = ImageTk.PhotoImage(self.image)
-        self.region = random.randint(0, 8)
+        self.region = random.randint(1, 9)
         #self.rect = canvas.create_image(self.x, self.y, image=self.photo, anchor=tk.CENTER)
 
     def deplacer(self):
@@ -247,7 +247,7 @@ class Loup(Animal):
         self.image = Image.open("zone_test/animaux_pillow/loup.png")
         self.image = self.image.resize((50, 50))  # checker la grosseur de l'image
         self.photo = ImageTk.PhotoImage(self.image)
-        self.region = random.randint(0, 8)
+        self.region = random.randint(1, 9)
         #self.rect = canvas.create_image(self.x, self.y, image=self.photo, anchor=tk.CENTER)
 
     def deplacer(self):
@@ -264,7 +264,7 @@ class Raton_laveur(Animal):
         self.image = Image.open("zone_test/animaux_pillow/laveur.png")
         self.image = self.image.resize((50, 50))  # checker la grosseur de l'image
         self.photo = ImageTk.PhotoImage(self.image)
-        self.region = random.randint(0, 8)
+        self.region = random.randint(1, 9)
         #self.rect = canvas.create_image(self.x, self.y, image=self.photo, anchor=tk.CENTER)
 
     def deplacer(self):
@@ -278,7 +278,7 @@ class Lynx(Animal):
         self.image = Image.open("zone_test/animaux_pillow/lynx.png")
         self.image = self.image.resize((50, 50))  # checker la grosseur de l'image
         self.photo = ImageTk.PhotoImage(self.image)
-        self.region = random.randint(0, 8)
+        self.region = random.randint(1, 9)
         #self.rect = canvas.create_image(self.x, self.y, image=self.photo, anchor=tk.CENTER)
 
     def deplacer(self):
@@ -292,7 +292,7 @@ class Ecureuil(Animal):
         self.image = Image.open("zone_test/animaux_pillow/ecureuil.png")
         self.image = self.image.resize((25, 25))  # checker la grosseur de l'image
         self.photo = ImageTk.PhotoImage(self.image)
-        self.region = random.randint(0, 8)
+        self.region = random.randint(1, 9)
         #self.rect = canvas.create_image(self.x, self.y, image=self.photo, anchor=tk.CENTER)
 
     def deplacer(self):
@@ -306,7 +306,7 @@ class Renard(Animal):
         self.image = Image.open("zone_test/animaux_pillow/renard.png")
         self.image = self.image.resize((50, 50))  # checker la grosseur de l'image
         self.photo = ImageTk.PhotoImage(self.image)
-        self.region = random.randint(0, 8)
+        self.region = random.randint(1, 9)
         #self.rect = canvas.create_image(self.x, self.y, image=self.photo, anchor=tk.CENTER)
 
     def deplacer(self):
@@ -320,7 +320,7 @@ class Achigan(Animal):
         self.image = Image.open("zone_test/animaux_pillow/poisson.png")
         self.image = self.image.resize((50, 50))  # checker la grosseur de l'image
         self.photo = ImageTk.PhotoImage(self.image)
-        self.region = random.randint(0, 8)
+        self.region = random.randint(1, 9)
         #self.rect = canvas.create_image(self.x, self.y, image=self.photo, anchor=tk.CENTER)
 
     def deplacer(self):
@@ -334,7 +334,7 @@ class Castor(Animal):
         self.image = Image.open("zone_test/animaux_pillow/castord.png")
         self.image = self.image.resize((50, 50))  # checker la grosseur de l'image
         self.photo = ImageTk.PhotoImage(self.image)
-        self.region = random.randint(0, 8)
+        self.region = random.randint(1, 9)
         #self.rect = canvas.create_image(self.x, self.y, image=self.photo, anchor=tk.CENTER)
 
     def deplacer(self):
@@ -348,7 +348,7 @@ class Orignal(Animal):
         self.image = Image.open("zone_test/animaux_pillow/orignal.png")
         self.image = self.image.resize((50, 50))  # checker la grosseur de l'image
         self.photo = ImageTk.PhotoImage(self.image)
-        self.region = random.randint(0, 8)
+        self.region = random.randint(1, 9)
         #self.rect = canvas.create_image(self.x, self.y, image=self.photo, anchor=tk.CENTER)
 
     def deplacer(self):
@@ -362,7 +362,7 @@ class Lievre(Animal):
         self.image = Image.open("zone_test/animaux_pillow/lapin.png")
         self.image = self.image.resize((50, 50))  # checker la grosseur de l'image
         self.photo = ImageTk.PhotoImage(self.image)
-        self.region = random.randint(0, 8)
+        self.region = random.randint(1, 9)
         #self.rect = canvas.create_image(self.x, self.y, image=self.photo, anchor=tk.CENTER)
 
     def deplacer(self):

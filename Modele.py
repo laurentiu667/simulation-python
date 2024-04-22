@@ -21,8 +21,8 @@ class Modele:
     def boucler_simulation(self):
         self.env.updateEnv()
         print("boucle")
-        self.parent.view.simroot.after(1000, self.boucler_simulation)
         self.parent.view.simulation()
+        self.parent.view.simroot.after(500, self.boucler_simulation)
     
         # self.debuterTemps() #initialisation du temps seulement si c'est le model final
 

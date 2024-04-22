@@ -13,6 +13,7 @@ class Vue:
         self.canva_frame_general = None
         self.squares = []
         self.res = 0
+        self.respawnTres = False
 
         # ZOOM DE LA MAP
         self.submap = None
@@ -36,27 +37,24 @@ class Vue:
         #ENVIRONNEMENT
         self.hey = None
         self.biomes_frame = None
+        self.Sapin = 0
+        self.Bouleau = 0
+        self.Pissenlit = 0
+        self.Bleuet = 0
+        self.Pomier = 0
+        self.Erable = 0
 
+        #METEO
         self.saison_frame = None
-
         self.dates_frame = None
-
         self.heure_frame = None
-
         self.temp_frame = None
-
         self.humidite_frame = None
-
         self.solei_max_frame = None
-
         self.solei_actuel_frame = None
-
         self.leve_solei_frame = None
-
         self.heure_coucher_solei = None
-
         self.apogee_solei = None
-
         self.solei_info = None
 
 
@@ -103,6 +101,13 @@ class Vue:
             self.Loup = nbrLoup.get()
             self.Orignial = nbrOrignial.get()
             self.Raton = nbrRaton.get()
+
+            self.Sapin = nbrSapin.get()
+            self.Bouleau = nbrBouleau.get()
+            self.Pissenlit = nbrPissenlit.get()
+            self.Bleuet = nbrBleuet.get()
+            self.Pomier = nbrPomier.get()
+            self.Erable = nbrErable.get()
 
         # SCROLL DOWN MENU
         labelPrincipal1 = Label(frame_buttons, text="Parametre de la carte", bg="#292929", fg="WHITE", font=("Arial", 20))
@@ -222,11 +227,59 @@ class Vue:
         label.pack(side=LEFT)
 
         # DIV PARAMETRE ENVIRONEMNT
-        frame_environnement = Frame(Frame_global, bg="red", height=50, width=20)
+        frame_environnement = Frame(Frame_global, bg="#292929", height=50, width=20)
         frame_environnement.pack(padx=30, side=LEFT, anchor=N)
 
         labelPrincipal3 = Label(frame_environnement, text="Parametre environnement", bg="#292929", fg="WHITE", font=("Arial", 20))
         labelPrincipal3.pack(anchor=W)
+
+        frameSapin = Frame(frame_environnement, bg="#292929", pady=5)
+        frameSapin.pack(anchor=W)
+        nbrSapin = Entry(frameSapin, width=10)
+        nbrSapin.insert(0, 0)
+        label = Label(frameSapin, text="Sapin : ", bg="#292929", fg="WHITE", font=("Arial", 10), width=15)
+        nbrSapin.pack(side=RIGHT)
+        label.pack(side=LEFT)
+
+        framBleuet = Frame(frame_environnement, bg="#292929", pady=5)
+        framBleuet.pack(anchor=W)
+        nbrBleuet = Entry(framBleuet, width=10)
+        nbrBleuet.insert(0, 0)
+        label = Label(framBleuet, text="Bleuet : ", bg="#292929", fg="WHITE", font=("Arial", 10), width=15)
+        nbrBleuet.pack(side=RIGHT)
+        label.pack(side=LEFT)
+
+        frameBouleau = Frame(frame_environnement, bg="#292929", pady=5)
+        frameBouleau.pack(anchor=W)
+        nbrBouleau = Entry(frameBouleau, width=10)
+        nbrBouleau.insert(0, 0)
+        label = Label(frameBouleau, text="Bouleau : ", bg="#292929", fg="WHITE", font=("Arial", 10), width=15)
+        nbrBouleau.pack(side=RIGHT)
+        label.pack(side=LEFT)
+
+        frameErable = Frame(frame_environnement, bg="#292929", pady=5)
+        frameErable.pack(anchor=W)
+        nbrErable = Entry(frameErable, width=10)
+        nbrErable.insert(0, 0)
+        label = Label(frameErable, text="Erable : ", bg="#292929", fg="WHITE", font=("Arial", 10), width=15)
+        nbrErable.pack(side=RIGHT)
+        label.pack(side=LEFT)
+
+        framePissenlit = Frame(frame_environnement, bg="#292929", pady=5)
+        framePissenlit.pack(anchor=W)
+        nbrPissenlit = Entry(framePissenlit, width=10)
+        nbrPissenlit.insert(0, 0)
+        label = Label(framePissenlit, text="Pissenlit : ", bg="#292929", fg="WHITE", font=("Arial", 10), width=15)
+        nbrPissenlit.pack(side=RIGHT)
+        label.pack(side=LEFT)
+
+        framePomier = Frame(frame_environnement, bg="#292929", pady=5)
+        framePomier.pack(anchor=W)
+        nbrPomier = Entry(framePomier, width=10)
+        nbrPomier.insert(0, 0)
+        label = Label(framePomier, text="Pomier : ", bg="#292929", fg="WHITE", font=("Arial", 10), width=15)
+        nbrPomier.pack(side=RIGHT)
+        label.pack(side=LEFT)
 
 
         # DIV start
@@ -350,6 +403,8 @@ class Vue:
                 self.carre = 8
             elif 532 < event.x < 800 and 532 < event.y < 800:
                 self.carre = 9
+
+            self.respawnTres = True
             labelCellSelect.config(text="Cellule choisie : " + str(self.carre))
             self.currSectionView = self.submap.ALL[self.carre -1]
             zoomView = MAPGENERATOR.Vue(self.canva_frame_zoom)
@@ -373,8 +428,8 @@ class Vue:
         self.canva_frame_zoom.pack(side=LEFT, padx=10)
 
 
-
         self.parent.model.creer_animaux()
+        self.parent.model.creer_vegetaux()
         self.parent.model.boucler_simulation()
 
     def update(self):
@@ -420,19 +475,15 @@ class Vue:
         self.generate_map_on_canvas(canva, True, 400)
 
     def simulation(self):
+        if(self.respawnTres):
+            self.respawnTres = False
+            for i in self.parent.model.vegetaux:
+                if (i.region == self.carre):
+                    self.canva_frame_zoom.create_image(i.x, i.y, image=i.photo, anchor=tk.CENTER)
+
         for i in self.parent.model.animaux:
-<<<<<<< HEAD
-            self.canva_frame_zoom.create_image(i.x, i.y, image=i.photo, anchor=tk.CENTER)
+            if (i.region == self.carre):
+                self.canva_frame_zoom.create_image(i.x, i.y, image=i.photo, anchor=tk.CENTER)
 
         self.update()
 
-=======
-            if(i.region == self.carre):
-                self.canva_frame_zoom.create_image(i.x, i.y, image=i.photo, anchor=tk.CENTER)
-            #i.deplacer()
-            
-        for i in self.parent.model.vegetaux:
-            if(i.region == self.carre):
-                self.canva_frame_zoom.create_image(i.x, i.y, image=i.photo, anchor=tk.CENTER)
-                
->>>>>>> 0b65177d1d44fc17b61b7a2aa5dc9405014a2dd5
