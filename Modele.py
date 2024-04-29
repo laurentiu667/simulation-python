@@ -16,7 +16,7 @@ class Modele:
         self.date = None
         self.animaux = []
         self.vegetaux = []
-        self.env = Environnement()
+        self.env = Environnement(self.parent.view.annee, self.parent.view.mois, self.parent.view.jour)
 
     def boucler_simulation(self):
         self.env.updateEnv()

@@ -49,7 +49,7 @@ class Vue:
         #TEMPS
         self.jour = 1
         self.mois = 1
-        self.annee = 0
+        self.annee = 1
 
         #METEO
         self.saison_frame = None
@@ -119,6 +119,8 @@ class Vue:
             self.Erable = nbrErable.get()
 
             self.annee = qteAnnee.get()
+            if int(self.annee) < 1:
+                self.annee = 1
             self.jour = jourMois.get()
             if int(self.jour) > 30:
                 self.jour = 1
@@ -341,7 +343,7 @@ class Vue:
         self.root.destroy()
         self.simroot = Tk()
         self.simroot.title("Accueil")
-        self.simroot.geometry("1600x900")
+        self.simroot.geometry("1600x950")
         self.simroot.resizable(False, False)
         self.simroot.config(background="#292929")
         self.mapGeneral = 800
@@ -349,86 +351,91 @@ class Vue:
         self.imageIDs = []
 
         # frame pour les conditions météo et heure
-        conditions_frame = Frame(self.simroot, bg="#292929")
+        conditions_frame = Frame(self.simroot, bg="Gray50")
         conditions_frame.pack(pady=5, padx=5, fill=X)
 
-        self.biomes_frame = Frame(conditions_frame, bg="gray50")
+        self.biomes_frame = Frame(conditions_frame, bg="#292929")
         self.biomes_frame.pack(side=LEFT, padx=5, pady=5)
-        Label(self.biomes_frame, text="Biomes: ").pack(side=LEFT)
-        self.biomes_value_label = Label(self.biomes_frame, text=str(self.parent.model.env.biome.nom))
+        Label(self.biomes_frame, text="Biomes: ", bg="gray25", fg="white").pack(side=LEFT)
+        self.biomes_value_label = Label(self.biomes_frame, text=str(self.parent.model.env.biome.nom), bg="gray25", fg="white")
         self.biomes_value_label.pack(side=LEFT)
 
-        self.saison_frame = Frame(conditions_frame, bg="gray50")
+        self.saison_frame = Frame(conditions_frame, bg="#292929")
         self.saison_frame.pack(side=LEFT, padx=5, pady=5)
-        Label(self.saison_frame, text="Saison: ").pack(side=LEFT)
-        self.saison_value_label = Label(self.saison_frame, text=str(self.parent.model.env.saison.nom))
+        Label(self.saison_frame, text="Saison: ", bg="gray25", fg="white").pack(side=LEFT)
+        self.saison_value_label = Label(self.saison_frame, text=str(self.parent.model.env.saison.nom), bg="gray25", fg="white")
         self.saison_value_label.pack(side=LEFT)
 
-        self.dates_frame = Frame(conditions_frame, bg="gray50")
+        self.dates_frame = Frame(conditions_frame, bg="#292929")
         self.dates_frame.pack(side=LEFT, padx=5, pady=5)
-        Label(self.dates_frame, text="Dates: ").pack(side=LEFT)
-        self.dates_value_label = Label(self.dates_frame, text=str(self.parent.model.env.dateHeure.get_date()))
+        Label(self.dates_frame, text="Dates: ", bg="gray25", fg="white").pack(side=LEFT)
+        self.dates_value_label = Label(self.dates_frame, text=str(self.parent.model.env.dateHeure.get_date()), bg="gray25", fg="white")
         self.dates_value_label.pack(side=LEFT)
 
-        self.heure_frame = Frame(conditions_frame, bg="gray50")
+        self.heure_frame = Frame(conditions_frame, bg="#292929")
         self.heure_frame.pack(side=LEFT, padx=5, pady=5)
-        Label(self.heure_frame, text="Heure: ").pack(side=LEFT)
-        self.heure_value_label = Label(self.heure_frame, text=str(self.parent.model.env.dateHeure.date.time()))
+        Label(self.heure_frame, text="Heure: ", bg="gray25", fg="white").pack(side=LEFT)
+        self.heure_value_label = Label(self.heure_frame, text=str(self.parent.model.env.dateHeure.date.time()), bg="gray25", fg="white")
         self.heure_value_label.pack(side=LEFT)
 
-        self.temp_frame = Frame(conditions_frame, bg="gray50")
+        self.temp_frame = Frame(conditions_frame, bg="#292929")
         self.temp_frame.pack(side=LEFT, padx=5, pady=5)
-        Label(self.temp_frame, text="Température: ").pack(side=LEFT)
-        self.temp_value_label = Label(self.temp_frame, text=str(self.parent.model.env.temperatureActuel))
+        Label(self.temp_frame, text="Température: ", bg="gray25", fg="white").pack(side=LEFT)
+        self.temp_value_label = Label(self.temp_frame, text=str(self.parent.model.env.temperatureActuel), bg="gray25", fg="white")
         self.temp_value_label.pack(side=LEFT)
 
-        self.humidite_frame = Frame(conditions_frame, bg="gray50")
+        self.humidite_frame = Frame(conditions_frame, bg="#292929")
         self.humidite_frame.pack(side=LEFT, padx=5, pady=5)
-        Label(self.humidite_frame, text="Humidité: ").pack(side=LEFT)
-        self.humidite_value_label = Label(self.humidite_frame, text=str(self.parent.model.env.humiditeActuel * 100))
+        Label(self.humidite_frame, text="Humidité: ", bg="gray25", fg="white").pack(side=LEFT)
+        self.humidite_value_label = Label(self.humidite_frame, text=str(self.parent.model.env.humiditeActuel * 100),bg="gray25", fg="white")
         self.humidite_value_label.pack(side=LEFT)
 
-        self.solei_max_frame = Frame(conditions_frame, bg="gray50")
+        self.solei_max_frame = Frame(conditions_frame, bg="#292929")
         self.solei_max_frame.pack(side=LEFT, padx=5, pady=5)
-        Label(self.solei_max_frame, text="Soleil max: ").pack(side=LEFT)
-        self.solei_max = Label(self.solei_max_frame, text=str(self.parent.model.env.ensoleillementMax * 100))
+        Label(self.solei_max_frame, text="Soleil max: ", bg="gray25", fg="white").pack(side=LEFT)
+        self.solei_max = Label(self.solei_max_frame, text=str(self.parent.model.env.ensoleillementMax * 100), bg="gray25", fg="white")
         self.solei_max.pack(side=LEFT)
 
-        self.solei_actuel_frame = Frame(conditions_frame, bg="gray50")
+        self.solei_actuel_frame = Frame(conditions_frame, bg="#292929")
         self.solei_actuel_frame.pack(side=LEFT, padx=5, pady=5)
-        Label(self.solei_actuel_frame, text="Ensoillement actuel: ").pack(side=LEFT)
+        Label(self.solei_actuel_frame, text="Ensoillement actuel: ", bg="gray25", fg="white").pack(side=LEFT)
         self.solei_actuel = Label(self.solei_actuel_frame,
-                                  text=f"{round(self.parent.model.env.ensoleillementActuel * 100, 3)}" + " %")
+                                  text=f"{round(self.parent.model.env.ensoleillementActuel * 100, 3)}" + " %", bg="gray25", fg="white")
         self.solei_actuel.pack(side=LEFT)
 
-        self.leve_solei_frame = Frame(conditions_frame, bg="gray50")
+        self.leve_solei_frame = Frame(conditions_frame, bg="#292929")
         self.leve_solei_frame.pack(side=LEFT, padx=5, pady=5)
-        Label(self.leve_solei_frame, text="Levé du soleil: ").pack(side=LEFT)
-        self.leve_solei = Label(self.leve_solei_frame, text=str(self.parent.model.env.leveeDuSoleil))
+        Label(self.leve_solei_frame, text="Levé du soleil: ", bg="gray25", fg="white").pack(side=LEFT)
+        self.leve_solei = Label(self.leve_solei_frame, text=str(self.parent.model.env.leveeDuSoleil), bg="gray25", fg="white")
         self.leve_solei.pack(side=LEFT)
 
-        self.heure_coucher_solei_frame = Frame(conditions_frame, bg="gray50")
+        self.heure_coucher_solei_frame = Frame(conditions_frame, bg="#292929")
         self.heure_coucher_solei_frame.pack(side=LEFT, padx=5, pady=5)
-        Label(self.heure_coucher_solei_frame, text="Coucher du soleil: ").pack(side=LEFT)
-        self.coucher_solei = Label(self.heure_coucher_solei_frame, text=str(self.parent.model.env.coucherDuSoleil))
+        Label(self.heure_coucher_solei_frame, text="Coucher du soleil: ", bg="gray25", fg="white").pack(side=LEFT)
+        self.coucher_solei = Label(self.heure_coucher_solei_frame, text=str(self.parent.model.env.coucherDuSoleil), bg="gray25", fg="white")
         self.coucher_solei.pack(side=LEFT)
 
-        self.apogee_solei_frame = Frame(conditions_frame, bg="gray50")
+        self.apogee_solei_frame = Frame(conditions_frame, bg="#292929")
         self.apogee_solei_frame.pack(side=LEFT, padx=5, pady=5)
-        Label(self.apogee_solei_frame, text="Apogée solaire: ").pack(side=LEFT)
-        self.apogee_solei_value_label = Label(self.apogee_solei_frame, text=str(self.parent.model.env.apogeeSolaire))
+        Label(self.apogee_solei_frame, text="Apogée solaire: ", bg="gray25", fg="white").pack(side=LEFT)
+        self.apogee_solei_value_label = Label(self.apogee_solei_frame, text=str(self.parent.model.env.apogeeSolaire), bg="gray25", fg="white")
         self.apogee_solei_value_label.pack(side=LEFT)
 
-        self.solei_info_frame = Frame(conditions_frame, bg="gray50")
+        self.solei_info_frame = Frame(conditions_frame, bg="#292929")
         self.solei_info_frame.pack(side=LEFT, padx=5, pady=5)
-        Label(self.solei_info_frame, text="Information Soleil: ").pack(side=LEFT)
-        self.solei_info_label = Label(self.solei_info_frame, text="Levé" if self.parent.model.env.soleil else "Couché")
+        Label(self.solei_info_frame, text="Information Soleil: ", bg="gray25", fg="white").pack(side=LEFT)
+        self.solei_info_label = Label(self.solei_info_frame, text="Levé" if self.parent.model.env.soleil else "Couché", bg="gray25", fg="white")
         self.solei_info_label.pack(side=LEFT)
 
+        # STATS FRAME
+        StatsFrame = Frame(self.simroot, bg="Gray50")
+        StatsFrame.pack(pady=5, padx=5, fill=X)
 
+        cardAspect = Frame(StatsFrame, bg="Gray50")
+        cardAspect.pack(side=LEFT)
 
-        labelSize = Label(text="Grosseur de la carte : "+str(self.res * 400)+" x "+str(self.res * 400)+" mètres.", bg="gray50")
-        labelSize.pack()
+        labelSize = Label(cardAspect, text="Grosseur de la carte : "+str(self.res * 400)+" x "+str(self.res * 400)+" mètres.", bg="gray50", font=('Arial', 13))
+        labelSize.pack(anchor=W)
 
         def show(event):
             self.canva_frame_zoom.delete(ALL) #RESET CANVA
@@ -459,8 +466,14 @@ class Vue:
             zoomView.generate_square(len(self.submap.ALL[self.carre - 1]), self.currSectionView, self.seed.biomeOrder, self.mapGeneral, False)
 
         # frame pour la simulation
-        labelCellSelect = Label(self.simroot, font=("Arial", 30), fg="white", bg="#292929")
-        labelCellSelect.pack(padx=20, expand=True)
+        labelCellSelect = Label(cardAspect, font=("Arial", 30), fg="black", bg="gray50")
+        labelCellSelect.pack(anchor=W)
+
+        #INFO POPULATION ANIMAL
+        animalAspect = Frame(StatsFrame, bg="Gray50")
+        animalAspect.pack(side=RIGHT)
+
+        Label(animalAspect, text="test").pack()
 
         # GROSSE MAP
         self.canva_frame_general = Canvas(self.simroot, bg="#292929", width=self.mapGeneral, height=self.mapGeneral)

@@ -125,7 +125,7 @@ class Vu:
 
 
 class Environnement:
-    def __init__(self):
+    def __init__(self, annee, mois, jours):
         self.tempDeBase = None
         self.temperatureActuel = None
         
@@ -145,6 +145,7 @@ class Environnement:
         self.saison = None
         self.biome = PrairiesEtSavanes()
         self.dateHeure = Timer(self) # definit ici ou dans le modele
+        print(self.dateHeure.date.month)
         self.statEnv()
 
 
