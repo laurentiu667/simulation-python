@@ -22,6 +22,7 @@ class Vue:
         self.currSectionView = None
         self.canva_frame_zoom = None
         self.carre = 10
+        self.reasignImageID = False
 
 #       ANIMAUX
         self.Loup = 0
@@ -255,7 +256,7 @@ class Vue:
         frameBouleau = Frame(frame_environnement, bg="#292929", pady=5)
         frameBouleau.pack(anchor=W)
         nbrBouleau = Entry(frameBouleau, width=10)
-        nbrBouleau.insert(0, 10)
+        nbrBouleau.insert(0, 15)
         label = Label(frameBouleau, text="Bouleau : ", bg="#292929", fg="WHITE", font=("Arial", 10), width=15)
         nbrBouleau.pack(side=RIGHT)
         label.pack(side=LEFT)
@@ -263,7 +264,7 @@ class Vue:
         frameErable = Frame(frame_environnement, bg="#292929", pady=5)
         frameErable.pack(anchor=W)
         nbrErable = Entry(frameErable, width=10)
-        nbrErable.insert(0, 10)
+        nbrErable.insert(0, 15)
         label = Label(frameErable, text="Erable : ", bg="#292929", fg="WHITE", font=("Arial", 10), width=15)
         nbrErable.pack(side=RIGHT)
         label.pack(side=LEFT)
@@ -271,7 +272,7 @@ class Vue:
         framePissenlit = Frame(frame_environnement, bg="#292929", pady=5)
         framePissenlit.pack(anchor=W)
         nbrPissenlit = Entry(framePissenlit, width=10)
-        nbrPissenlit.insert(0, 100)
+        nbrPissenlit.insert(0, 150)
         label = Label(framePissenlit, text="Pissenlit : ", bg="#292929", fg="WHITE", font=("Arial", 10), width=15)
         nbrPissenlit.pack(side=RIGHT)
         label.pack(side=LEFT)
@@ -279,10 +280,13 @@ class Vue:
         framePomier = Frame(frame_environnement, bg="#292929", pady=5)
         framePomier.pack(anchor=W)
         nbrPomier = Entry(framePomier, width=10)
-        nbrPomier.insert(0, 10)
+        nbrPomier.insert(0, 15)
         label = Label(framePomier, text="Pomier : ", bg="#292929", fg="WHITE", font=("Arial", 10), width=15)
         nbrPomier.pack(side=RIGHT)
         label.pack(side=LEFT)
+
+        labelPrincipal4 = Label(frame_environnement, text="Parametre temporel", bg="#292929", fg="WHITE", font=("Arial", 20))
+        labelPrincipal4.pack(anchor=W)
 
 
         # DIV start
@@ -390,6 +394,8 @@ class Vue:
         labelSize.pack()
 
         def show(event):
+            self.canva_frame_zoom.delete(ALL) #RESET CANVA
+
             if 0 < event.x < 266 and 0 < event.y < 266:
                 self.carre = 1
             elif 266 < event.x < 532 and 0 < event.y < 266:
@@ -483,24 +489,24 @@ class Vue:
         self.generate_map_on_canvas(canva, True, 400)
 
     def simulation(self):
+        #SPAWN TREES
         if(self.respawnTres):
             self.respawnTres = False
             for i in self.parent.model.vegetaux:
                 if (i.region == self.carre):
                     self.canva_frame_zoom.create_image(i.x, i.y, image=i.photo, anchor=tk.CENTER)
 
+        # DELETE PREVIOUS
         if self.imageIDs:
             for i in self.imageIDs:
                 self.canva_frame_zoom.delete(i)
 
+        # RESPAWN AT NEW POS
+        self.imageIDs.clear()
         for i in self.parent.model.animaux:
             if (i.region == self.carre):
                 self.parent.model.deplacer(i)
                 self.imageIDs.append(self.canva_frame_zoom.create_image(i.x, i.y, image=i.photo, anchor=tk.CENTER))
-        
-        # if(self.saisonBase != self.parent.model.env.saison):
-        #     self.generate_map_on_canvas(self.canva_frame_general, False, self.mapGeneral)
-        #     self.saisonBase = self.parent.model.env.saison
 
+        # UPDATE ENVIRONEMENT
         self.update()
-
