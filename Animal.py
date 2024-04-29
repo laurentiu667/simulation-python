@@ -126,6 +126,24 @@ class Animal(ABC):
                     self.dest_x = i
                     self.dest_y = v
     
+    def check_position(self):
+        ratio = 801 / len(self.terrain[0][0])
+
+        pos_x = math.floor(self.x / ratio)
+        pos_y = math.floor(self.y / ratio)
+
+        while self.terrain[self.region-1][pos_x][pos_y] < 50:
+            self.x = random.randint(0, 801)  # changer les valeurs de déplacement en fonction de la map
+            self.y = random.randint(0, 801)
+            self.region = random.randint(1, 9)
+            pos_x = math.floor(self.x / ratio)
+            pos_y = math.floor(self.y / ratio)
+
+        if self.terrain[self.region-1][pos_x][pos_y] <= 50:
+            print("BUG")
+        else:
+            print(self.x,self.y)
+
     def repro(self):
         if self.isFucking == True:
             pass

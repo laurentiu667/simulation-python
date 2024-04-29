@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod  # biblioteque pour les classes abstraites defini
 import random
 import time
+import math
 from PIL import Image, ImageTk
 
 
@@ -15,6 +16,7 @@ class Vegetal(ABC):
         self.photosynthese  = 0
         self.nom = None
         self.region = None
+        self.terrain = None
         self.x = random.randint(0, 800)
         self.y = random.randint(0, 800)
 
@@ -35,7 +37,24 @@ class Vegetal(ABC):
 
             if int(secondes) == 0:
                 minutes += 1
-    
+
+    def check_position(self):
+        ratio = 801 / len(self.terrain[0][0])
+
+        pos_x = math.floor(self.x / ratio)
+        pos_y = math.floor(self.y / ratio)
+
+        while self.terrain[self.region - 1][pos_x][pos_y] < 50:
+            self.x = random.randint(0, 801)  # changer les valeurs de déplacement en fonction de la map
+            self.y = random.randint(0, 801)
+            self.region = random.randint(1, 9)
+            pos_x = math.floor(self.x / ratio)
+            pos_y = math.floor(self.y / ratio)
+
+        if self.terrain[self.region - 1][pos_x][pos_y] <= 50:
+            print("BUG")
+        else:
+            print(self.x, self.y)
    
     def ajoutFruit(self):
         None
@@ -82,54 +101,60 @@ class PlanteComestible(Vegetal):
         self.capaciteFruit = self.capaciteFruit * facteur
             
 class Sapin(Vegetal):
-    def __init__(self, index):
+    def __init__(self, index, map):
         super().__init__()
         self.nom = ("Sapin" + index)
+        self.terrain = map
         self.image = Image.open("Images_Végétaux/Végétaux (images, code)/Végétaux/sapin.png")
         self.image = self.image.resize((280, 280))  # checker la grosseur de l'image
         self.photo = ImageTk.PhotoImage(self.image)
         self.region = random.randint(1, 9)
 
 class Bleuet(Vegetal):
-    def __init__(self, index):
+    def __init__(self, index, map):
         super().__init__()
         self.nom = ("Bleuet" + index)
+        self.terrain = map
         self.image = Image.open("Images_Végétaux/Végétaux (images, code)/Végétaux/bleuet.png")
         self.image = self.image.resize((60, 60))  # checker la grosseur de l'image
         self.photo = ImageTk.PhotoImage(self.image)
         self.region = random.randint(1, 9)
 
 class Bouleau(Vegetal):
-    def __init__(self, index):
+    def __init__(self, index, map):
         super().__init__()
         self.nom = ("Bouleau" + index)
+        self.terrain = map
         self.image = Image.open("Images_Végétaux/Végétaux (images, code)/Végétaux/bouleaujaune.png")
         self.image = self.image.resize((265, 265))  # checker la grosseur de l'image
         self.photo = ImageTk.PhotoImage(self.image)
         self.region = random.randint(1, 9)
         
 class Erable(Vegetal):
-    def __init__(self, index):
+    def __init__(self, index, map):
         super().__init__()
         self.nom = ("Erable" + index)
+        self.terrain = map
         self.image = Image.open("Images_Végétaux/Végétaux (images, code)/Végétaux/erable_de_sucre.png")
         self.image = self.image.resize((265, 265))  # checker la grosseur de l'image
         self.photo = ImageTk.PhotoImage(self.image)
         self.region = random.randint(1, 9)
         
 class Pomier(Vegetal):
-    def __init__(self, index):
+    def __init__(self, index, map):
         super().__init__()
         self.nom = ("Pomier" + index)
+        self.terrain = map
         self.image = Image.open("Images_Végétaux/Végétaux (images, code)/Végétaux/pommiersauvage.png")
         self.image = self.image.resize((265, 265))  # checker la grosseur de l'image
         self.photo = ImageTk.PhotoImage(self.image)
         self.region = random.randint(1, 9)
 
 class Pissenlit(Vegetal):
-    def __init__(self, index):
+    def __init__(self, index, map):
         super().__init__()
         self.nom = ("Pissenlit" + index)
+        self.terrain = map
         self.image = Image.open("Images_Végétaux/Végétaux (images, code)/Végétaux/pissenlit.png")
         self.image = self.image.resize((15, 15))  # checker la grosseur de l'image
         self.photo = ImageTk.PhotoImage(self.image)
