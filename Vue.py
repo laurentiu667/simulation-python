@@ -46,6 +46,11 @@ class Vue:
         self.Pomier = 0
         self.Erable = 0
 
+        #TEMPS
+        self.jour = 1
+        self.mois = 1
+        self.annee = 0
+
         #METEO
         self.saison_frame = None
         self.dates_frame = None
@@ -112,6 +117,14 @@ class Vue:
             self.Bleuet = nbrBleuet.get()
             self.Pomier = nbrPomier.get()
             self.Erable = nbrErable.get()
+
+            self.annee = qteAnnee.get()
+            self.jour = jourMois.get()
+            if int(self.jour) > 30:
+                self.jour = 1
+            self.mois = moisAnnee.get()
+            if int(self.mois) > 12:
+                self.mois = 1
 
         # SCROLL DOWN MENU
         labelPrincipal1 = Label(frame_buttons, text="Parametre de la carte", bg="#292929", fg="WHITE", font=("Arial", 20))
@@ -287,6 +300,30 @@ class Vue:
 
         labelPrincipal4 = Label(frame_environnement, text="Parametre temporel", bg="#292929", fg="WHITE", font=("Arial", 20))
         labelPrincipal4.pack(anchor=W)
+
+        frameJour = Frame(frame_environnement, bg="#292929", pady=5)
+        frameJour.pack(anchor=W)
+        jourMois = Entry(frameJour, width=10)
+        jourMois.insert(0, 1)
+        label = Label(frameJour, text="Jour du mois : ", bg="#292929", fg="WHITE", font=("Arial", 10), width=15)
+        jourMois.pack(side=RIGHT)
+        label.pack(side=LEFT)
+
+        frameMois = Frame(frame_environnement, bg="#292929", pady=5)
+        frameMois.pack(anchor=W)
+        moisAnnee = Entry(frameMois, width=10)
+        moisAnnee.insert(0, 1)
+        label = Label(frameMois, text="Mois de l'année : ", bg="#292929", fg="WHITE", font=("Arial", 10), width=15)
+        moisAnnee.pack(side=RIGHT)
+        label.pack(side=LEFT)
+
+        annee = Frame(frame_environnement, bg="#292929", pady=5)
+        annee.pack(anchor=W)
+        qteAnnee = Entry(annee, width=10)
+        qteAnnee.insert(0, 0)
+        label = Label(annee, text="Année de départ : ", bg="#292929", fg="WHITE", font=("Arial", 10), width=15)
+        qteAnnee.pack(side=RIGHT)
+        label.pack(side=LEFT)
 
 
         # DIV start
