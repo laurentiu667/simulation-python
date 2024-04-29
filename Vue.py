@@ -520,10 +520,12 @@ class Vue:
         if(new):
             self.seed.generate_map()
 
-        if self.parent.model.env.saison.nom == "été":
+        if self.parent.model.env.saison.nom == "été" or self.parent.model.env.saison.nom == "printemps":
             vue.generate_square(self.seed.diamond_square.heightmapWidth, self.seed.diamond_square.heightmap, self.seed.biomeOrder, grosseur, True)
         elif self.parent.model.env.saison.nom == "hiver":
             vue.generate_square_winter(self.seed.diamond_square.heightmapWidth, self.seed.diamond_square.heightmap, self.seed.biomeOrder, grosseur, True)
+        elif self.parent.model.env.saison.nom == "automne":
+            vue.generate_square_autumn(self.seed.diamond_square.heightmapWidth, self.seed.diamond_square.heightmap, self.seed.biomeOrder, grosseur, True)
 
     def new_window_preview(self):
         self.startButton['state'] = NORMAL
