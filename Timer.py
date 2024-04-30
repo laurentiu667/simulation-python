@@ -3,35 +3,51 @@ import threading
 import time as T
 import calendar
 
-
 class Timer:
-    LOCK = threading.Lock()  # Verrou  n'autorise qu'un seul thread a la fois a acceder a la
+    LOCK = threading.Lock()  # Verrou autorise un seul thread à la fois à accéder
     _instance = None
 
-    def __init__(self):
-        self.date_initiale = self.date = datetime(1, 1, 1, 0, 0, 0)
-        self.thread = threading.Thread(target=self.update_timer).start()
-
-    def __init__(self, e):
-        self.envi = e
-        self.date_initiale = self.date = datetime(1, 1, 1, 0, 0, 0)
-        self.thread = threading.Thread(target=self.update_timer).start()  # Démarre le thread de mise à jour du timer
-
-    def __new__(cls, e=None):  # singleton on verra ça en orienté objets 2
-        if not cls._instance:
-            cls._instance = super(Timer, cls).__new__(cls)
-
-            if e is not None:
-                cls.e = e
+    def __new__(cls, *args, **kwargs):
+        with cls.LOCK:
+            if not cls._instance:
+                cls._instance = super(Timer, cls).__new__(cls)
         return cls._instance
 
-    def update_timer(self):
-        """Avance le temps d'une seconde."""
-        with Timer.LOCK:  # Acquiert le verrou
-            while True:
-                self.date += timedelta(seconds=3600)
-                T.sleep(1)  #
-
+    def __init__(self, e = None, annee = 1, mois = 1, jour = 1, heure = 0, minute = 0, seconde = 0):
+        if not hasattr(self, 'initialized'):  # Eviter l'initialisation multiple(vérifie si l'objet Timer a déjà été initialisé)
+            self.environnement = e
+            self.date_initiale = datetime(annee,mois,jour,heure,minute,seconde)
+            self.date = self.date_initiale
+            
+            self.thread = None
+            self.running = False
+            self.initialized = True
+    
+    
+    def Start_Time(self):
+        
+        def update_timer():
+            while self.running:
+                with Timer.LOCK:
+                    self.date += timedelta(seconds=3600)
+                    print(1)
+                T.sleep(1)
+            
+        if self.thread is None:
+            self.thread = threading.Thread(target=update_timer)
+            self.thread.start()
+            
+    def stopperTemps(self):
+        self.running = False  # stopper la mise a jour du repere temporelle pour pouvoir en creer un autre plus tard
+        self.thread.join()  # Attendre que le thread se termine proprement
+            
+    @classmethod
+    def reset_instance(cls):
+        with cls.LOCK:
+            if cls._instance is not None:
+                cls._instance.running = False
+                cls._instance = None
+        
     @staticmethod
     def obtenirUneHeure(heure=0, minute=0, seconde=0):
         return time(heure, minute, seconde)
@@ -62,27 +78,26 @@ class Timer:
         if time is not None:
             return time.strftime("%H:%M:%S")
         return self.date.strftime("%H:%M:%S")
-
-    def nombreDeJoursDumois(self, month=None):
-        if month is not None:
-            return calendar.monthrange(self.date.year, month)[1]
-        return calendar.monthrange(self.date.year, self.date.month)[1]
+    
+    @staticmethod
+    def nombreDeJoursDumois(year,month):
+        return calendar.monthrange(year, month)[1]
 
     def nombreDeJoursDeLaSaison(self, saison=None):
         if saison is not None:
             return sum([calendar.monthrange(self.date.year, month)[1] for month in saison.mois])
 
-        return sum([calendar.monthrange(self.date.year, month)[1] for month in self.envi.saison.mois])
+        return sum([calendar.monthrange(self.date.year, month)[1] for month in self.environnement.saison.mois])
 
     def joursDepuisDebutSaison(self):
         from Saison import Hiver  # import ici pour eviter les import circulaire
-        if isinstance(self.envi.saison, Hiver):
+        if isinstance(self.environnement.saison, Hiver):
             if self.date.year == 1:
                 date_debut_saison = self.date_initiale
             else:
-                date_debut_saison = datetime(self.date.year - 1, self.envi.saison.mois[0], 1)
+                date_debut_saison = datetime(self.date.year - 1, self.environnement.saison.mois[0], 1)
         else:
-            date_debut_saison = datetime(self.date.year, self.envi.saison.mois[0],
+            date_debut_saison = datetime(self.date.year, self.environnement.saison.mois[0],
                                          1)  # Assumons que la saison commence le premier jour du premier mois de la saison
         jours_ecoules = (self.date - date_debut_saison).days
         return 1 if jours_ecoules == 0 else jours_ecoules
@@ -112,3 +127,18 @@ class Timer:
         else:
             return "Format non reconnu"
 
+if __name__ == "__main__":
+    
+    t = Timer()
+    t.Start_Time()
+    t1 = None
+    t.Start_Time()
+    while True:
+        print(t.get_time())
+        if t1 is not None:
+            print(t1.get_time())
+        T.sleep(1)
+        if t.date.hour > 10:
+            if t1 is None:
+                t1 = Timer()
+            

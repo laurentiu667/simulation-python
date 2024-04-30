@@ -13,24 +13,14 @@ class Modele:
         self.parent = parent
         self.map = map
         self.environnement = None
-        self.date = None
         self.animaux = []
         self.vegetaux = []
-        self.env = Environnement(self.parent.view.annee, self.parent.view.mois, self.parent.view.jour)
+        self.env = Environnement()
 
     def boucler_simulation(self):
         self.env.updateEnv()
         self.parent.view.simulation()
         self.parent.view.simroot.after(100, self.boucler_simulation)
-    
-        # self.debuterTemps() #initialisation du temps seulement si c'est le model final
-
-    def debuterTemps(self):
-        self.date = Timer()  # class codé en sorte qu'il n'y ai qu'un seul repere temporelle
-
-    def stopperTemps(self):
-        self.date.thread.stop()  # stopper la mise a jour du repere temporelle pour pouvoir en creer un autre plus tard
-        self.date.thread.join()  # Attendre que le thread se termine proprement
 
     # GENERE TOUT LES VEGETAUX AVEC : NOM DES VEGETAUX + INDEX
     def creer_vegetaux(self):

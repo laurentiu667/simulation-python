@@ -125,7 +125,7 @@ class Vu:
 
 
 class Environnement:
-    def __init__(self, annee, mois, jours):
+    def __init__(self):
         self.tempDeBase = None
         self.temperatureActuel = None
         
@@ -144,20 +144,22 @@ class Environnement:
         
         self.saison = None
         self.biome = PrairiesEtSavanes()
-        self.dateHeure = Timer(self) # definit ici ou dans le modele
-        print(self.dateHeure.date.month)
+        self.dateHeure = None 
         self.statEnv()
 
 
     def statEnv(self):
-        self.liaisonSaisonMois()
         #selon stats moyenne de montreal
         self.tempDeBase = 6 #en degrés Celsius
         self.humiditeMoyenne = 0.73
         self.ensoleillementMoyen = 0.6
         self.precipitationMoyenne = 978 #en mm/an
         self.impactEnsoleillement = 5
-        self.calculTemperature()
+        
+    def baseValider(self,annee,mois,jours):#call dans vue
+        Timer.reset_instance()
+        self.dateHeure = Timer(self,annee,mois,jours)
+        self.updateEnv()
         
     def updateEnv(self):
         self.liaisonSaisonMois()

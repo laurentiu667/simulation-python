@@ -4,6 +4,7 @@
     // Pour plus d'informations, visitez : https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
+
         {
             "name": "Main",
             "type": "debugpy",
@@ -16,6 +17,14 @@
             "type": "debugpy",
             "request": "launch",
             "program": "${workspaceFolder}/Environnement.py",
+            "console": "integratedTerminal"
+        },
+
+        {
+            "name": "Timer",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/Timer.py",
             "console": "integratedTerminal"
         }
     ]

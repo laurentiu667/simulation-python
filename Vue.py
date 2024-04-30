@@ -24,32 +24,83 @@ class Vue:
         self.carre = 10
         self.reasignImageID = False
 
+        def on_write(var): #sert de verification au entrés # pour l'intant j'ai mis que aucun ne peut etre egal a zero mais a voir
+            try:
+                if var.get() < 1:
+                    var.set(1)
+                elif self.mois.get() > 12:
+                    self.mois.set(12)
+                elif self.jour.get() > Timer.nombreDeJoursDumois(self.annee.get(),self.mois.get()):
+                    self.jour.set(Timer.nombreDeJoursDumois(self.annee.get(),self.mois.get()))
+                    
+            except TclError:
+                    pass
+        
 #       ANIMAUX
-        self.Loup = 0
-        self.Lievre = 0
-        self.Raton = 0
-        self.Cerf = 0
-        self.Lynx = 0
-        self.Renard = 0
-        self.Orignial = 0
-        self.Ours = 0
-        self.Castor = 0
-        self.Ecureille = 0
+        self.Loup = IntVar(value=5)
+        self.Loup.trace_add("write", lambda *args: on_write(self.Loup))
+        
+        self.Lievre = IntVar(value=5)
+        self.Lievre.trace_add("write", lambda *args: on_write(self.Lievre))
+        
+        self.Sapin = IntVar(value=5)
+        self.Sapin.trace_add("write", lambda *args: on_write(self.Sapin))
+        
+        self.Cerf = IntVar(value=5)
+        self.Cerf.trace_add("write", lambda *args: on_write(self.Cerf))
+        
+        self.Lynx = IntVar(value=5)
+        self.Lynx.trace_add("write", lambda *args: on_write(self.Lynx))
+        
+        self.Renard = IntVar(value=5)
+        self.Renard.trace_add("write", lambda *args: on_write(self.Renard))
+        
+        self.Orignial = IntVar(value=5)
+        self.Orignial.trace_add("write", lambda *args: on_write(self.Orignial))
+        
+        self.Ours = IntVar(value=5)
+        self.Ours.trace_add("write", lambda *args: on_write(self.Ours))
+        
+        self.Castor = IntVar(value=5)
+        self.Castor.trace_add("write", lambda *args: on_write(self.Castor))
+        
+        self.Ecureille = IntVar(value=5)
+        self.Ecureille.trace_add("write", lambda *args: on_write(self.Ecureille))
+        
+        self.Raton = IntVar(value=5)
+        self.Raton.trace_add("write", lambda *args: on_write(self.Raton))
 
-        #ENVIRONNEMENT
-        self.hey = None
+        #VEGETAUX
         self.biomes_frame = None
-        self.Sapin = 0
-        self.Bouleau = 0
-        self.Pissenlit = 0
-        self.Bleuet = 0
-        self.Pomier = 0
-        self.Erable = 0
+        
+        self.Sapin = IntVar(value=10)
+        self.Sapin.trace_add("write", lambda *args: on_write(self.Sapin))
+        
+        self.Bouleau = IntVar(value=15)
+        self.Bouleau.trace_add("write", lambda *args: on_write(self.Bouleau))
+        
+        self.Pissenlit = IntVar(value=150)
+        self.Pissenlit.trace_add("write", lambda *args: on_write(self.Pissenlit))
+        
+        self.Bleuet = IntVar(value=25)
+        self.Bleuet.trace_add("write", lambda *args: on_write(self.Bleuet))
+        
+        self.Pomier = IntVar(value=15)
+        self.Pomier.trace_add("write", lambda *args: on_write(self.Pomier))
+        
+        self.Erable = IntVar(value=15)
+        self.Erable.trace_add("write", lambda *args: on_write(self.Erable))
 
-        #TEMPS
-        self.jour = 1
-        self.mois = 1
-        self.annee = 1
+        #TEMPS(ENVIRONNEMENT)
+        self.jour = IntVar(value=1)
+        self.jour.trace_add("write", lambda *args: on_write(self.jour))
+        
+        
+        self.mois = IntVar(value=1)
+        self.mois.trace_add("write", lambda *args: on_write(self.mois))
+        
+        self.annee = IntVar(value=2015)
+        self.annee.trace_add("write", lambda *args: on_write(self.annee))
 
         #METEO
         self.saison_frame = None
@@ -98,35 +149,26 @@ class Vue:
 
             self.seed = MAPGENERATOR.Seed(water)  #SEED GENERATES HERE!!!!!!!!
             self.startButton['state'] = DISABLED
-
-            # SET LE NOMBRE ANIMAUX VOULUT DANS LES VARIABLES
-            self.Ours = nbrOurs.get()
-            self.Ecureille = nbrEcureille.get()
-            self.Cerf = nbrCerf.get()
-            self.Lievre = nbrLievre.get()
-            self.Castor = nbrCastor.get()
-            self.Renard = nbrRenard.get()
-            self.Lynx = nbrLynx.get()
-            self.Loup = nbrLoup.get()
-            self.Orignial = nbrOrignial.get()
-            self.Raton = nbrRaton.get()
-
-            self.Sapin = nbrSapin.get()
-            self.Bouleau = nbrBouleau.get()
-            self.Pissenlit = nbrPissenlit.get()
-            self.Bleuet = nbrBleuet.get()
-            self.Pomier = nbrPomier.get()
-            self.Erable = nbrErable.get()
-
-            self.annee = qteAnnee.get()
-            if int(self.annee) < 1:
-                self.annee = 1
-            self.jour = jourMois.get()
-            if int(self.jour) > 30:
-                self.jour = 1
-            self.mois = moisAnnee.get()
-            if int(self.mois) > 12:
-                self.mois = 1
+            
+            self.parent.model.env.baseValider(self.annee.get(), self.mois.get(), self.jour.get())
+            
+        
+        # n'autorise que les chiffres dans les entry auquel il est assigné
+        def validate_digit(action, index, value_if_allowed, prior_value, text, validation_type, trigger_type, widget_name):
+            """Valide si l'entrée est un chiffre."""
+            if action == '1':  # action 1 est pour insertion
+                if text.isdigit():
+                    return True
+                else:
+                    return False
+            return True
+        vcmd = (self.root.register(validate_digit), '%d', '%i', '%P', '%s', '%S', '%v', '%V', '%W')
+        
+        def on_exit(event,var):  # Fonction à exécuter lorsque vous quittez l'Entry
+            try:
+                var.get() 
+            except TclError:
+                var.set(1)
 
         # SCROLL DOWN MENU
         labelPrincipal1 = Label(frame_buttons, text="Parametre de la carte", bg="#292929", fg="WHITE", font=("Arial", 20))
@@ -167,85 +209,85 @@ class Vue:
 
         frameOurs = Frame(frame_animaux, bg="#292929", pady = 5)
         frameOurs.pack(anchor=W)
-        nbrOurs = Entry(frameOurs, width=10)
-        nbrOurs.insert(0, 5)
+        nbrOurs = Entry(frameOurs, textvariable=self.Ours, width=10, validate="key", validatecommand=vcmd)
+        nbrOurs.bind("<FocusOut>", lambda event: on_exit(event, self.Ours))
         label = Label(frameOurs, text="Ours : ", bg="#292929", fg="WHITE", font=("Arial", 10), width=15)
         nbrOurs.pack(side = RIGHT)
         label.pack(side = LEFT)
 
         frameCerf = Frame(frame_animaux, bg="#292929", pady = 5)
         frameCerf.pack(anchor=W)
-        nbrCerf = Entry(frameCerf, width=10)
-        nbrCerf.insert(0, 5)
+        nbrCerf = Entry(frameCerf, textvariable=self.Cerf, width=10, validate="key", validatecommand=vcmd)
+        nbrCerf.bind("<FocusOut>", lambda event: on_exit(event, self.Cerf))
         label = Label(frameCerf, text="Cerf : ", bg="#292929", fg="WHITE", font=("Arial", 10), width=15)
         nbrCerf.pack(side=RIGHT)
         label.pack(side=LEFT)
 
         frameLoup = Frame(frame_animaux, bg="#292929", pady = 5)
         frameLoup.pack(anchor=W)
-        nbrLoup = Entry(frameLoup, width=10)
-        nbrLoup.insert(0, 5)
+        nbrLoup = Entry(frameLoup, textvariable=self.Loup, width=10, validate="key", validatecommand=vcmd)
+        nbrLoup.bind("<FocusOut>", lambda event: on_exit(event, self.Loup))
         label = Label(frameLoup, text="Loup : ", bg="#292929", fg="WHITE", font=("Arial", 10), width=15)
         nbrLoup.pack(side=RIGHT)
         label.pack(side=LEFT)
 
         frameRaton = Frame(frame_animaux, bg="#292929", pady=5)
         frameRaton.pack(anchor=W)
-        nbrRaton = Entry(frameRaton, width=10)
-        nbrRaton.insert(0, 5)
+        nbrRaton = Entry(frameRaton, textvariable=self.Raton, width=10, validate="key", validatecommand=vcmd)
+        nbrRaton.bind("<FocusOut>", lambda event: on_exit(event, self.Raton))
         label = Label(frameRaton, text="Raton : ", bg="#292929", fg="WHITE", font=("Arial", 10), width=15)
         nbrRaton.pack(side=RIGHT)
         label.pack(side=LEFT)
 
         frameEcureille = Frame(frame_animaux, bg="#292929", pady=5)
         frameEcureille.pack(anchor=W)
-        nbrEcureille = Entry(frameEcureille, width=10)
-        nbrEcureille.insert(0, 5)
+        nbrEcureille = Entry(frameEcureille, textvariable=self.Ecureille, width=10, validate="key", validatecommand=vcmd)
+        nbrEcureille.bind("<FocusOut>", lambda event: on_exit(event, self.Ecureille))
         label = Label(frameEcureille, text="Ecureille : ", bg="#292929", fg="WHITE", font=("Arial", 10), width=15)
         nbrEcureille.pack(side=RIGHT)
         label.pack(side=LEFT)
 
         frameCastor = Frame(frame_animaux, bg="#292929", pady=5)
         frameCastor.pack(anchor=W)
-        nbrCastor = Entry(frameCastor, width=10)
-        nbrCastor.insert(0, 5)
+        nbrCastor = Entry(frameCastor,textvariable=self.Castor, width=10, validate="key", validatecommand=vcmd)
+        nbrCastor.bind("<FocusOut>", lambda event: on_exit(event, self.Castor))
         label = Label(frameCastor, text="Castor : ", bg="#292929", fg="WHITE", font=("Arial", 10), width=15)
         nbrCastor.pack(side=RIGHT)
         label.pack(side=LEFT)
 
         frameRenard = Frame(frame_animaux, bg="#292929", pady=5)
         frameRenard.pack(anchor=W)
-        nbrRenard = Entry(frameRenard, width=10)
-        nbrRenard.insert(0, 5)
+        nbrRenard = Entry(frameRenard, textvariable=self.Renard, width=10, validate="key", validatecommand=vcmd)
+        nbrRenard.bind("<FocusOut>", lambda event: on_exit(event, self.Renard))
         label = Label(frameRenard, text="Renard : ", bg="#292929", fg="WHITE", font=("Arial", 10), width=15)
         nbrRenard.pack(side=RIGHT)
         label.pack(side=LEFT)
 
         frameOrignial = Frame(frame_animaux, bg="#292929", pady=5)
         frameOrignial.pack(anchor=W)
-        nbrOrignial = Entry(frameOrignial, width=10)
-        nbrOrignial.insert(0, 5)
+        nbrOrignial = Entry(frameOrignial, textvariable=self.Orignial, width=10, validate="key", validatecommand=vcmd)
+        nbrOrignial.bind("<FocusOut>", lambda event: on_exit(event, self.Orignial))
         label = Label(frameOrignial, text="Orignial : ", bg="#292929", fg="WHITE", font=("Arial", 10), width=15)
         nbrOrignial.pack(side=RIGHT)
         label.pack(side=LEFT)
 
         frameLievre = Frame(frame_animaux, bg="#292929", pady=5)
         frameLievre.pack(anchor=W)
-        nbrLievre = Entry(frameLievre, width=10)
-        nbrLievre.insert(0, 5)
+        nbrLievre = Entry(frameLievre,textvariable=self.Lievre, width=10, validate="key", validatecommand=vcmd)
+        nbrLievre.bind("<FocusOut>", lambda event: on_exit(event, self.Lievre))
         label = Label(frameLievre, text="Lievre : ", bg="#292929", fg="WHITE", font=("Arial", 10), width=15)
         nbrLievre.pack(side=RIGHT)
         label.pack(side=LEFT)
 
         frameLynx = Frame(frame_animaux, bg="#292929", pady=5)
         frameLynx.pack(anchor=W)
-        nbrLynx = Entry(frameLynx, width=10)
-        nbrLynx.insert(0, 5)
+        nbrLynx = Entry(frameLynx, textvariable=self.Lynx, width=10, validate="key", validatecommand=vcmd)
+        nbrLynx.bind("<FocusOut>", lambda event: on_exit(event, self.Lynx))
         label = Label(frameLynx, text="Lynx : ", bg="#292929", fg="WHITE", font=("Arial", 10), width=15)
         nbrLynx.pack(side=RIGHT)
         label.pack(side=LEFT)
 
-        # DIV PARAMETRE ENVIRONEMNT
+        # DIV PARAMETRE VEGETAUX
         frame_environnement = Frame(Frame_global, bg="#292929", height=50, width=20)
         frame_environnement.pack(padx=30, side=LEFT, anchor=N)
 
@@ -254,77 +296,79 @@ class Vue:
 
         frameSapin = Frame(frame_environnement, bg="#292929", pady=5)
         frameSapin.pack(anchor=W)
-        nbrSapin = Entry(frameSapin, width=10)
-        nbrSapin.insert(0, 10)
+        nbrSapin = Entry(frameSapin,textvariable=self.Sapin, width=10, validate="key", validatecommand=vcmd)
+        nbrSapin.bind("<FocusOut>", lambda event: on_exit(event, self.Sapin))
         label = Label(frameSapin, text="Sapin : ", bg="#292929", fg="WHITE", font=("Arial", 10), width=15)
         nbrSapin.pack(side=RIGHT)
         label.pack(side=LEFT)
 
         framBleuet = Frame(frame_environnement, bg="#292929", pady=5)
         framBleuet.pack(anchor=W)
-        nbrBleuet = Entry(framBleuet, width=10)
-        nbrBleuet.insert(0, 25)
+        nbrBleuet = Entry(framBleuet, textvariable=self.Bleuet, width=10, validate="key", validatecommand=vcmd)
+        nbrBleuet.bind("<FocusOut>", lambda event: on_exit(event, self.Bleuet))
         label = Label(framBleuet, text="Bleuet : ", bg="#292929", fg="WHITE", font=("Arial", 10), width=15)
         nbrBleuet.pack(side=RIGHT)
         label.pack(side=LEFT)
 
         frameBouleau = Frame(frame_environnement, bg="#292929", pady=5)
         frameBouleau.pack(anchor=W)
-        nbrBouleau = Entry(frameBouleau, width=10)
-        nbrBouleau.insert(0, 15)
+        nbrBouleau = Entry(frameBouleau, textvariable=self.Bouleau, width=10, validate="key", validatecommand=vcmd)
+        nbrBouleau.bind("<FocusOut>", lambda event: on_exit(event, self.Bouleau))
         label = Label(frameBouleau, text="Bouleau : ", bg="#292929", fg="WHITE", font=("Arial", 10), width=15)
         nbrBouleau.pack(side=RIGHT)
         label.pack(side=LEFT)
 
         frameErable = Frame(frame_environnement, bg="#292929", pady=5)
         frameErable.pack(anchor=W)
-        nbrErable = Entry(frameErable, width=10)
-        nbrErable.insert(0, 15)
+        nbrErable = Entry(frameErable, textvariable=self.Erable, width=10, validate="key", validatecommand=vcmd)
+        nbrErable.bind("<FocusOut>", lambda event: on_exit(event, self.Erable))
         label = Label(frameErable, text="Erable : ", bg="#292929", fg="WHITE", font=("Arial", 10), width=15)
         nbrErable.pack(side=RIGHT)
         label.pack(side=LEFT)
 
         framePissenlit = Frame(frame_environnement, bg="#292929", pady=5)
         framePissenlit.pack(anchor=W)
-        nbrPissenlit = Entry(framePissenlit, width=10)
-        nbrPissenlit.insert(0, 150)
+        nbrPissenlit = Entry(framePissenlit, textvariable=self.Pissenlit, width=10, validate="key", validatecommand=vcmd)
+        nbrPissenlit.bind("<FocusOut>", lambda event: on_exit(event, self.Pissenlit))
         label = Label(framePissenlit, text="Pissenlit : ", bg="#292929", fg="WHITE", font=("Arial", 10), width=15)
         nbrPissenlit.pack(side=RIGHT)
         label.pack(side=LEFT)
 
         framePomier = Frame(frame_environnement, bg="#292929", pady=5)
         framePomier.pack(anchor=W)
-        nbrPomier = Entry(framePomier, width=10)
-        nbrPomier.insert(0, 15)
+        nbrPomier = Entry(framePomier, textvariable=self.Pomier, width=10, validate="key", validatecommand=vcmd)
+        nbrPomier.bind("<FocusOut>", lambda event: on_exit(event, self.Pomier))
         label = Label(framePomier, text="Pomier : ", bg="#292929", fg="WHITE", font=("Arial", 10), width=15)
         nbrPomier.pack(side=RIGHT)
         label.pack(side=LEFT)
 
+        # DIV PARAMETRE TEMPS(ENVIRONNEMENT)
         labelPrincipal4 = Label(frame_environnement, text="Parametre temporel", bg="#292929", fg="WHITE", font=("Arial", 20))
         labelPrincipal4.pack(anchor=W)
 
         frameJour = Frame(frame_environnement, bg="#292929", pady=5)
         frameJour.pack(anchor=W)
-        jourMois = Entry(frameJour, width=10)
-        jourMois.insert(0, 1)
+        jourMois = Entry(frameJour, textvariable=self.jour, width=10, validate="key", validatecommand=vcmd)
+        jourMois.bind("<FocusOut>", lambda event: on_exit(event, self.jour))
         label = Label(frameJour, text="Jour du mois : ", bg="#292929", fg="WHITE", font=("Arial", 10), width=15)
         jourMois.pack(side=RIGHT)
         label.pack(side=LEFT)
 
         frameMois = Frame(frame_environnement, bg="#292929", pady=5)
         frameMois.pack(anchor=W)
-        moisAnnee = Entry(frameMois, width=10)
-        moisAnnee.insert(0, 1)
+        moisAnnee = Entry(frameMois, textvariable=self.mois, width=10, validate="key", validatecommand=vcmd)
+        moisAnnee.bind("<FocusOut>", lambda event: on_exit(event, self.mois))
         label = Label(frameMois, text="Mois de l'année : ", bg="#292929", fg="WHITE", font=("Arial", 10), width=15)
         moisAnnee.pack(side=RIGHT)
         label.pack(side=LEFT)
 
+
         annee = Frame(frame_environnement, bg="#292929", pady=5)
         annee.pack(anchor=W)
-        qteAnnee = Entry(annee, width=10)
-        qteAnnee.insert(0, 0)
-        label = Label(annee, text="Année de départ : ", bg="#292929", fg="WHITE", font=("Arial", 10), width=15)
+        qteAnnee = Entry(annee,textvariable=self.annee, width=10, validate="key", validatecommand=vcmd)
+        qteAnnee.bind("<FocusOut>", lambda event: on_exit(event, self.annee))
         qteAnnee.pack(side=RIGHT)
+        label = Label(annee, text="Année de départ : ", bg="#292929", fg="WHITE", font=("Arial", 10), width=15)
         label.pack(side=LEFT)
 
 
@@ -488,10 +532,13 @@ class Vue:
         self.canva_frame_zoom = Canvas(self.simroot, bg="#292929", width=self.mapGeneral, height=self.mapGeneral)
         self.canva_frame_zoom.pack(side=LEFT, padx=10)
 
-
+        self.parent.model.env.dateHeure.Start_Time()
+        
         self.parent.model.creer_animaux()
         self.parent.model.creer_vegetaux()
         self.parent.model.boucler_simulation()
+        
+        
 
     def update(self):
 
