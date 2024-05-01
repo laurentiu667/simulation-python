@@ -30,11 +30,11 @@ class Timer:
             while self.running:
                 with Timer.LOCK:
                     self.date += timedelta(seconds=3600)
-                    print(1)
                 T.sleep(1)
             
         if self.thread is None:
             self.thread = threading.Thread(target=update_timer)
+            self.running = True
             self.thread.start()
             
     def stopperTemps(self):
