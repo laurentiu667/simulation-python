@@ -147,7 +147,9 @@ class Vue:
             water = waterPerc[clicked2.get()]
 
             self.seed = MAPGENERATOR.Seed(water)  #SEED GENERATES HERE!!!!!!!!
+            
             start_preview['state'] = NORMAL
+            self.startButton['state'] = DISABLED
             
             self.parent.model.env.baseValider(self.annee.get(), self.mois.get(), self.jour.get())
             
@@ -576,7 +578,7 @@ class Vue:
 
 
     def new_window_preview(self):
-        self.startButton['state'] = NORMA
+        self.startButton['state'] = NORMAL
 
         if(self.Frame_Preview_show_map):
             self.Frame_Preview_show_map.destroy()
