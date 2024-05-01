@@ -118,7 +118,6 @@ class Vue:
         self.saisonBase = None
 
 
-
     def accueil(self):
         self.root.title("Accueil")
         self.root.geometry("1500x500")
@@ -148,7 +147,7 @@ class Vue:
             water = waterPerc[clicked2.get()]
 
             self.seed = MAPGENERATOR.Seed(water)  #SEED GENERATES HERE!!!!!!!!
-            self.startButton['state'] = DISABLED
+            start_preview['state'] = NORMAL
             
             self.parent.model.env.baseValider(self.annee.get(), self.mois.get(), self.jour.get())
             
@@ -376,8 +375,8 @@ class Vue:
         start_frame = Frame(frame_buttons, bg="#292929")
         start_frame.pack(fill=X, side=BOTTOM, anchor=W)
 
-        start_preview = Button(start_frame, text="Aperçu", font=("Arial", 20), bg="#292929", fg="gray", command=self.new_window_preview)
-        self.startButton = Button(start_frame, text="Commencer", font=("Arial", 20), bg="#292929", fg="gray", command=self.new_window_start_sim, state=DISABLED)
+        start_preview = Button(start_frame, text="Aperçu", font=("Arial", 20), bg="#292929", fg="WHITE", command=self.new_window_preview,   state=DISABLED)
+        self.startButton = Button(start_frame, text="Commencer", font=("Arial", 20), bg="#292929", fg="WHITE", command=self.new_window_start_sim, state=DISABLED)
 
         start_preview.grid(row=0, column=0, columnspan=1, sticky="nsew")
         self.startButton.grid(row=0, column=1, columnspan=1, sticky="nsew")
@@ -538,7 +537,6 @@ class Vue:
         self.parent.model.creer_vegetaux()
         self.parent.model.boucler_simulation()
         
-        
 
     def update(self):
 
@@ -559,8 +557,10 @@ class Vue:
         #self.root.update()
         #self.root.after(300, self.update)
 
+
     def on_click(self, event):
         print("salut")
+
 
     def generate_map_on_canvas(self, canvas, new, grosseur):
         vue = MAPGENERATOR.Vue(canvas)
@@ -574,8 +574,9 @@ class Vue:
         elif self.parent.model.env.saison.nom == "automne":
             vue.generate_square_autumn(self.seed.diamond_square.heightmapWidth, self.seed.diamond_square.heightmap, self.seed.biomeOrder, grosseur, True)
 
+
     def new_window_preview(self):
-        self.startButton['state'] = NORMAL
+        self.startButton['state'] = NORMA
 
         if(self.Frame_Preview_show_map):
             self.Frame_Preview_show_map.destroy()
@@ -586,6 +587,7 @@ class Vue:
         self.Frame_Preview_show_map.pack(side=RIGHT)
         canva = Canvas(self.Frame_Preview_show_map, width=400, height=400)
         self.generate_map_on_canvas(canva, True, 400)
+
 
     def simulation(self):
         #SPAWN TREES
