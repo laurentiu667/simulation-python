@@ -1,6 +1,10 @@
 from abc import ABC
 
 class Biome(ABC):
+    
+    BIOMES_NAME = {0: "Forêts Boréales", 1: "Toundra", 2: "Rivières et Lacs", 3: "Montagnes et Plateaux", 4: "Prairies et Savanes"}
+
+    
     def __init__(self, nom, temp, humidite, impHum, ensoleillementBiome, precipitation):
         self.nom = nom
         self.tempBiome = temp
@@ -8,6 +12,9 @@ class Biome(ABC):
         self.impacteHumidite = impHum
         self.ensoleillement = ensoleillementBiome
         self.precipitation = precipitation
+    
+    def __str__(self) -> str:
+        return self.nom
 
         
         # def __init__(self, name, orage, night,climate, average_temperature, precipitation, dominant_flora, dominant_fauna):
@@ -63,3 +70,5 @@ class PrairiesEtSavanes(Biome):
         ensoleillement = 0.8
         precipitaion = 0.5
         super().__init__('Prairies et Savanes', temperature, humidite, coefHumidité,ensoleillement, precipitaion)
+        
+BIOMES_CLASS = {Biome.BIOMES_NAME[0]: ForetsBoreales(), Biome.BIOMES_NAME[1]: Toundra(), Biome.BIOMES_NAME[2]: RivieresEtLacs(), Biome.BIOMES_NAME[3]: MontagnesEtPlateaux(), Biome.BIOMES_NAME[4]: PrairiesEtSavanes()}

@@ -1,8 +1,8 @@
 import random
 import math
-import tkinter as tk
+from tkinter import font
 import time
-
+from Biome import Biome
 class Vue():
     def __init__(self, root):
         self.root = root
@@ -162,7 +162,7 @@ class Vue():
         index = 0
         for i in range(0, 3, 1):
             for j in range(0, 3, 1):
-                self.root.create_text(limits*i + 35, limits*j + 6, text=biomes[index], fill="white")
+                self.root.create_text(limits*i+ limits/2 , limits*j + 7, text=biomes[index], fill="black")
                 index += 1
 
 
@@ -273,16 +273,16 @@ class Seed():
         self.biomeOrder = []
         self.WaterPerc = waterPerc
         self.seed = self.get_seed()
-        self.biomeDict = {1: "ForetFeuillu",
-                          2: "ForetFeuillu",
-                          3: "ForetBoreale",
-                          4: "ForetBoreale",
-                          5: "Prairies",
-                          6: "Prairies",
-                          7: "Marais",
-                          8: "Marais",
-                          9: "Toundra",
-                          0: "Toundra"}
+        self.biomeDict = {0: Biome.BIOMES_NAME[0], 
+                          1: Biome.BIOMES_NAME[0],
+                          2: Biome.BIOMES_NAME[0],
+                          3: Biome.BIOMES_NAME[1],
+                          4: Biome.BIOMES_NAME[1],
+                          5: Biome.BIOMES_NAME[4],
+                          6: Biome.BIOMES_NAME[4],
+                          7: Biome.BIOMES_NAME[2],
+                          8: Biome.BIOMES_NAME[2],
+                          9: Biome.BIOMES_NAME[3]}
 
     def get_seed(self):
         random.seed(math.trunc(time.time()))
@@ -321,3 +321,4 @@ class Seed():
             self.mapValide = self.check_water_percentage()
 
         self.mapValide = False
+        

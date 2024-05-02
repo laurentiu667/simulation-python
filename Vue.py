@@ -1,13 +1,13 @@
-from tkinter import *
+import tkinter as tk
 import MAPGENERATOR
 from MAPGENERATOR import *
-from Environnement import *
-import Modele
+from tkinter import *
 
+from Timer import Timer
 class Vue:
     def __init__(self, parent):
         self.parent = parent
-        self.root = Tk()
+        self.root = tk.Tk()
         self.simroot = None
         self.seed = None
         self.startButton = None
@@ -399,12 +399,6 @@ class Vue:
         conditions_frame = Frame(self.simroot, bg="Gray50")
         conditions_frame.pack(pady=5, padx=5, fill=X)
 
-        self.biomes_frame = Frame(conditions_frame, bg="#292929")
-        self.biomes_frame.pack(side=LEFT, padx=5, pady=5)
-        Label(self.biomes_frame, text="Biomes: ", bg="gray25", fg="white").pack(side=LEFT)
-        self.biomes_value_label = Label(self.biomes_frame, text=str(self.parent.model.env.biome.nom), bg="gray25", fg="white")
-        self.biomes_value_label.pack(side=LEFT)
-
         self.saison_frame = Frame(conditions_frame, bg="#292929")
         self.saison_frame.pack(side=LEFT, padx=5, pady=5)
         Label(self.saison_frame, text="Saison: ", bg="gray25", fg="white").pack(side=LEFT)
@@ -422,31 +416,6 @@ class Vue:
         Label(self.heure_frame, text="Heure: ", bg="gray25", fg="white").pack(side=LEFT)
         self.heure_value_label = Label(self.heure_frame, text=str(self.parent.model.env.dateHeure.date.time()), bg="gray25", fg="white")
         self.heure_value_label.pack(side=LEFT)
-
-        self.temp_frame = Frame(conditions_frame, bg="#292929")
-        self.temp_frame.pack(side=LEFT, padx=5, pady=5)
-        Label(self.temp_frame, text="Température: ", bg="gray25", fg="white").pack(side=LEFT)
-        self.temp_value_label = Label(self.temp_frame, text=str(self.parent.model.env.temperatureActuel), bg="gray25", fg="white")
-        self.temp_value_label.pack(side=LEFT)
-
-        self.humidite_frame = Frame(conditions_frame, bg="#292929")
-        self.humidite_frame.pack(side=LEFT, padx=5, pady=5)
-        Label(self.humidite_frame, text="Humidité: ", bg="gray25", fg="white").pack(side=LEFT)
-        self.humidite_value_label = Label(self.humidite_frame, text=str(self.parent.model.env.humiditeActuel * 100),bg="gray25", fg="white")
-        self.humidite_value_label.pack(side=LEFT)
-
-        self.solei_max_frame = Frame(conditions_frame, bg="#292929")
-        self.solei_max_frame.pack(side=LEFT, padx=5, pady=5)
-        Label(self.solei_max_frame, text="Soleil max: ", bg="gray25", fg="white").pack(side=LEFT)
-        self.solei_max = Label(self.solei_max_frame, text=str(self.parent.model.env.ensoleillementMax * 100), bg="gray25", fg="white")
-        self.solei_max.pack(side=LEFT)
-
-        self.solei_actuel_frame = Frame(conditions_frame, bg="#292929")
-        self.solei_actuel_frame.pack(side=LEFT, padx=5, pady=5)
-        Label(self.solei_actuel_frame, text="Ensoillement actuel: ", bg="gray25", fg="white").pack(side=LEFT)
-        self.solei_actuel = Label(self.solei_actuel_frame,
-                                  text=f"{round(self.parent.model.env.ensoleillementActuel * 100, 3)}" + " %", bg="gray25", fg="white")
-        self.solei_actuel.pack(side=LEFT)
 
         self.leve_solei_frame = Frame(conditions_frame, bg="#292929")
         self.leve_solei_frame.pack(side=LEFT, padx=5, pady=5)
@@ -533,8 +502,9 @@ class Vue:
         self.canva_frame_zoom = Canvas(self.simroot, bg="#292929", width=self.mapGeneral, height=self.mapGeneral)
         self.canva_frame_zoom.pack(side=LEFT, padx=10)
 
-        self.parent.model.env.dateHeure.Start_Time()
         
+        self.parent.model.env.dateHeure.Start_Time()
+        self.parent.model.env.assignerBiomes(self.seed.biomeOrder)
         self.parent.model.creer_animaux()
         self.parent.model.creer_vegetaux()
         self.parent.model.boucler_simulation()
@@ -543,14 +513,9 @@ class Vue:
     def update(self):
 
         # Configurer les labels avec les valeurs actuelles
-        self.biomes_value_label.config(text=str(self.parent.model.env.biome.nom))
         self.saison_value_label.config(text=str(self.parent.model.env.saison.nom))
         self.dates_value_label.config(text=str(self.parent.model.env.dateHeure.get_date()))
         self.heure_value_label.config(text=str(self.parent.model.env.dateHeure.date.time()))
-        self.temp_value_label.config(text=str(self.parent.model.env.temperatureActuel))
-        self.humidite_value_label.config(text=str(self.parent.model.env.humiditeActuel * 100))
-        self.solei_max.config(text=str(self.parent.model.env.ensoleillementMax * 100))
-        self.solei_actuel.config(text=f"{round(self.parent.model.env.ensoleillementActuel * 100, 3)}" + " %")
         self.leve_solei.config(text=str(self.parent.model.env.leveeDuSoleil))
         self.coucher_solei.config(text=str(self.parent.model.env.coucherDuSoleil))
         self.apogee_solei_value_label.config(text=str(self.parent.model.env.apogeeSolaire))

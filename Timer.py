@@ -36,9 +36,16 @@ class Timer:
             self.thread = threading.Thread(target=update_timer)
             self.running = True
             self.thread.start()
+    
+    def resetTemps(self , année = 1, mois = 1, jour = 1, heure = 0, minute = 0, seconde = 0):
+        self.pauseTemps()
+        self.thread = None
+        self.date_initiale = datetime(année,mois,jour,heure,minute,seconde)
+        self.date = self.date_initiale
+        
             
-    def stopperTemps(self):
-        self.running = False  # stopper la mise a jour du repere temporelle pour pouvoir en creer un autre plus tard
+    def pauseTemps(self):
+        self.running = False  # met en pause la mise a jour du repere temporelle pour pouvoir la relancer plus tard
         self.thread.join()  # Attendre que le thread se termine proprement
             
     @classmethod
@@ -49,47 +56,45 @@ class Timer:
                 cls._instance = None
         
     @staticmethod
-    def obtenirUneHeure(heure=0, minute=0, seconde=0):
+    def obtenirUneHeure(heure=0, minute=0, seconde=0) -> time:
         return time(heure, minute, seconde)
 
     @staticmethod
-    def convertirSecondeEnDuree(secondes):
+    def convertirSecondeEnDuree(secondes) -> timedelta:
         return timedelta(seconds=secondes)
 
     @staticmethod
-    def addTime(timeObj, delta):
+    def addTime(timeObj, delta) -> time:
         """Ajoute un timedelta à un objet time et retourne un nouvel objet time."""
         # Convertit time en datetime (date arbitraire)
-        datetime_obj = datetime(1, 1, 1, timeObj.hour, timeObj.minute, timeObj.second)
-
+        datetime_obj = datetime(1, 1, 1, timeObj.hour, timeObj.minute, timeObj.second,round(timeObj.microsecond,0))
         # Ajoute le timedelta
         new_datetime_obj = datetime_obj + delta
-
         # Retourne un nouvel objet time
         return new_datetime_obj.time()
 
-    def __str__(self):  # permet de print(self.var(stock la classe Timer)) directment le temps
+    def __str__(self) -> str:  # permet de print(self.var(stock la classe Timer)) directment le temps
         return self.date.strftime("%d/%m/%Y %H:%M:%S")
 
-    def get_date(self):
+    def get_date(self) -> str:
         return self.date.strftime("%d/%m/%Y")
 
-    def get_time(self, time=None):
+    def get_time(self, time=None) -> str:
         if time is not None:
             return time.strftime("%H:%M:%S")
         return self.date.strftime("%H:%M:%S")
     
     @staticmethod
-    def nombreDeJoursDumois(year,month):
+    def nombreDeJoursDumois(year,month) -> int:
         return calendar.monthrange(year, month)[1]
 
-    def nombreDeJoursDeLaSaison(self, saison=None):
+    def nombreDeJoursDeLaSaison(self, saison=None) -> int:
         if saison is not None:
             return sum([calendar.monthrange(self.date.year, month)[1] for month in saison.mois])
 
         return sum([calendar.monthrange(self.date.year, month)[1] for month in self.environnement.saison.mois])
 
-    def joursDepuisDebutSaison(self):
+    def joursDepuisDebutSaison(self) -> int:
         from Saison import Hiver  # import ici pour eviter les import circulaire
         if isinstance(self.environnement.saison, Hiver):
             if self.date.year == 1:
@@ -102,7 +107,7 @@ class Timer:
         jours_ecoules = (self.date - date_debut_saison).days
         return 1 if jours_ecoules == 0 else jours_ecoules
 
-    def total_seconds(self, timeObj=None):  # par default renvoie le nombre de seconde de la journée en cours
+    def total_seconds(self, timeObj=None) -> int:  # par default renvoie le nombre de seconde de la journée en cours
         if timeObj is None:
             timeObj = self.date
         return (timeObj.hour * 3600) + (timeObj.minute * 60) + timeObj.second
@@ -133,12 +138,22 @@ if __name__ == "__main__":
     t.Start_Time()
     t1 = None
     t.Start_Time()
+    ok = None
     while True:
         print(t.get_time())
         if t1 is not None:
             print(t1.get_time())
-        T.sleep(1)
-        if t.date.hour > 10:
+        if t.date.hour > 7:
             if t1 is None:
                 t1 = Timer()
+        if t.date.hour > 10:
+            if ok is None:
+                ok = 1
+                t.resetTemps(heure=4)
+                T.sleep(3)
+                t.Start_Time()
+        T.sleep(1)
+            
+            
+
             

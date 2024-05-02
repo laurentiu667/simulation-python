@@ -11,6 +11,9 @@ class Saison(ABC):
         self.coucherDuSoleil = coucherDuSoleil
         self.apogeeSolaire = apogeeSolaire
         self.precipitation = precipitation
+        
+    def __str__(self) -> str:
+        return self.nom
 
 class Ete(Saison):
     mois =(6,7,8)

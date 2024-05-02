@@ -1,11 +1,8 @@
 from Environnement import Environnement
-from Timer import Timer
 import tkinter as tk
 import random
-import Animal
-from Animal import Ours, Cerf, Loup, Raton_laveur, Lynx, Ecureuil, Renard, Achigan, Castor, Orignal, Lievre
-from Vegetal import Sapin, Bleuet, Bouleau, Erable, Pissenlit, Pomier
-import time
+from Animal import *
+from Vegetal import *
 
 
 class Modele:

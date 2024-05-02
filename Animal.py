@@ -4,9 +4,7 @@ from helper import Helper as hp
 import random
 import tkinter as tk
 from PIL import Image, ImageTk
-import datetime
 import time
-import Environnement
 
 # classe et methode abstraite
 
@@ -132,7 +130,7 @@ class Animal(ABC):
         pos_x = math.floor(self.x / ratio)
         pos_y = math.floor(self.y / ratio)
 
-        while self.terrain[self.region - 1][pos_x % len(self.terrain[self.region - 1])][pos_y] < 50:
+        while self.terrain[self.region - 1][pos_x][pos_y] < 50:
             self.x = random.randint(0, 801)  # changer les valeurs de déplacement en fonction de la map
             self.y = random.randint(0, 801)
             self.region = random.randint(1, 9)
@@ -183,7 +181,7 @@ class Animal(ABC):
         start_time = time.time()
 
         while True:
-            current_time = time.time()#Timer(model.environnement).time() classe simgleton ou (si acces) evironnement.dateHeure.time() les 2 se valent
+            current_time = time.time()#Timer().time() classe simgleton ou (si acces) evironnement.dateHeure.time() les 2 se valent
             minutes, secondes = divmod(current_time, 60)
 
             print("Minutes :", int(minutes))

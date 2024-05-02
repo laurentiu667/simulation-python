@@ -43,7 +43,7 @@ class Vegetal(ABC):
 
         pos_x = math.floor(self.x / ratio)
         pos_y = math.floor(self.y / ratio)
-
+        
         while self.terrain[self.region - 1][pos_x][pos_y] < 50:
             self.x = random.randint(0, 801)  # changer les valeurs de déplacement en fonction de la map
             self.y = random.randint(0, 801)
