@@ -5,12 +5,14 @@ import random
 import tkinter as tk
 from PIL import Image, ImageTk
 import time
+import Modele as m1
 
 # classe et methode abstraite
 
 class Animal(ABC):
     # canvas, vitesse, heightMap
     def __init__(self):
+        self.modele = m1
         self.y1 = None
         self.x1 = None
         self.x2 = None
@@ -18,11 +20,12 @@ class Animal(ABC):
         self.champDeVision = None
         self.cacher = False
         self.faim = 100
-        self.soif = 100
+        self.soif = 70
         self.vie = 100
         self.Vitesse = None
         self.energie = 100
         self.sexe = None
+        self.isAssoifee = None
         self.isAlive = None
         self.IsSleeping = False
         self.isStarvings = False
@@ -111,6 +114,7 @@ class Animal(ABC):
             dest_y = self.y + random.uniform(-vitesse, vitesse)
             self.canvas.move(self.rect, dest_x - self.x, dest_y - self.y)
             self.calculerEndurance()
+           
             self.x, self.y = dest_x, dest_y
             self.canvas.update()
 
@@ -118,12 +122,14 @@ class Animal(ABC):
     def check_map_eau(self):
         for i in range(len(self.terrain[0])):
             for v in range(len(self.terrain[0])):
-                #print(self.terrain[0][i][v])
+                print(self.terrain[0][i][v])
 
                 if(self.terrain[0][i][v] > -1 and self.terrain[0][i][v] < 50 ):
                     self.dest_x = i
                     self.dest_y = v
-    
+                    print(self.dest_x)
+                    print(self.dest_y)
+                    
     def check_position(self):
         ratio = 801 / len(self.terrain[0][0])
 
@@ -137,10 +143,10 @@ class Animal(ABC):
             pos_x = math.floor(self.x / ratio)
             pos_y = math.floor(self.y / ratio)
 
-        if self.terrain[self.region-1][pos_x][pos_y] <= 50:
-            print("BUG")
-        else:
-            print(self.x,self.y)
+       # if self.terrain[self.region-1][pos_x][pos_y] <= 50:
+        #    print("BUG")
+        #else:
+           # print(self.x,self.y)
 
     def repro(self):
         if self.isFucking == True:
@@ -154,7 +160,30 @@ class Animal(ABC):
             self.vie -= 0.005
             if self.vie == 0:
                 self.isAlive = False
-
+                
+    def isAssoife(self):
+        self.soif -= 10
+        print(self.soif)
+        if self.soif <= 70:
+            self.isAssoifee = True
+            self.energie -= 0.005
+            self.vie -= 0.005
+            if self.isAssoifee:
+                self.deplacementVersEau()
+            if self.vie == 0:
+                self.isAlive = False
+                
+    def isNotAssoife(self):
+        if self.isAssoifee == False:
+            self.soif += 0.5
+            self.energie += 0.05
+                
+    def deplacementVersEau(self):
+           if self.isAssoifee == True:
+                self.check_map_eau()
+                self.isNotAssoife()
+       
+            
     def calculerEndurance(self):
         if self.isRunning == True:
             self.endurance -= 6.68
@@ -183,9 +212,6 @@ class Animal(ABC):
         while True:
             current_time = time.time()#Timer().time() classe simgleton ou (si acces) evironnement.dateHeure.time() les 2 se valent
             minutes, secondes = divmod(current_time, 60)
-
-            print("Minutes :", int(minutes))
-            print("Secondes :", int(secondes))
 
             if minutes >= 4:
                 minutes = 0

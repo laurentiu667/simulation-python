@@ -13,6 +13,7 @@ class Modele:
         self.animaux = []
         self.vegetaux = []
         self.env = Environnement()
+        self.animal = Animal()
 
     def boucler_simulation(self):
         self.env.updateEnv()
@@ -59,6 +60,8 @@ class Modele:
                 cerf = Cerf(str(i), self.map.submap.ALL)
                 cerf.check_position()
                 self.animaux.append(cerf)
+                
+                
 
         if self.map.Loup.get() > 0:
             for i in range(self.map.Loup.get()):
@@ -113,10 +116,17 @@ class Modele:
                 ours = Ours(str(i), self.map.submap.ALL)
                 ours.check_position()
                 self.animaux.append(ours)
-                
+       
+    def actionAnimaux(self):
+        for animal in self.animaux:
+            animal.isAssoife()
+               
+                  
+           
     def deplacer(self, i):
+       # self.animal.isAssoife() # C'est ca qui fait tout chier pcq pas capable de faire check_map_eau
         x = random.randint(1, 4)
-        if x == 1:
+        if x == 1:         
             i.x -= 5
             i.y -= 5
         elif x == 2:

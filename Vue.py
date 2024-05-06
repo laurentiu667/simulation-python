@@ -574,6 +574,8 @@ class Vue:
         for i in self.parent.model.animaux:
             if (i.region == self.carre):
                 self.parent.model.deplacer(i)
+                self.parent.model.actionAnimaux()
+
                 self.imageIDs.append(self.canva_frame_zoom.create_image(i.x, i.y, image=i.photo, anchor=tk.CENTER))
 
         # UPDATE ENVIRONEMENT
