@@ -301,7 +301,7 @@ class Raton_laveur(Animal):
         super().__init__()
         self.nom = ("Raton" + index)
         self.terrain = map
-        self.image = Image.open("zone_test/animaux_pillow/laveur.png")
+        self.image = Image.open("Images_Végétaux\Végétaux (images, code)\Animaux\laveur2.png")
         self.image = self.image.resize((50, 50))  # checker la grosseur de l'image
         self.photo = ImageTk.PhotoImage(self.image)
         self.region = random.randint(1, 9)
@@ -331,7 +331,7 @@ class Ecureuil(Animal):
         super().__init__()
         self.nom = ("Ecureille" + index)
         self.terrain = map
-        self.image = Image.open("zone_test/animaux_pillow/ecureuil.png")
+        self.image = Image.open("Images_Végétaux\Végétaux (images, code)\Animaux\ecureuil2.png")
         self.image = self.image.resize((25, 25))  # checker la grosseur de l'image
         self.photo = ImageTk.PhotoImage(self.image)
         self.region = random.randint(1, 9)

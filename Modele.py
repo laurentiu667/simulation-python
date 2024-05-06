@@ -23,32 +23,32 @@ class Modele:
     def creer_vegetaux(self):
         if self.map.Sapin.get() > 0:
             for i in range(self.map.Sapin.get()):
-                sapin = Sapin(str(i), self.map.submap.ALL)
+                sapin = Sapin(str(i), self.map.submap.ALL, self)
                 sapin.check_position()
                 self.vegetaux.append(sapin)
         if self.map.Bleuet.get() > 0:
             for i in range(self.map.Bleuet.get()):
-                bleuet = Bleuet(str(i), self.map.submap.ALL)
+                bleuet = Bleuet(str(i), self.map.submap.ALL, self)
                 bleuet.check_position()
                 self.vegetaux.append(bleuet)
         if self.map.Bouleau.get() > 0:
             for i in range(self.map.Bouleau.get()):
-                bouleau = Bouleau(str(i), self.map.submap.ALL)
+                bouleau = Bouleau(str(i), self.map.submap.ALL, self)
                 bouleau.check_position()
                 self.vegetaux.append(bouleau)
         if self.map.Erable.get() > 0:
             for i in range(self.map.Erable.get()):
-                erable = Erable(str(i), self.map.submap.ALL)
+                erable = Erable(str(i), self.map.submap.ALL, self)
                 erable.check_position()
                 self.vegetaux.append(erable)
         if self.map.Pomier.get() > 0:
             for i in range(self.map.Pomier.get()):
-                pomier = Pomier(str(i), self.map.submap.ALL)
+                pomier = Pomier(str(i), self.map.submap.ALL, self)
                 pomier.check_position()
                 self.vegetaux.append(pomier)
         if self.map.Pissenlit.get() > 0:
             for i in range(self.map.Pissenlit.get()):
-                pissenlit = Pissenlit(str(i), self.map.submap.ALL)
+                pissenlit = Pissenlit(str(i), self.map.submap.ALL, self)
                 pissenlit.check_position()
                 self.vegetaux.append(pissenlit)
                 

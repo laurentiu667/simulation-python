@@ -7,7 +7,8 @@ from PIL import Image, ImageTk
 
 
 class Vegetal(ABC):
-    def __init__(self):
+    def __init__(self, parent):
+        self.parent = parent
         self.fruits = []
         self.croissance = None
         self.capaciteFruit = None
@@ -101,61 +102,97 @@ class PlanteComestible(Vegetal):
         self.capaciteFruit = self.capaciteFruit * facteur
             
 class Sapin(Vegetal):
-    def __init__(self, index, map):
-        super().__init__()
+    def __init__(self, index, map, parent):
+        super().__init__(parent)
         self.nom = ("Sapin" + index)
         self.terrain = map
-        self.image = Image.open("Images_Végétaux/Végétaux (images, code)/Végétaux/sapin.png")
+        if self.parent.env.saison.nom == "été":
+            self.image = Image.open("Images_Végétaux/Végétaux (images, code)/Végétaux/sapin.png")
+        elif self.parent.env.saison.nom == "automne" or self.parent.env.saison.nom == "printemps":
+            self.image = Image.open("Images_Végétaux/Végétaux (images, code)/Végétaux/sapin-automne_printemps.png")
+        elif self.parent.env.saison.nom == "hiver":
+            self.image = Image.open("Images_Végétaux/Végétaux (images, code)/Végétaux/sapin-hiver.png")
         self.image = self.image.resize((280, 280))  # checker la grosseur de l'image
         self.photo = ImageTk.PhotoImage(self.image)
         self.region = random.randint(1, 9)
 
 class Bleuet(Vegetal):
-    def __init__(self, index, map):
-        super().__init__()
+    def __init__(self, index, map, parent):
+        super().__init__(parent)
         self.nom = ("Bleuet" + index)
         self.terrain = map
-        self.image = Image.open("Images_Végétaux/Végétaux (images, code)/Végétaux/bleuet.png")
+        if self.parent.env.saison.nom == "été":
+            self.image = Image.open("Images_Végétaux/Végétaux (images, code)/Végétaux/bleuet.png")
+        elif self.parent.env.saison.nom == "automne":
+            self.image = Image.open("Images_Végétaux/Végétaux (images, code)/Végétaux/bleuet-automne.png")
+        elif self.parent.env.saison.nom == "printemps":
+            self.image = Image.open("Images_Végétaux/Végétaux (images, code)/Végétaux/bleuet-printemps.png")
+        elif self.parent.env.saison.nom == "hiver":
+            self.image = Image.open("Images_Végétaux/Végétaux (images, code)/Végétaux/bleuet-hiver.png")
         self.image = self.image.resize((60, 60))  # checker la grosseur de l'image
         self.photo = ImageTk.PhotoImage(self.image)
         self.region = random.randint(1, 9)
 
 class Bouleau(Vegetal):
-    def __init__(self, index, map):
-        super().__init__()
+    def __init__(self, index, map, parent):
+        super().__init__(parent)
         self.nom = ("Bouleau" + index)
         self.terrain = map
-        self.image = Image.open("Images_Végétaux/Végétaux (images, code)/Végétaux/bouleaujaune.png")
+        if self.parent.env.saison.nom == "été":
+            self.image = Image.open("Images_Végétaux/Végétaux (images, code)/Végétaux/bouleaujaune.png")
+        elif self.parent.env.saison.nom == "automne":
+            self.image = Image.open("Images_Végétaux/Végétaux (images, code)/Végétaux/bouleaujaune-automne.png")
+        elif self.parent.env.saison.nom == "printemps":
+            self.image = Image.open("Images_Végétaux/Végétaux (images, code)/Végétaux/bouleaujaune-printemps.png")
+        elif self.parent.env.saison.nom == "hiver":
+            self.image = Image.open("Images_Végétaux/Végétaux (images, code)/Végétaux/bouleaujaune-hiver.png")
         self.image = self.image.resize((265, 265))  # checker la grosseur de l'image
         self.photo = ImageTk.PhotoImage(self.image)
         self.region = random.randint(1, 9)
         
 class Erable(Vegetal):
-    def __init__(self, index, map):
-        super().__init__()
+    def __init__(self, index, map, parent):
+        super().__init__(parent)
         self.nom = ("Erable" + index)
         self.terrain = map
-        self.image = Image.open("Images_Végétaux/Végétaux (images, code)/Végétaux/erable_de_sucre.png")
+        if self.parent.env.saison.nom == "été":
+            self.image = Image.open("Images_Végétaux/Végétaux (images, code)/Végétaux/erable_de_sucre.png")
+        elif self.parent.env.saison.nom == "automne":
+            self.image = Image.open("Images_Végétaux/Végétaux (images, code)/Végétaux/erable_de_sucre-automne.png")
+        elif self.parent.env.saison.nom == "printemps":
+            self.image = Image.open("Images_Végétaux/Végétaux (images, code)/Végétaux/erable_de_sucre-printemps.png")
+        elif self.parent.env.saison.nom == "hiver":
+            self.image = Image.open("Images_Végétaux/Végétaux (images, code)/Végétaux/erable_de_sucre-hiver.png")
         self.image = self.image.resize((265, 265))  # checker la grosseur de l'image
         self.photo = ImageTk.PhotoImage(self.image)
         self.region = random.randint(1, 9)
         
 class Pomier(Vegetal):
-    def __init__(self, index, map):
-        super().__init__()
+    def __init__(self, index, map, parent):
+        super().__init__(parent)
         self.nom = ("Pomier" + index)
         self.terrain = map
-        self.image = Image.open("Images_Végétaux/Végétaux (images, code)/Végétaux/pommiersauvage.png")
+        if self.parent.env.saison.nom == "été":
+            self.image = Image.open("Images_Végétaux/Végétaux (images, code)/Végétaux/pommiersauvage.png")
+        elif self.parent.env.saison.nom == "automne":
+            self.image = Image.open("Images_Végétaux/Végétaux (images, code)/Végétaux/pommiersauvage-automne.png")
+        elif self.parent.env.saison.nom == "printemps":
+            self.image = Image.open("Images_Végétaux/Végétaux (images, code)/Végétaux/pommiersauvage-printemps.png")
+        elif self.parent.env.saison.nom == "hiver":
+            self.image = Image.open("Images_Végétaux/Végétaux (images, code)/Végétaux/pommiersauvage-hiver.png")
         self.image = self.image.resize((265, 265))  # checker la grosseur de l'image
         self.photo = ImageTk.PhotoImage(self.image)
         self.region = random.randint(1, 9)
 
 class Pissenlit(Vegetal):
-    def __init__(self, index, map):
-        super().__init__()
+    def __init__(self, index, map, parent):
+        super().__init__(parent)
         self.nom = ("Pissenlit" + index)
         self.terrain = map
-        self.image = Image.open("Images_Végétaux/Végétaux (images, code)/Végétaux/pissenlit.png")
+        if self.parent.env.saison.nom == "été":
+            self.image = Image.open("Images_Végétaux/Végétaux (images, code)/Végétaux/pissenlit.png")
+        elif self.parent.env.saison.nom == "automne" or self.parent.env.saison.nom == "printemps" or self.parent.env.saison.nom == "hiver":
+            self.image = Image.open("Images_Végétaux/Végétaux (images, code)/Végétaux/pissenlit-automne_hiver_printemps.png")
         self.image = self.image.resize((15, 15))  # checker la grosseur de l'image
         self.photo = ImageTk.PhotoImage(self.image)
         self.region = random.randint(1, 9)
