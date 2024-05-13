@@ -52,10 +52,6 @@ class Vegetal(ABC):
             pos_x = math.floor(self.x / ratio)
             pos_y = math.floor(self.y / ratio)
 
-        if self.terrain[self.region - 1][pos_x][pos_y] <= 50:
-            print("BUG")
-        else:
-            print(self.x, self.y)
    
     def ajoutFruit(self):
         None
@@ -92,10 +88,8 @@ class PlanteComestible(Vegetal):
     def croitre(self):
         if self.age < self.esperanceVie:
             self.age *= self.coefCroissance
-            print(self.age)
         else:
             self.croissance = False
-            print(self.age)
     
     def updateCapaciteFruit(self):
         facteur = 1+ self.age * random.uniform(0.1, 0.15)

@@ -122,13 +122,10 @@ class Animal(ABC):
     def check_map_eau(self):
         for i in range(len(self.terrain[0])):
             for v in range(len(self.terrain[0])):
-                print(self.terrain[0][i][v])
 
                 if(self.terrain[0][i][v] > -1 and self.terrain[0][i][v] < 50 ):
                     self.dest_x = i
                     self.dest_y = v
-                    print(self.dest_x)
-                    print(self.dest_y)
                     
     def check_position(self):
         ratio = 801 / len(self.terrain[0][0])
@@ -163,7 +160,6 @@ class Animal(ABC):
                 
     def isAssoife(self):
         self.soif -= 10
-        print(self.soif)
         if self.soif <= 70:
             self.isAssoifee = True
             self.energie -= 0.005
@@ -201,7 +197,6 @@ class Animal(ABC):
         marge_erreur = 15
         erreur = random.randint(-marge_erreur, marge_erreur)
         self.dureDeVie = vieMoyen - erreur
-        print(self.dureDeVie)
 
     def gererTick(self):
         pass

@@ -477,7 +477,12 @@ class Vue:
             labelCellSelect.config(text="Cellule choisie : " + str(self.carre))
             self.currSectionView = self.submap.ALL[self.carre -1]
             zoomView = MAPGENERATOR.Vue(self.canva_frame_zoom)
-            zoomView.generate_square(len(self.submap.ALL[self.carre - 1]), self.currSectionView, self.seed.biomeOrder, self.mapGeneral, False)
+            if self.parent.model.env.saison.nom == "été" or self.parent.model.env.saison.nom == "printemps":
+                zoomView.generate_square(len(self.submap.ALL[self.carre - 1]), self.currSectionView, self.seed.biomeOrder, self.mapGeneral, False)
+            elif self.parent.model.env.saison.nom == "hiver":
+                zoomView.generate_square_winter(len(self.submap.ALL[self.carre - 1]), self.currSectionView, self.seed.biomeOrder, self.mapGeneral, False)
+            elif self.parent.model.env.saison.nom == "automne":
+                zoomView.generate_square_autumn(len(self.submap.ALL[self.carre - 1]), self.currSectionView, self.seed.biomeOrder, self.mapGeneral, False)
 
         # frame pour la simulation
         labelCellSelect = Label(cardAspect, font=("Arial", 30), fg="black", bg="gray50")
@@ -487,7 +492,7 @@ class Vue:
         animalAspect = Frame(StatsFrame, bg="Gray50")
         animalAspect.pack(side=RIGHT)
 
-        Label(animalAspect, text="test").pack()
+        Label(animalAspect, text="Statistique Animal").pack()
 
         # GROSSE MAP
         self.canva_frame_general = Canvas(self.simroot, bg="#292929", width=self.mapGeneral, height=self.mapGeneral)

@@ -18,7 +18,11 @@ class Modele:
     def boucler_simulation(self):
         self.env.updateEnv()
         self.parent.view.simulation()
-        self.parent.view.simroot.after(100, self.boucler_simulation)
+
+        # ACTION ANIMAUX
+
+
+        self.parent.view.simroot.after(20, self.boucler_simulation)
 
     # GENERE TOUT LES VEGETAUX AVEC : NOM DES VEGETAUX + INDEX
     def creer_vegetaux(self):
@@ -60,8 +64,6 @@ class Modele:
                 cerf = Cerf(str(i), self.map.submap.ALL)
                 cerf.check_position()
                 self.animaux.append(cerf)
-                
-                
 
         if self.map.Loup.get() > 0:
             for i in range(self.map.Loup.get()):
